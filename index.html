@@ -49,7 +49,7 @@
 
     <link
         rel="stylesheet"
-        href="style.css?v=110"
+        href="style.css?v=111"
     >
 
 </head>
@@ -685,6 +685,27 @@
         id="settingsSaved"
     ></div>
 <!-- ========================================
+     ACCOUNT + CLOUD SYNC
+========================================= -->
+<section class="btc-account-card" id="btcAccountCard">
+    <div class="eyebrow">Account & Cloud</div>
+    <h2>Your Before the Close Account</h2>
+    <p id="btcAccountCopy">Sign in to back up your Journey and carry it across devices.</p>
+    <div id="btcSignedOutActions" class="btc-account-actions">
+        <button type="button" class="btc-account-primary" onclick="btcOpenAuth('signup')">Create Account</button>
+        <button type="button" class="btc-account-secondary" onclick="btcOpenAuth('signin')">Sign In</button>
+    </div>
+    <div id="btcSignedInActions" hidden>
+        <div class="btc-account-user"><span>Signed in as</span><strong id="btcAccountEmail"></strong></div>
+        <div class="btc-cloud-status" id="btcCloudStatus">Cloud sync ready.</div>
+        <div class="btc-account-actions">
+            <button type="button" class="btc-account-secondary" onclick="btcSyncNow(true)">Sync Now</button>
+            <button type="button" class="btc-account-secondary" onclick="btcSignOut()">Sign Out</button>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
      TESTER FEEDBACK
 ========================================= -->
 
@@ -942,13 +963,45 @@
 
 
 
+<div class="btc-auth-modal" id="btcAuthModal" hidden>
+    <div class="btc-auth-backdrop" onclick="btcCloseAuth()"></div>
+    <div class="btc-auth-panel" role="dialog" aria-modal="true" aria-labelledby="btcAuthTitle">
+        <button class="btc-auth-close" type="button" onclick="btcCloseAuth()" aria-label="Close">×</button>
+        <div class="onboarding-mark">✝</div>
+        <div class="eyebrow">Before the Close</div>
+        <h2 id="btcAuthTitle">Create your account</h2>
+        <p id="btcAuthSubtitle">Back up your Journey and keep it with you.</p>
+        <div id="btcAuthNameWrap">
+            <label for="btcAuthName">First name</label>
+            <input id="btcAuthName" type="text" maxlength="24" autocomplete="given-name" placeholder="Your first name">
+        </div>
+        <label for="btcAuthEmail">Email</label>
+        <input id="btcAuthEmail" type="email" autocomplete="email" placeholder="you@example.com">
+        <div id="btcAuthPasswordWrap">
+            <label for="btcAuthPassword">Password</label>
+            <input id="btcAuthPassword" type="password" minlength="8" autocomplete="current-password" placeholder="At least 8 characters">
+        </div>
+        <div id="btcAuthNewPasswordWrap" hidden>
+            <label for="btcAuthNewPassword">New password</label>
+            <input id="btcAuthNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters">
+        </div>
+        <div class="btc-auth-message" id="btcAuthMessage"></div>
+        <button id="btcAuthSubmit" class="btc-account-primary btc-auth-submit" type="button" onclick="btcSubmitAuth()">Create Account</button>
+        <button id="btcForgotPassword" class="btc-auth-link" type="button" onclick="btcOpenAuth('recovery')">Forgot password?</button>
+        <button id="btcAuthSwitch" class="btc-auth-link" type="button" onclick="btcOpenAuth('signin')">Already have an account? Sign in</button>
+    </div>
+</div>
+
 <!-- ========================================
      JAVASCRIPT
 ========================================= -->
 
-<script src="prayers.js?v=110"></script>
+<script src="prayers.js?v=111"></script>
 
-<script src="app.js?v=110"></script>
+<script src="app.js?v=111"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="cloud.js?v=111"></script>
 
 
 <!-- ========================================

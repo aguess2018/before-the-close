@@ -1,5 +1,5 @@
-const CACHE_NAME = "before-the-close-v110";
-const APP_FILES = ["./","./index.html","./style.css","./prayers.js","./app.js","./manifest.json","./icons/icon-192.png","./icons/icon-512.png"];
+const CACHE_NAME = "before-the-close-v111-cloud";
+const APP_FILES = ["./","./index.html","./style.css","./prayers.js","./app.js","./cloud.js","./manifest.json","./icons/icon-192.png","./icons/icon-512.png"];
 
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_FILES)));

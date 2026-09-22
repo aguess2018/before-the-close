@@ -1,0 +1,18 @@
+BEFORE THE CLOSE — v1.1 CLOUD DEV
+
+This is a separate test build based on the v1.0.0 production candidate.
+It adds:
+- Supabase email/password authentication
+- Account UI in Settings
+- Password recovery
+- Persistent sessions
+- Offline-first cloud synchronization
+- One-time merge/migration of existing localStorage data
+- Cloud sync for profile, check-ins, reflections, favorites, weekly goal,
+  prayer history, achievements, stats, and reminder preferences
+
+IMPORTANT
+- Only the browser-safe Supabase publishable key is included.
+- Never place a secret/service-role key in this app.
+- Existing localStorage data is retained after migration as the offline copy.
+- Test this build before replacing the current public build.
