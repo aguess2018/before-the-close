@@ -49,7 +49,7 @@
 
     <link
         rel="stylesheet"
-        href="style.css?v=4"
+        href="style.css?v=10"
     >
 
 </head>
@@ -253,6 +253,58 @@
     </div>
 
 </div>
+
+    
+    <!-- Beta v0.7: Weekly Goal + Intention -->
+    <section class="focus-card" id="focusCard">
+        <div class="focus-card-top">
+            <div>
+                <div class="eyebrow">This Week</div>
+                <h2>Your Focus</h2>
+            </div>
+            <button class="focus-edit-btn" type="button" onclick="openFocusEditor()">Edit</button>
+        </div>
+        <div id="focusEmpty" class="focus-empty">
+            <p>Set a weekly sales goal and one intention to carry into the work.</p>
+            <button class="focus-primary-btn" type="button" onclick="openFocusEditor()">Set My Focus</button>
+        </div>
+        <div id="focusSummary" class="focus-summary" hidden>
+            <div class="focus-goal-line">
+                <span id="focusGoalIcon">🎯</span>
+                <div>
+                    <small>Weekly Goal</small>
+                    <strong id="focusGoalDisplay"></strong>
+                </div>
+            </div>
+            <div class="focus-progress-row">
+                <button type="button" class="focus-step-btn" onclick="changeGoalProgress(-1)">−</button>
+                <div class="focus-progress-center">
+                    <div class="focus-progress-text"><span id="focusProgressDisplay">0 / 0</span></div>
+                    <div class="focus-progress-track"><div id="focusProgressFill" class="focus-progress-fill"></div></div>
+                </div>
+                <button type="button" class="focus-step-btn" onclick="changeGoalProgress(1)">+</button>
+            </div>
+            <div class="focus-intention-line">
+                <small>My Intention</small>
+                <p id="focusIntentionDisplay"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beta v0.4: Daily Check-In -->
+    <section class="daily-checkin-section" id="dailyCheckinSection">
+        <div class="eyebrow">Daily Check-In</div>
+        <h2>How are you walking into today?</h2>
+        <p class="checkin-copy">Check in once a day. No judgment—just be honest about where you are.</p>
+        <div class="checkin-options" id="checkinOptions">
+            <button class="checkin-btn" data-mood="locked" onclick="saveDailyCheckin('locked')">🔥 <span>Locked In</span></button>
+            <button class="checkin-btn" data-mood="good" onclick="saveDailyCheckin('good')">🙂 <span>Feeling Good</span></button>
+            <button class="checkin-btn" data-mood="here" onclick="saveDailyCheckin('here')">😐 <span>Just Here</span></button>
+            <button class="checkin-btn" data-mood="struggling" onclick="saveDailyCheckin('struggling')">😓 <span>Struggling</span></button>
+        </div>
+        <div class="checkin-response" id="checkinResponse" hidden></div>
+    </section>
+
 </div>
 <!-- ========================================
      PRAYER MODE SCREEN
@@ -541,6 +593,134 @@
 
 
 
+
+<!-- ========================================
+     JOURNEY
+========================================= -->
+<div class="app" id="journeyScreen" style="display:none;">
+    <div class="header">
+        <div class="brand">BEFORE THE CLOSE</div>
+    </div>
+
+    <div class="welcome">
+        <div class="eyebrow">Your Journey</div>
+        <h1>Keep showing up.</h1>
+        <p class="subtitle">Progress • Consistency • Purpose</p>
+    </div>
+
+    <section class="journey-section" id="journeySection">
+        <div class="journey-grid">
+            <div class="journey-stat"><strong id="journeyStreak">0</strong><span>Day Streak</span></div>
+            <div class="journey-stat"><strong id="journeyCheckins">0</strong><span>Check-Ins</span></div>
+            <div class="journey-stat"><strong id="journeyPrayers">0</strong><span>Prayers Opened</span></div>
+            <div class="journey-stat"><strong id="journeyFavorites">0</strong><span>Favorites</span></div>
+        </div>
+        <div class="journey-goal-card" id="journeyGoalCard">
+            <div class="eyebrow">Weekly Sales Goal</div>
+            <div id="journeyGoalEmpty" class="journey-goal-empty">Set a goal on Today to start tracking your week.</div>
+            <div id="journeyGoalContent" hidden>
+                <div class="journey-goal-top">
+                    <strong id="journeyGoalName"></strong>
+                    <span id="journeyGoalNumbers"></span>
+                </div>
+                <div class="focus-progress-track"><div id="journeyGoalFill" class="focus-progress-fill"></div></div>
+                <p id="journeyIntention"></p>
+            </div>
+        </div>
+
+
+        
+        <!-- Beta v0.5: Weekly Challenge -->
+        <div class="weekly-challenge-card">
+            <div class="challenge-topline">
+                <div>
+                    <div class="eyebrow">Weekly Challenge</div>
+                    <h2 id="weeklyChallengeTitle">Show Up 5 Days</h2>
+                </div>
+                <div class="challenge-badge" id="weeklyChallengeBadge">0 / 5</div>
+            </div>
+            <p id="weeklyChallengeCopy">Complete a daily check-in on 5 different days this week.</p>
+            <div class="challenge-progress">
+                <div class="challenge-progress-fill" id="weeklyChallengeFill"></div>
+            </div>
+            <div class="challenge-days" id="weeklyChallengeDays"></div>
+        </div>
+
+        <!-- Beta v0.5: Recent Activity -->
+        <div class="recent-activity-card">
+            <div class="eyebrow">Recent Activity</div>
+            <h2>Your Last 7 Days</h2>
+            <div class="activity-week" id="activityWeek"></div>
+            <div class="activity-summary" id="activitySummary"></div>
+        </div>
+
+        
+        <!-- Beta v0.6: Prayer History -->
+        <div class="prayer-history-card">
+            <div class="history-heading">
+                <div>
+                    <div class="eyebrow">Prayer History</div>
+                    <h2>Recently Read</h2>
+                </div>
+                <button class="history-clear-btn" onclick="clearPrayerHistory()">Clear</button>
+            </div>
+            <p class="history-copy">Your recent prayers stay on this device.</p>
+            <div class="prayer-history-list" id="prayerHistoryList"></div>
+        </div>
+
+        <div class="achievements-wrap">
+            <div class="eyebrow">Achievements</div>
+            <div class="achievement-list" id="achievementList"></div>
+        </div>
+    </section>
+</div>
+
+
+<!-- Beta v0.7: Focus Editor -->
+<div class="focus-modal" id="focusModal" hidden>
+    <div class="focus-modal-backdrop" onclick="closeFocusEditor()"></div>
+    <div class="focus-modal-panel" role="dialog" aria-modal="true" aria-labelledby="focusModalTitle">
+        <div class="focus-modal-head">
+            <div>
+                <div class="eyebrow">Weekly Focus</div>
+                <h2 id="focusModalTitle">Set Your Target</h2>
+            </div>
+            <button type="button" class="focus-close-btn" onclick="closeFocusEditor()">×</button>
+        </div>
+
+        <label class="focus-label" for="goalType">What are you chasing?</label>
+        <select id="goalType" class="focus-input">
+            <option value="Appointments">Appointments</option>
+            <option value="Closes">Closes</option>
+            <option value="Doors Knocked">Doors Knocked</option>
+            <option value="Calls">Calls</option>
+            <option value="Follow-Ups">Follow-Ups</option>
+            <option value="Demos">Demos</option>
+            <option value="Quotes">Quotes</option>
+            <option value="Custom">Custom Goal</option>
+        </select>
+
+        <div id="customGoalWrap" hidden>
+            <label class="focus-label" for="customGoalType">Goal name</label>
+            <input id="customGoalType" class="focus-input" type="text" maxlength="28" placeholder="Example: Test Drives">
+        </div>
+
+        <label class="focus-label" for="goalTarget">Weekly target</label>
+        <input id="goalTarget" class="focus-input" type="number" min="1" max="9999" inputmode="numeric" placeholder="Example: 10">
+
+        <label class="focus-label" for="weeklyIntention">What do you want to remember this week?</label>
+        <textarea id="weeklyIntention" class="focus-input focus-textarea" maxlength="140" placeholder="Example: Stay patient, listen first, and ask confidently for the sale."></textarea>
+        <div class="focus-suggestions">
+            <button type="button" onclick="useIntentionSuggestion('Serve before I sell.')">Serve before I sell</button>
+            <button type="button" onclick="useIntentionSuggestion('Stay patient and trust the process.')">Trust the process</button>
+            <button type="button" onclick="useIntentionSuggestion('Listen first. Speak with purpose.')">Listen first</button>
+            <button type="button" onclick="useIntentionSuggestion('Ask confidently for the sale.')">Ask for the sale</button>
+        </div>
+
+        <button type="button" class="focus-save-btn" onclick="saveWeeklyFocus()">Save Weekly Focus</button>
+    </div>
+</div>
+
 <!-- ========================================
      BOTTOM NAVIGATION
 ========================================= -->
@@ -559,6 +739,16 @@
 
         Today
 
+    </div>
+
+
+    <div
+        class="nav-item"
+        id="journeyNav"
+        onclick="showJourney()"
+    >
+        <span class="nav-icon">🏆</span>
+        Journey
     </div>
 
 
@@ -599,9 +789,9 @@
      JAVASCRIPT
 ========================================= -->
 
-<script src="prayers.js?v=4"></script>
+<script src="prayers.js?v=10"></script>
 
-<script src="app.js?v=4"></script>
+<script src="app.js?v=10"></script>
 
 
 <!-- ========================================

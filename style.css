@@ -1014,3 +1014,279 @@ h1 {
     }
 
 }
+
+/* ========================================
+   BETA v0.4 — CHECK-IN + JOURNEY
+======================================== */
+.daily-checkin-section,
+.journey-section {
+    margin: 24px 0;
+    padding: 22px;
+    border: 1px solid rgba(212,175,55,.28);
+    border-radius: 18px;
+    background: rgba(255,255,255,.025);
+}
+.daily-checkin-section h2 { margin: 6px 0 8px; }
+.checkin-copy { opacity:.72; margin:0 0 16px; }
+.checkin-options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.checkin-btn {
+    min-height:58px; border-radius:14px;
+    border:1px solid rgba(212,175,55,.25);
+    background:rgba(255,255,255,.035); color:inherit; font:inherit; cursor:pointer;
+}
+.checkin-btn span { display:block; margin-top:4px; font-size:.82rem; }
+.checkin-btn.selected { border-color:#d4af37; box-shadow:0 0 0 1px rgba(212,175,55,.3); }
+.checkin-response { margin-top:14px; padding:12px 14px; border-radius:12px; background:rgba(212,175,55,.08); line-height:1.45; }
+
+.journey-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.journey-stat { padding:18px 10px; border-radius:14px; background:rgba(255,255,255,.035); text-align:center; }
+.journey-stat strong { display:block; font-size:1.65rem; }
+.journey-stat span { display:block; margin-top:3px; font-size:.76rem; opacity:.68; text-transform:uppercase; letter-spacing:.06em; }
+.achievements-wrap { margin-top:22px; }
+.achievement-list { display:grid; gap:8px; margin-top:10px; }
+.achievement { display:flex; align-items:center; gap:11px; padding:11px 12px; border-radius:12px; background:rgba(255,255,255,.03); opacity:.48; }
+.achievement.unlocked { opacity:1; border:1px solid rgba(212,175,55,.22); }
+.achievement-icon { font-size:1.25rem; }
+.achievement-copy strong,.achievement-copy span { display:block; }
+.achievement-copy span { opacity:.68; font-size:.8rem; margin-top:2px; }
+
+@media (min-width:700px) {
+    .checkin-options,.journey-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+}
+
+
+/* ========================================
+   BETA v0.5 — WEEKLY CHALLENGE + ACTIVITY
+======================================== */
+.weekly-challenge-card,
+.recent-activity-card {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 16px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(212,175,55,.18);
+}
+
+.challenge-topline {
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:14px;
+}
+.challenge-topline h2,
+.recent-activity-card h2 { margin:5px 0 8px; }
+
+.challenge-badge {
+    flex:0 0 auto;
+    padding:7px 10px;
+    border-radius:999px;
+    border:1px solid rgba(212,175,55,.3);
+    font-size:.78rem;
+    font-weight:700;
+}
+
+.weekly-challenge-card p { margin:0 0 14px; opacity:.72; line-height:1.45; }
+.challenge-progress {
+    height:8px;
+    overflow:hidden;
+    border-radius:999px;
+    background:rgba(255,255,255,.08);
+}
+.challenge-progress-fill {
+    height:100%;
+    width:0%;
+    border-radius:999px;
+    background:#d4af37;
+    transition:width .25s ease;
+}
+.challenge-days,
+.activity-week {
+    display:grid;
+    grid-template-columns:repeat(7,minmax(0,1fr));
+    gap:6px;
+    margin-top:14px;
+}
+.challenge-day,
+.activity-day {
+    text-align:center;
+    padding:9px 2px;
+    border-radius:10px;
+    background:rgba(255,255,255,.035);
+    font-size:.7rem;
+    opacity:.55;
+}
+.challenge-day.done,
+.activity-day.active {
+    opacity:1;
+    border:1px solid rgba(212,175,55,.28);
+}
+.challenge-day strong,
+.activity-day strong {
+    display:block;
+    font-size:.9rem;
+    margin-top:3px;
+}
+.activity-day .activity-dot {
+    width:7px;
+    height:7px;
+    margin:6px auto 0;
+    border-radius:50%;
+    background:rgba(255,255,255,.18);
+}
+.activity-day.active .activity-dot { background:#d4af37; }
+.activity-summary {
+    margin-top:12px;
+    font-size:.82rem;
+    line-height:1.45;
+    opacity:.72;
+}
+
+
+/* ========================================
+   BETA v0.6 — SHARE + PRAYER HISTORY
+======================================== */
+.btc-share-btn {
+    width:100%;
+    margin-top:12px;
+    padding:13px 16px;
+    border-radius:13px;
+    border:1px solid rgba(212,175,55,.28);
+    background:rgba(212,175,55,.08);
+    color:inherit;
+    font:inherit;
+    font-weight:700;
+    cursor:pointer;
+}
+.btc-share-btn:active { transform:scale(.99); }
+
+.prayer-history-card {
+    margin-top:18px;
+    padding:18px;
+    border-radius:16px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(212,175,55,.18);
+}
+.history-heading {
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+}
+.history-heading h2 { margin:5px 0 4px; }
+.history-copy { margin:0 0 14px; opacity:.65; font-size:.82rem; }
+.history-clear-btn {
+    border:1px solid rgba(255,255,255,.13);
+    background:transparent;
+    color:inherit;
+    border-radius:999px;
+    padding:6px 10px;
+    font:inherit;
+    font-size:.72rem;
+    cursor:pointer;
+}
+.prayer-history-list { display:grid; gap:9px; }
+.history-item {
+    padding:12px;
+    border-radius:12px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06);
+}
+.history-item-top {
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:flex-start;
+}
+.history-item strong { font-size:.9rem; }
+.history-item small { opacity:.5; white-space:nowrap; font-size:.67rem; }
+.history-item p {
+    margin:6px 0 0;
+    opacity:.68;
+    font-size:.78rem;
+    line-height:1.4;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+}
+.history-empty {
+    padding:16px 8px;
+    text-align:center;
+    opacity:.55;
+    font-size:.82rem;
+}
+
+
+/* ========================================
+   BETA v0.7 — WEEKLY GOALS + INTENTIONS
+======================================== */
+.focus-card {
+    margin:24px 0;
+    padding:20px;
+    border-radius:18px;
+    border:1px solid rgba(212,175,55,.24);
+    background:rgba(255,255,255,.025);
+}
+.focus-card-top,.focus-goal-line,.journey-goal-top {
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.focus-card-top h2 { margin:5px 0 0; }
+.focus-edit-btn,.focus-close-btn {
+    border:1px solid rgba(255,255,255,.13); background:transparent; color:inherit;
+    border-radius:999px; padding:7px 11px; font:inherit; cursor:pointer;
+}
+.focus-empty { margin-top:14px; }
+.focus-empty p { opacity:.7; line-height:1.45; }
+.focus-primary-btn,.focus-save-btn {
+    width:100%; padding:13px 15px; border:0; border-radius:13px;
+    background:#d4af37; color:#111; font:inherit; font-weight:800; cursor:pointer;
+}
+.focus-summary { margin-top:16px; }
+.focus-goal-line { justify-content:flex-start; }
+.focus-goal-line > span { font-size:1.4rem; }
+.focus-goal-line small,.focus-intention-line small { display:block; opacity:.55; text-transform:uppercase; letter-spacing:.06em; font-size:.67rem; }
+.focus-goal-line strong { display:block; margin-top:2px; }
+.focus-progress-row { display:flex; align-items:center; gap:10px; margin:16px 0; }
+.focus-progress-center { flex:1; }
+.focus-progress-text { text-align:center; font-size:.76rem; margin-bottom:6px; opacity:.72; }
+.focus-progress-track { height:8px; overflow:hidden; border-radius:999px; background:rgba(255,255,255,.08); }
+.focus-progress-fill { height:100%; width:0%; border-radius:999px; background:#d4af37; transition:width .2s ease; }
+.focus-step-btn {
+    width:38px; height:38px; border-radius:50%; border:1px solid rgba(212,175,55,.28);
+    background:rgba(212,175,55,.07); color:inherit; font-size:1.25rem; cursor:pointer;
+}
+.focus-intention-line { padding:12px; border-radius:12px; background:rgba(212,175,55,.06); }
+.focus-intention-line p { margin:5px 0 0; line-height:1.4; }
+
+.focus-modal[hidden] { display:none !important; }
+.focus-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:flex-end; justify-content:center; }
+.focus-modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,.72); }
+.focus-modal-panel {
+    position:relative; z-index:1; width:min(100%,560px); max-height:90vh; overflow:auto;
+    padding:22px; border-radius:22px 22px 0 0; background:#151515;
+    border:1px solid rgba(212,175,55,.22);
+}
+.focus-modal-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+.focus-modal-head h2 { margin:5px 0 12px; }
+.focus-close-btn { font-size:1.2rem; padding:4px 10px; }
+.focus-label { display:block; margin:14px 0 6px; font-size:.76rem; opacity:.7; }
+.focus-input {
+    width:100%; box-sizing:border-box; padding:12px; border-radius:12px;
+    border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05);
+    color:inherit; font:inherit;
+}
+.focus-input option { color:#111; }
+.focus-textarea { min-height:88px; resize:vertical; }
+.focus-suggestions { display:flex; flex-wrap:wrap; gap:7px; margin:10px 0 16px; }
+.focus-suggestions button {
+    border:1px solid rgba(212,175,55,.2); background:rgba(212,175,55,.06);
+    color:inherit; border-radius:999px; padding:7px 9px; font-size:.7rem; cursor:pointer;
+}
+.journey-goal-card {
+    margin-top:14px; padding:16px; border-radius:14px;
+    background:rgba(255,255,255,.035); border:1px solid rgba(212,175,55,.16);
+}
+.journey-goal-empty { margin-top:8px; opacity:.58; font-size:.8rem; }
+.journey-goal-top { margin:9px 0; }
+.journey-goal-top span { font-size:.78rem; opacity:.7; }
+.journey-goal-card p { margin:11px 0 0; font-size:.8rem; opacity:.7; font-style:italic; }
