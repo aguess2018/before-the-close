@@ -997,93 +997,1370 @@ const industryNames = {
     d2d: "\ud83d\udeaa DOOR-TO-DOOR",
     b2b: "\ud83e\udd1d B2B SALES"
 };
+
 /* ========================================
-   SITUATIONAL PRAYER MODES
+   SITUATIONAL PRAYER MODES — 320 PRAYERS
 ======================================== */
 
 const modePrayers = {
-
     general: {
-
         approach: [
-
             {
                 title: "Walk In With Purpose",
                 text: "Lord, steady my mind before this next conversation. Help me walk in confident but humble, prepared but present. Keep me from prejudging the opportunity before it begins. Let me listen well, serve honestly, and give this person my best. Amen."
             },
-
             {
                 title: "The Next Opportunity",
                 text: "Lord, clear away whatever happened before this moment. Give me fresh energy for the person in front of me. Help me approach with curiosity instead of assumptions and confidence instead of fear. Amen."
             },
-
             {
                 title: "Confidence to Begin",
                 text: "Lord, keep me from overthinking the approach. Give me the courage to begin the conversation, ask the first question, and trust that momentum will come once I move. Amen."
+            },
+            {
+                title: "Lead With Service",
+                text: "Lord, before I speak about what I sell, help me notice the person in front of me. Give me questions that uncover what they actually need and patience to listen to the answers. Amen."
+            },
+            {
+                title: "Calm Confidence",
+                text: "Lord, settle the nerves that make me rush. Help me speak with calm confidence, remember the value I bring, and let this conversation unfold naturally. Amen."
+            },
+            {
+                title: "Do Not Prejudge",
+                text: "Lord, keep me from deciding the outcome before the conversation begins. Help me give this opportunity my full effort regardless of appearances, mood, or first impressions. Amen."
+            },
+            {
+                title: "Be Fully Present",
+                text: "Lord, pull my attention away from quotas, commissions, and the last deal. Help me be fully present with this person and serve this moment well. Amen."
+            },
+            {
+                title: "Bring Good Energy",
+                text: "Lord, let my energy be genuine, steady, and welcoming. Help me bring confidence into the room without overpowering the person I am here to serve. Amen."
+            },
+            {
+                title: "Listen for the Need",
+                text: "Lord, sharpen my ears before I sharpen my pitch. Help me hear the real need behind the words and respond with something useful instead of something rehearsed. Amen."
+            },
+            {
+                title: "One Opportunity at a Time",
+                text: "Lord, keep me from trying to win the entire day in one conversation. Help me focus on this opportunity, do the next right thing, and let the results build one step at a time. Amen."
             }
-
         ],
-
-
         rejection: [
-
             {
                 title: "Leave It Here",
                 text: "Lord, help me leave that rejection where it happened. Keep one person's answer from changing how I see myself or how I approach the next opportunity. Let me learn what I can, release the rest, and move forward. Amen."
             },
-
             {
                 title: "No Is Not the End",
                 text: "Lord, remind me that hearing no is part of doing work that requires courage. Protect my confidence from becoming dependent on every outcome. Give me enough strength to try again. Amen."
             },
-
             {
                 title: "Reset My Mind",
                 text: "Lord, reset my attitude before I carry frustration into the next conversation. Help me stay professional, optimistic, and focused on what I can control. Amen."
+            },
+            {
+                title: "Worth Beyond the Result",
+                text: "Lord, remind me that one person's decision does not determine my worth. Help me separate my identity from the scoreboard and keep working with confidence. Amen."
+            },
+            {
+                title: "Learn Without Spiraling",
+                text: "Lord, show me anything I should learn from that loss without letting me replay it endlessly. Give me wisdom to improve and freedom to move on. Amen."
+            },
+            {
+                title: "Keep Asking",
+                text: "Lord, rejection makes me want to protect myself by asking less. Give me courage to keep having real conversations and keep asking for the business when I have earned the right. Amen."
+            },
+            {
+                title: "No Bitterness",
+                text: "Lord, guard my attitude after rejection. Keep me respectful toward the person who said no and grateful that I still have another opportunity ahead. Amen."
+            },
+            {
+                title: "Stay in the Game",
+                text: "Lord, when rejection makes quitting feel easier, remind me that persistence is part of the work. Give me enough discipline for the next meaningful attempt. Amen."
+            },
+            {
+                title: "Confidence Rebuilt",
+                text: "Lord, rebuild the confidence that took a hit. Help me remember the skills I have developed, the people I have helped, and the value I can still bring today. Amen."
+            },
+            {
+                title: "Next Play",
+                text: "Lord, the last result is finished. Turn my attention toward the next call, the next conversation, and the next useful action I can control. Amen."
             }
-
         ],
-
-
         close: [
-
             {
                 title: "Ask With Confidence",
                 text: "Lord, I have listened, explained, and served. If this is the right solution for this person, give me the confidence to ask for their business clearly. Keep fear of rejection from making me hesitate when it is time to close. Amen."
             },
-
             {
                 title: "Clarity at the Close",
                 text: "Lord, give me wisdom in this final moment. Help me answer honestly, communicate clearly, and recognize what this person still needs before making a decision. Let confidence replace pressure. Amen."
             },
-
             {
                 title: "Trust the Work",
                 text: "Lord, help me trust the work I have already done. Keep me from talking past the moment or creating pressure out of nervousness. Give me the courage to ask, then the patience to listen. Amen."
+            },
+            {
+                title: "Do Not Oversell",
+                text: "Lord, when the moment is ready, keep nervousness from making me talk past the close. Help me ask, become quiet, and give this person room to decide. Amen."
+            },
+            {
+                title: "Final Concern",
+                text: "Lord, help me recognize the concern that still stands between this person and a decision. Give me patience to address it honestly instead of forcing my way around it. Amen."
+            },
+            {
+                title: "Confidence Without Pressure",
+                text: "Lord, let confidence replace pressure. Help me believe in what I am offering while respecting this person's freedom to make the decision that is right for them. Amen."
+            },
+            {
+                title: "Speak the Next Step",
+                text: "Lord, give me clarity to explain the next step simply. Remove confusion, unnecessary words, and hesitation so this person knows exactly what moving forward means. Amen."
+            },
+            {
+                title: "Courage for the Question",
+                text: "Lord, take away the fear that makes the closing question feel heavier than it is. Give me courage to ask directly and receive the answer professionally. Amen."
+            },
+            {
+                title: "Integrity at the Finish",
+                text: "Lord, keep my integrity strongest when the commission is closest. Help me answer final questions truthfully and never hide something just to save the sale. Amen."
+            },
+            {
+                title: "Whatever the Answer",
+                text: "Lord, help me pursue the close wholeheartedly while staying grounded whatever the answer becomes. Let me finish this conversation with professionalism, gratitude, and peace. Amen."
             }
-
         ],
-
-
         roughDay: [
-
             {
                 title: "This Day Isn't Over",
                 text: "Lord, this day has been harder than I expected. Help me stop measuring the rest of it by what has already happened. Give me enough energy for the next opportunity and enough perspective to remember that one difficult day does not define me. Amen."
             },
-
             {
                 title: "When Nothing Is Landing",
                 text: "Lord, when every conversation seems to go nowhere, keep frustration from taking over. Help me return to the fundamentals, control my effort, and continue doing the work with integrity. Amen."
             },
-
             {
                 title: "Strength for the Rest",
                 text: "Lord, I am tired and discouraged. Give me strength for what remains today. Help me slow down, reset my mind, and finish with purpose instead of simply waiting for the day to end. Amen."
+            },
+            {
+                title: "Return to Fundamentals",
+                text: "Lord, when nothing seems to work, bring me back to the basics: preparation, activity, listening, follow-up, and honest service. Help me control what I can control. Amen."
+            },
+            {
+                title: "Numbers Are Not My Worth",
+                text: "Lord, the scoreboard is discouraging today. Remind me that numbers can guide my performance without defining my value as a person. Amen."
+            },
+            {
+                title: "Break the Spiral",
+                text: "Lord, stop one bad moment from becoming a story about the whole day. Help me interrupt the frustration, reset my thinking, and make the next useful move. Amen."
+            },
+            {
+                title: "Patience in the Slow Hours",
+                text: "Lord, when the hours feel empty, keep me productive instead of defeated. Show me the follow-up, preparation, learning, or outreach I can do while I wait. Amen."
+            },
+            {
+                title: "Finish With Character",
+                text: "Lord, even if today's results never turn around, help me finish with character. Let my effort, honesty, and professionalism remain strong when the numbers are weak. Amen."
+            },
+            {
+                title: "A Small Win",
+                text: "Lord, help me stop demanding one giant turnaround. Show me the next small win I can create: one call, one conversation, one follow-up, one good decision. Amen."
+            },
+            {
+                title: "Leave Work at Work",
+                text: "Lord, when this difficult day ends, help me learn from it without carrying all of it home. Give me perspective, gratitude, and the ability to begin fresh tomorrow. Amen."
             }
-
         ]
-
+    },
+    solar: {
+        approach: [
+            {
+                title: "The Next Driveway",
+                text: "Lord, prepare me for this next driveway. Help me approach this homeowner with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Knock Without Prejudging",
+                text: "Lord, steady me before this front door. Give me the right energy, thoughtful questions, and patience to understand this homeowner before I try to offer a solution. Amen."
+            },
+            {
+                title: "Earn the Conversation",
+                text: "Lord, help me enter this doorstep prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this homeowner like a person rather than a number. Amen."
+            },
+            {
+                title: "Steady at the Door",
+                text: "Lord, prepare me for this next knock. Help me approach this homeowner with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Lead With Their Bill",
+                text: "Lord, steady me before this utility conversation. Give me the right energy, thoughtful questions, and patience to understand this homeowner before I try to offer a solution. Amen."
+            },
+            {
+                title: "Fresh Block",
+                text: "Lord, help me enter this next block prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this homeowner like a person rather than a number. Amen."
+            },
+            {
+                title: "Respect Their Home",
+                text: "Lord, prepare me for this property. Help me approach this homeowner with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Weather and Focus",
+                text: "Lord, steady me before this turf. Give me the right energy, thoughtful questions, and patience to understand this homeowner before I try to offer a solution. Amen."
+            },
+            {
+                title: "Curiosity Before Pitch",
+                text: "Lord, help me enter this energy needs prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this homeowner like a person rather than a number. Amen."
+            },
+            {
+                title: "Appointment Mindset",
+                text: "Lord, prepare me for this first conversation. Help me approach this homeowner with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            }
+        ],
+        rejection: [
+            {
+                title: "Leave It at the Door",
+                text: "Lord, help me release this closed door. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this homeowner intact. Amen."
+            },
+            {
+                title: "After Not Interested",
+                text: "Lord, this quick rejection did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Reset After a Rough Block",
+                text: "Lord, keep this rough block from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next homeowner well. Amen."
+            },
+            {
+                title: "No Answer, Keep Moving",
+                text: "Lord, help me release this unanswered doors. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this homeowner intact. Amen."
+            },
+            {
+                title: "Do Not Take It Personally",
+                text: "Lord, this skepticism did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Respect the No",
+                text: "Lord, keep this declined conversation from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next homeowner well. Amen."
+            },
+            {
+                title: "Next House, Fresh Energy",
+                text: "Lord, help me release this next house. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this homeowner intact. Amen."
+            },
+            {
+                title: "After the Appointment Falls",
+                text: "Lord, this canceled appointment did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Protect Your Belief",
+                text: "Lord, keep this rejection from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next homeowner well. Amen."
+            },
+            {
+                title: "Keep Walking",
+                text: "Lord, help me release this long turf day. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this homeowner intact. Amen."
+            }
+        ],
+        close: [
+            {
+                title: "The Solar Decision",
+                text: "Lord, bring clarity to this final decision. Help me answer this homeowner's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Numbers With Integrity",
+                text: "Lord, I have reached this savings numbers. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this homeowner makes. Amen."
+            },
+            {
+                title: "Ask for the Next Step",
+                text: "Lord, guide me through this next step. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this homeowner can make an informed decision. Amen."
+            },
+            {
+                title: "No Fear at the Finish",
+                text: "Lord, bring clarity to this decision point. Help me answer this homeowner's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Answer the Last Question",
+                text: "Lord, I have reached this final concern. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this homeowner makes. Amen."
+            },
+            {
+                title: "Trust Over Pressure",
+                text: "Lord, guide me through this solar decision. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this homeowner can make an informed decision. Amen."
+            },
+            {
+                title: "When the Numbers Fit",
+                text: "Lord, bring clarity to this proposal. Help me answer this homeowner's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Let Them Decide Clearly",
+                text: "Lord, I have reached this agreement. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this homeowner makes. Amen."
+            },
+            {
+                title: "Protect the Promise",
+                text: "Lord, guide me through this expectations. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this homeowner can make an informed decision. Amen."
+            },
+            {
+                title: "Close With Service",
+                text: "Lord, bring clarity to this final conversation. Help me answer this homeowner's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            }
+        ],
+        roughDay: [
+            {
+                title: "Dead Turf",
+                text: "Lord, this quiet turf is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next homeowner and focus on what I can still control. Amen."
+            },
+            {
+                title: "When Nobody Answers",
+                text: "Lord, when unanswered doors makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each homeowner with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Canceled Appointments",
+                text: "Lord, I am discouraged by canceled appointments. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Long Day Outside",
+                text: "Lord, this weather and miles is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next homeowner and focus on what I can still control. Amen."
+            },
+            {
+                title: "Zero on the Board",
+                text: "Lord, when empty appointment board makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each homeowner with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "After a Hostile Door",
+                text: "Lord, I am discouraged by hostile interaction. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "When the Block Feels Burned",
+                text: "Lord, this rough neighborhood is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next homeowner and focus on what I can still control. Amen."
+            },
+            {
+                title: "Tired Feet, Clear Purpose",
+                text: "Lord, when long walking day makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each homeowner with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "When Savings Do Not Fit",
+                text: "Lord, I am discouraged by homes that do not qualify. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "One More Real Conversation",
+                text: "Lord, this remaining doors is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next homeowner and focus on what I can still control. Amen."
+            }
+        ]
+    },
+    cars: {
+        approach: [
+            {
+                title: "The Next Up",
+                text: "Lord, prepare me for this next customer. Help me approach this customer with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Meet Them Without Assumptions",
+                text: "Lord, steady me before this lot arrival. Give me the right energy, thoughtful questions, and patience to understand this customer before I try to offer a solution. Amen."
+            },
+            {
+                title: "First Walk-Up",
+                text: "Lord, help me enter this first greeting prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this customer like a person rather than a number. Amen."
+            },
+            {
+                title: "Listen Before the Walkaround",
+                text: "Lord, prepare me for this vehicle needs. Help me approach this customer with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Fresh Test Drive",
+                text: "Lord, steady me before this test drive. Give me the right energy, thoughtful questions, and patience to understand this customer before I try to offer a solution. Amen."
+            },
+            {
+                title: "Slow Lot, Ready Mind",
+                text: "Lord, help me enter this lot traffic prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this customer like a person rather than a number. Amen."
+            },
+            {
+                title: "Welcome Without Pressure",
+                text: "Lord, prepare me for this showroom. Help me approach this customer with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Needs Before Payment",
+                text: "Lord, steady me before this budget conversation. Give me the right energy, thoughtful questions, and patience to understand this customer before I try to offer a solution. Amen."
+            },
+            {
+                title: "Know the Inventory",
+                text: "Lord, help me enter this vehicle search prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this customer like a person rather than a number. Amen."
+            },
+            {
+                title: "Earn the Test Drive",
+                text: "Lord, prepare me for this initial conversation. Help me approach this customer with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            }
+        ],
+        rejection: [
+            {
+                title: "After the Walkout",
+                text: "Lord, help me release this customer walking away. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this customer intact. Amen."
+            },
+            {
+                title: "The Be-Back",
+                text: "Lord, this customer leaving to think did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Lost to Another Store",
+                text: "Lord, keep this lost deal from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next customer well. Amen."
+            },
+            {
+                title: "Price Objection Reset",
+                text: "Lord, help me release this price objection. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this customer intact. Amen."
+            },
+            {
+                title: "Financing Did Not Work",
+                text: "Lord, this financing setback did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Trade-In Frustration",
+                text: "Lord, keep this trade disagreement from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next customer well. Amen."
+            },
+            {
+                title: "Another Salesperson Closed",
+                text: "Lord, help me release this coworker's sale. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this customer intact. Amen."
+            },
+            {
+                title: "No Deal Today",
+                text: "Lord, this missed sale did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Do Not Chase the Lot",
+                text: "Lord, keep this rejection from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next customer well. Amen."
+            },
+            {
+                title: "Next Up, Fresh Start",
+                text: "Lord, help me release this next lot opportunity. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this customer intact. Amen."
+            }
+        ],
+        close: [
+            {
+                title: "Ask for the Keys",
+                text: "Lord, bring clarity to this purchase decision. Help me answer this customer's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Payment With Clarity",
+                text: "Lord, I have reached this payment decision. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this customer makes. Amen."
+            },
+            {
+                title: "Final Numbers",
+                text: "Lord, guide me through this deal figures. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this customer can make an informed decision. Amen."
+            },
+            {
+                title: "Before the Pencil Comes Back",
+                text: "Lord, bring clarity to this negotiation. Help me answer this customer's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "The Trade and the Close",
+                text: "Lord, I have reached this trade-in decision. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this customer makes. Amen."
+            },
+            {
+                title: "Confidence in the Vehicle",
+                text: "Lord, guide me through this vehicle choice. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this customer can make an informed decision. Amen."
+            },
+            {
+                title: "Last Objection",
+                text: "Lord, bring clarity to this final concern. Help me answer this customer's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "No Pressure in Finance",
+                text: "Lord, I have reached this finance handoff. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this customer makes. Amen."
+            },
+            {
+                title: "Make the Next Step Simple",
+                text: "Lord, guide me through this paperwork. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this customer can make an informed decision. Amen."
+            },
+            {
+                title: "Close the Right Car",
+                text: "Lord, bring clarity to this final purchase. Help me answer this customer's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            }
+        ],
+        roughDay: [
+            {
+                title: "Empty Lot",
+                text: "Lord, this slow traffic is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next customer and focus on what I can still control. Amen."
+            },
+            {
+                title: "Deals Falling Apart",
+                text: "Lord, when lost deals makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each customer with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Credit Challenges",
+                text: "Lord, I am discouraged by financing difficulties. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "When Every Up Walks",
+                text: "Lord, this walkouts is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next customer and focus on what I can still control. Amen."
+            },
+            {
+                title: "Watching Others Sell",
+                text: "Lord, when coworker sales makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each customer with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Inventory Frustration",
+                text: "Lord, I am discouraged by limited inventory. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Long Saturday",
+                text: "Lord, this long dealership shift is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next customer and focus on what I can still control. Amen."
+            },
+            {
+                title: "Negotiation Fatigue",
+                text: "Lord, when repeated negotiations makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each customer with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "No Cars on the Board",
+                text: "Lord, I am discouraged by zero sales. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Finish the Shift Strong",
+                text: "Lord, this remaining showroom hours is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next customer and focus on what I can still control. Amen."
+            }
+        ]
+    },
+    realestate: {
+        approach: [
+            {
+                title: "Before the Showing",
+                text: "Lord, prepare me for this next showing. Help me approach this client with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Meet the New Lead",
+                text: "Lord, steady me before this new lead. Give me the right energy, thoughtful questions, and patience to understand this client before I try to offer a solution. Amen."
+            },
+            {
+                title: "Before the Listing Appointment",
+                text: "Lord, help me enter this listing appointment prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this client like a person rather than a number. Amen."
+            },
+            {
+                title: "Open the Door Calmly",
+                text: "Lord, prepare me for this property tour. Help me approach this client with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Listen to Their Priorities",
+                text: "Lord, steady me before this housing needs. Give me the right energy, thoughtful questions, and patience to understand this client before I try to offer a solution. Amen."
+            },
+            {
+                title: "Do Not Prejudge the Lead",
+                text: "Lord, help me enter this new inquiry prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this client like a person rather than a number. Amen."
+            },
+            {
+                title: "Before the Open House",
+                text: "Lord, prepare me for this open house. Help me approach this client with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Fresh Follow-Up",
+                text: "Lord, steady me before this lead follow-up. Give me the right energy, thoughtful questions, and patience to understand this client before I try to offer a solution. Amen."
+            },
+            {
+                title: "Serve the Move",
+                text: "Lord, help me enter this life transition prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this client like a person rather than a number. Amen."
+            },
+            {
+                title: "Prepared for the Conversation",
+                text: "Lord, prepare me for this real estate meeting. Help me approach this client with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            }
+        ],
+        rejection: [
+            {
+                title: "Lost the Listing",
+                text: "Lord, help me release this lost listing. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this client intact. Amen."
+            },
+            {
+                title: "Offer Rejected",
+                text: "Lord, this rejected offer did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Lead Went Silent",
+                text: "Lord, keep this unresponsive lead from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next client well. Amen."
+            },
+            {
+                title: "They Chose Another Agent",
+                text: "Lord, help me release this lost client. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this client intact. Amen."
+            },
+            {
+                title: "Showing Went Nowhere",
+                text: "Lord, this unsuccessful showing did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Deal Fell Through",
+                text: "Lord, keep this failed transaction from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next client well. Amen."
+            },
+            {
+                title: "Inspection Changed Everything",
+                text: "Lord, help me release this inspection issue. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this client intact. Amen."
+            },
+            {
+                title: "Appraisal Setback",
+                text: "Lord, this appraisal issue did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "No From the Seller",
+                text: "Lord, keep this seller rejection from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next client well. Amen."
+            },
+            {
+                title: "Return to the Pipeline",
+                text: "Lord, help me release this lost opportunity. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this client intact. Amen."
+            }
+        ],
+        close: [
+            {
+                title: "Before the Offer",
+                text: "Lord, bring clarity to this offer decision. Help me answer this client's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Listing Agreement",
+                text: "Lord, I have reached this listing decision. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this client makes. Amen."
+            },
+            {
+                title: "Ask for the Business",
+                text: "Lord, guide me through this representation decision. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this client can make an informed decision. Amen."
+            },
+            {
+                title: "Final Walkthrough Mindset",
+                text: "Lord, bring clarity to this closing process. Help me answer this client's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Negotiate With Wisdom",
+                text: "Lord, I have reached this negotiation. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this client makes. Amen."
+            },
+            {
+                title: "The Counteroffer",
+                text: "Lord, guide me through this counteroffer. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this client can make an informed decision. Amen."
+            },
+            {
+                title: "Before the Signature",
+                text: "Lord, bring clarity to this contract. Help me answer this client's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Protect Their Decision",
+                text: "Lord, I have reached this major purchase. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this client makes. Amen."
+            },
+            {
+                title: "Closing Table",
+                text: "Lord, guide me through this closing. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this client can make an informed decision. Amen."
+            },
+            {
+                title: "Guide, Do Not Push",
+                text: "Lord, bring clarity to this final decision. Help me answer this client's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            }
+        ],
+        roughDay: [
+            {
+                title: "Showings With No Offers",
+                text: "Lord, this slow buyer activity is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next client and focus on what I can still control. Amen."
+            },
+            {
+                title: "Deals Falling Apart",
+                text: "Lord, when failed transactions makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each client with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Quiet Pipeline",
+                text: "Lord, I am discouraged by thin pipeline. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Inspection Problems",
+                text: "Lord, this inspection setbacks is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next client and focus on what I can still control. Amen."
+            },
+            {
+                title: "Appraisal Trouble",
+                text: "Lord, when appraisal setbacks makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each client with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Clients Changing Direction",
+                text: "Lord, I am discouraged by changing plans. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Weekend of Showings",
+                text: "Lord, this long showing schedule is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next client and focus on what I can still control. Amen."
+            },
+            {
+                title: "No Response From Leads",
+                text: "Lord, when silent leads makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each client with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Market Frustration",
+                text: "Lord, I am discouraged by difficult market. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "One Client at a Time",
+                text: "Lord, this remaining opportunities is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next client and focus on what I can still control. Amen."
+            }
+        ]
+    },
+    insurance: {
+        approach: [
+            {
+                title: "Before the Quote",
+                text: "Lord, prepare me for this quote conversation. Help me approach this client with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Protection First",
+                text: "Lord, steady me before this coverage needs. Give me the right energy, thoughtful questions, and patience to understand this client before I try to offer a solution. Amen."
+            },
+            {
+                title: "Ask the Hard Questions",
+                text: "Lord, help me enter this risk conversation prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this client like a person rather than a number. Amen."
+            },
+            {
+                title: "New Prospect",
+                text: "Lord, prepare me for this prospect call. Help me approach this client with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Listen for the Gap",
+                text: "Lord, steady me before this coverage gap. Give me the right energy, thoughtful questions, and patience to understand this client before I try to offer a solution. Amen."
+            },
+            {
+                title: "Trust Before Premium",
+                text: "Lord, help me enter this insurance conversation prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this client like a person rather than a number. Amen."
+            },
+            {
+                title: "Before the Review",
+                text: "Lord, prepare me for this policy review. Help me approach this client with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Explain It Simply",
+                text: "Lord, steady me before this coverage details. Give me the right energy, thoughtful questions, and patience to understand this client before I try to offer a solution. Amen."
+            },
+            {
+                title: "Respect Their Budget",
+                text: "Lord, help me enter this premium concerns prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this client like a person rather than a number. Amen."
+            },
+            {
+                title: "Serve the Family",
+                text: "Lord, prepare me for this protection decision. Help me approach this client with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            }
+        ],
+        rejection: [
+            {
+                title: "They Stayed With Their Carrier",
+                text: "Lord, help me release this lost quote. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this client intact. Amen."
+            },
+            {
+                title: "Price Beat the Conversation",
+                text: "Lord, this price rejection did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "No to the Quote",
+                text: "Lord, keep this declined quote from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next client well. Amen."
+            },
+            {
+                title: "Prospect Went Silent",
+                text: "Lord, help me release this silent prospect. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this client intact. Amen."
+            },
+            {
+                title: "After the Cold Call",
+                text: "Lord, this cold-call rejection did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Do Not Fear the Next Dial",
+                text: "Lord, keep this phone rejection from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next client well. Amen."
+            },
+            {
+                title: "Lost the Renewal",
+                text: "Lord, help me release this lost renewal. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this client intact. Amen."
+            },
+            {
+                title: "Another Agent Won",
+                text: "Lord, this competitive loss did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Release the Outcome",
+                text: "Lord, keep this rejection from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next client well. Amen."
+            },
+            {
+                title: "Return to the List",
+                text: "Lord, help me release this next prospect. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this client intact. Amen."
+            }
+        ],
+        close: [
+            {
+                title: "Protect What Matters",
+                text: "Lord, bring clarity to this coverage decision. Help me answer this client's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Before the Bind",
+                text: "Lord, I have reached this policy bind. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this client makes. Amen."
+            },
+            {
+                title: "Ask for the Application",
+                text: "Lord, guide me through this application. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this client can make an informed decision. Amen."
+            },
+            {
+                title: "Final Coverage Question",
+                text: "Lord, bring clarity to this coverage concern. Help me answer this client's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Premium With Clarity",
+                text: "Lord, I have reached this premium decision. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this client makes. Amen."
+            },
+            {
+                title: "No Fear in the Ask",
+                text: "Lord, guide me through this final decision. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this client can make an informed decision. Amen."
+            },
+            {
+                title: "Right Coverage, Right Reason",
+                text: "Lord, bring clarity to this policy choice. Help me answer this client's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Explain the Exclusions",
+                text: "Lord, I have reached this policy details. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this client makes. Amen."
+            },
+            {
+                title: "Long-Term Trust",
+                text: "Lord, guide me through this insurance relationship. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this client can make an informed decision. Amen."
+            },
+            {
+                title: "Close With Integrity",
+                text: "Lord, bring clarity to this final policy decision. Help me answer this client's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            }
+        ],
+        roughDay: [
+            {
+                title: "Cold Calls All Day",
+                text: "Lord, this prospecting is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next client and focus on what I can still control. Amen."
+            },
+            {
+                title: "Quotes Going Nowhere",
+                text: "Lord, when lost quotes makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each client with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Price Shopping",
+                text: "Lord, I am discouraged by price objections. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Slow Renewal Day",
+                text: "Lord, this renewals is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next client and focus on what I can still control. Amen."
+            },
+            {
+                title: "Heavy Conversations",
+                text: "Lord, when sensitive protection topics makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each client with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Pipeline Feels Empty",
+                text: "Lord, I am discouraged by thin pipeline. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Claims Emotion Around You",
+                text: "Lord, this claims-related stress is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next client and focus on what I can still control. Amen."
+            },
+            {
+                title: "When Everyone Says Later",
+                text: "Lord, when delayed decisions makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each client with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Numbers Behind Goal",
+                text: "Lord, I am discouraged by production goal. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Keep Serving",
+                text: "Lord, this remaining prospects is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next client and focus on what I can still control. Amen."
+            }
+        ]
+    },
+    cellular: {
+        approach: [
+            {
+                title: "The Next Customer",
+                text: "Lord, prepare me for this next customer. Help me approach this customer with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Before the Upgrade",
+                text: "Lord, steady me before this upgrade conversation. Give me the right energy, thoughtful questions, and patience to understand this customer before I try to offer a solution. Amen."
+            },
+            {
+                title: "Find the Real Need",
+                text: "Lord, help me enter this device needs prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this customer like a person rather than a number. Amen."
+            },
+            {
+                title: "Welcome the Store Traffic",
+                text: "Lord, prepare me for this store traffic. Help me approach this customer with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Ask About the Whole Account",
+                text: "Lord, steady me before this account needs. Give me the right energy, thoughtful questions, and patience to understand this customer before I try to offer a solution. Amen."
+            },
+            {
+                title: "Before the Carrier Switch",
+                text: "Lord, help me enter this switch conversation prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this customer like a person rather than a number. Amen."
+            },
+            {
+                title: "Accessories With Purpose",
+                text: "Lord, prepare me for this device protection and accessories. Help me approach this customer with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Slow Down and Listen",
+                text: "Lord, steady me before this retail conversation. Give me the right energy, thoughtful questions, and patience to understand this customer before I try to offer a solution. Amen."
+            },
+            {
+                title: "Troubleshooting First",
+                text: "Lord, help me enter this device issue prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this customer like a person rather than a number. Amen."
+            },
+            {
+                title: "Fresh Transaction",
+                text: "Lord, prepare me for this next transaction. Help me approach this customer with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            }
+        ],
+        rejection: [
+            {
+                title: "No Upgrade Today",
+                text: "Lord, help me release this declined upgrade. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this customer intact. Amen."
+            },
+            {
+                title: "They Only Came to Browse",
+                text: "Lord, this browsing customer did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Accessory No",
+                text: "Lord, keep this declined accessories from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next customer well. Amen."
+            },
+            {
+                title: "Carrier Switch Fell Apart",
+                text: "Lord, help me release this failed switch. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this customer intact. Amen."
+            },
+            {
+                title: "Price Objection",
+                text: "Lord, this price concern did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "After a Difficult Customer",
+                text: "Lord, keep this tense interaction from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next customer well. Amen."
+            },
+            {
+                title: "Lost the Postpaid Opportunity",
+                text: "Lord, help me release this missed postpaid sale. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this customer intact. Amen."
+            },
+            {
+                title: "Do Not Carry the Complaint",
+                text: "Lord, this customer complaint did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Next Transaction",
+                text: "Lord, keep this next customer from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next customer well. Amen."
+            },
+            {
+                title: "Reset the Counter",
+                text: "Lord, help me release this retail rejection. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this customer intact. Amen."
+            }
+        ],
+        close: [
+            {
+                title: "Finish the Upgrade",
+                text: "Lord, bring clarity to this upgrade decision. Help me answer this customer's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Ask for the Protection",
+                text: "Lord, I have reached this protection decision. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this customer makes. Amen."
+            },
+            {
+                title: "Complete the Solution",
+                text: "Lord, guide me through this full solution. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this customer can make an informed decision. Amen."
+            },
+            {
+                title: "Before the Port",
+                text: "Lord, bring clarity to this carrier port. Help me answer this customer's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Final Plan Question",
+                text: "Lord, I have reached this plan decision. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this customer makes. Amen."
+            },
+            {
+                title: "Accessories That Help",
+                text: "Lord, guide me through this accessory decision. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this customer can make an informed decision. Amen."
+            },
+            {
+                title: "Explain the Bill Clearly",
+                text: "Lord, bring clarity to this bill expectations. Help me answer this customer's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "No Surprise at Checkout",
+                text: "Lord, I have reached this final pricing. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this customer makes. Amen."
+            },
+            {
+                title: "Ask for the Switch",
+                text: "Lord, guide me through this carrier decision. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this customer can make an informed decision. Amen."
+            },
+            {
+                title: "Close With Trust",
+                text: "Lord, bring clarity to this final transaction. Help me answer this customer's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            }
+        ],
+        roughDay: [
+            {
+                title: "Dead Store Traffic",
+                text: "Lord, this slow traffic is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next customer and focus on what I can still control. Amen."
+            },
+            {
+                title: "Returns and Complaints",
+                text: "Lord, when difficult service issues makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each customer with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Activation Problems",
+                text: "Lord, I am discouraged by activation issues. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Systems Are Fighting Me",
+                text: "Lord, this system problems is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next customer and focus on what I can still control. Amen."
+            },
+            {
+                title: "Quota Pressure",
+                text: "Lord, when sales goals makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each customer with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Every Upgrade Says No",
+                text: "Lord, I am discouraged by missed upgrades. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Long Retail Shift",
+                text: "Lord, this long shift is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next customer and focus on what I can still control. Amen."
+            },
+            {
+                title: "Transfer Problems",
+                text: "Lord, when data transfer issues makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each customer with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Behind on Attachments",
+                text: "Lord, I am discouraged by accessory goals. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Last Customer, Same Energy",
+                text: "Lord, this remaining shift is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next customer and focus on what I can still control. Amen."
+            }
+        ]
+    },
+    d2d: {
+        approach: [
+            {
+                title: "The Next Door",
+                text: "Lord, prepare me for this next door. Help me approach this homeowner with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Walk the Driveway",
+                text: "Lord, steady me before this driveway. Give me the right energy, thoughtful questions, and patience to understand this homeowner before I try to offer a solution. Amen."
+            },
+            {
+                title: "Do Not Prejudge the House",
+                text: "Lord, help me enter this house prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this homeowner like a person rather than a number. Amen."
+            },
+            {
+                title: "Steady the Knock",
+                text: "Lord, prepare me for this next knock. Help me approach this homeowner with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Fresh Porch",
+                text: "Lord, steady me before this doorstep. Give me the right energy, thoughtful questions, and patience to understand this homeowner before I try to offer a solution. Amen."
+            },
+            {
+                title: "Respect the Property",
+                text: "Lord, help me enter this property prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this homeowner like a person rather than a number. Amen."
+            },
+            {
+                title: "Confidence at the Curb",
+                text: "Lord, prepare me for this curb. Help me approach this homeowner with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "First Words",
+                text: "Lord, steady me before this opening line. Give me the right energy, thoughtful questions, and patience to understand this homeowner before I try to offer a solution. Amen."
+            },
+            {
+                title: "One House at a Time",
+                text: "Lord, help me enter this next house prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this homeowner like a person rather than a number. Amen."
+            },
+            {
+                title: "Bring Good Energy to the Door",
+                text: "Lord, prepare me for this door approach. Help me approach this homeowner with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            }
+        ],
+        rejection: [
+            {
+                title: "Close the Gate Behind It",
+                text: "Lord, help me release this rejection. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this homeowner intact. Amen."
+            },
+            {
+                title: "After the Door Slam",
+                text: "Lord, this abrupt rejection did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Not Interested",
+                text: "Lord, keep this quick no from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next homeowner well. Amen."
+            },
+            {
+                title: "Keep Walking",
+                text: "Lord, help me release this next door. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this homeowner intact. Amen."
+            },
+            {
+                title: "Rough Street",
+                text: "Lord, this rough street did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Do Not Match Their Anger",
+                text: "Lord, keep this hostile response from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next homeowner well. Amen."
+            },
+            {
+                title: "No Answer",
+                text: "Lord, help me release this unanswered door. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this homeowner intact. Amen."
+            },
+            {
+                title: "Protect Your Confidence",
+                text: "Lord, this rejection did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Respect the Boundary",
+                text: "Lord, keep this declined conversation from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next homeowner well. Amen."
+            },
+            {
+                title: "Fresh Door, Fresh Mind",
+                text: "Lord, help me release this next opportunity. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this homeowner intact. Amen."
+            }
+        ],
+        close: [
+            {
+                title: "Ask at the Door",
+                text: "Lord, bring clarity to this final ask. Help me answer this homeowner's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Earn the Appointment",
+                text: "Lord, I have reached this appointment decision. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this homeowner makes. Amen."
+            },
+            {
+                title: "Before They Say Yes",
+                text: "Lord, guide me through this decision point. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this homeowner can make an informed decision. Amen."
+            },
+            {
+                title: "One Clear Next Step",
+                text: "Lord, bring clarity to this next step. Help me answer this homeowner's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "No Pressure on the Porch",
+                text: "Lord, I have reached this final conversation. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this homeowner makes. Amen."
+            },
+            {
+                title: "Handle the Last Concern",
+                text: "Lord, guide me through this final objection. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this homeowner can make an informed decision. Amen."
+            },
+            {
+                title: "Trust the Conversation",
+                text: "Lord, bring clarity to this close. Help me answer this homeowner's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Ask, Then Listen",
+                text: "Lord, I have reached this closing question. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this homeowner makes. Amen."
+            },
+            {
+                title: "Protect the Promise",
+                text: "Lord, guide me through this expectations. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this homeowner can make an informed decision. Amen."
+            },
+            {
+                title: "Leave With Integrity",
+                text: "Lord, bring clarity to this final outcome. Help me answer this homeowner's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            }
+        ],
+        roughDay: [
+            {
+                title: "Miles of No",
+                text: "Lord, this long rejection streak is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next homeowner and focus on what I can still control. Amen."
+            },
+            {
+                title: "Bad Weather, Steady Mind",
+                text: "Lord, when weather makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each homeowner with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Tired Legs",
+                text: "Lord, I am discouraged by long walking day. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Nobody Is Answering",
+                text: "Lord, this unanswered doors is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next homeowner and focus on what I can still control. Amen."
+            },
+            {
+                title: "Hostile Doors",
+                text: "Lord, when difficult interactions makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each homeowner with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Empty Board",
+                text: "Lord, I am discouraged by zero results. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Burned Turf",
+                text: "Lord, this rough turf is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next homeowner and focus on what I can still control. Amen."
+            },
+            {
+                title: "When the Team Is Winning",
+                text: "Lord, when comparison makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each homeowner with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Last Hour",
+                text: "Lord, I am discouraged by final hour. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "One More Door With Purpose",
+                text: "Lord, this remaining doors is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next homeowner and focus on what I can still control. Amen."
+            }
+        ]
+    },
+    b2b: {
+        approach: [
+            {
+                title: "Before the Cold Call",
+                text: "Lord, prepare me for this cold call. Help me approach this prospect with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Past the Gatekeeper",
+                text: "Lord, steady me before this gatekeeper conversation. Give me the right energy, thoughtful questions, and patience to understand this prospect before I try to offer a solution. Amen."
+            },
+            {
+                title: "Before the Demo",
+                text: "Lord, help me enter this demo prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this prospect like a person rather than a number. Amen."
+            },
+            {
+                title: "Meet the Decision Maker",
+                text: "Lord, prepare me for this decision-maker meeting. Help me approach this prospect with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Discovery First",
+                text: "Lord, steady me before this business needs. Give me the right energy, thoughtful questions, and patience to understand this prospect before I try to offer a solution. Amen."
+            },
+            {
+                title: "Research Into Service",
+                text: "Lord, help me enter this account research prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this prospect like a person rather than a number. Amen."
+            },
+            {
+                title: "Before the Follow-Up",
+                text: "Lord, prepare me for this follow-up. Help me approach this prospect with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            },
+            {
+                title: "Executive Conversation",
+                text: "Lord, steady me before this executive meeting. Give me the right energy, thoughtful questions, and patience to understand this prospect before I try to offer a solution. Amen."
+            },
+            {
+                title: "New Account, No Assumptions",
+                text: "Lord, help me enter this new account prepared but present. Let me use what I know without sounding rehearsed, listen closely, and treat this prospect like a person rather than a number. Amen."
+            },
+            {
+                title: "Value Before Pitch",
+                text: "Lord, prepare me for this business problem. Help me approach this prospect with confidence, curiosity, and respect. Keep me from assuming the outcome before I have listened, and let service lead the conversation. Amen."
+            }
+        ],
+        rejection: [
+            {
+                title: "No From Procurement",
+                text: "Lord, help me release this procurement rejection. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this prospect intact. Amen."
+            },
+            {
+                title: "Lost the Proposal",
+                text: "Lord, this lost proposal did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Ghosted After the Demo",
+                text: "Lord, keep this silent prospect from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next prospect well. Amen."
+            },
+            {
+                title: "Not in the Budget",
+                text: "Lord, help me release this budget rejection. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this prospect intact. Amen."
+            },
+            {
+                title: "Went With a Competitor",
+                text: "Lord, this competitive loss did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Gatekeeper Said No",
+                text: "Lord, keep this blocked outreach from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next prospect well. Amen."
+            },
+            {
+                title: "Long Cycle, Closed Door",
+                text: "Lord, help me release this lost opportunity. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this prospect intact. Amen."
+            },
+            {
+                title: "Decision Delayed",
+                text: "Lord, this delayed decision did not go the way I hoped. Help me separate the result from my worth, reset my attitude, and give the next opportunity fresh effort. Amen."
+            },
+            {
+                title: "Return to the Pipeline",
+                text: "Lord, keep this rejection from becoming bigger in my mind than it needs to be. Give me perspective, discipline, and the courage to keep serving the next prospect well. Amen."
+            },
+            {
+                title: "Next Account",
+                text: "Lord, help me release this next prospect. Let me learn anything useful without carrying frustration into the next opportunity. Protect my confidence and keep my respect for this prospect intact. Amen."
+            }
+        ],
+        close: [
+            {
+                title: "Before the Contract",
+                text: "Lord, bring clarity to this contract decision. Help me answer this prospect's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "Ask for the Commitment",
+                text: "Lord, I have reached this commitment. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this prospect makes. Amen."
+            },
+            {
+                title: "Final Stakeholder",
+                text: "Lord, guide me through this stakeholder concern. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this prospect can make an informed decision. Amen."
+            },
+            {
+                title: "Procurement and Patience",
+                text: "Lord, bring clarity to this procurement process. Help me answer this prospect's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "The Business Case",
+                text: "Lord, I have reached this business case. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this prospect makes. Amen."
+            },
+            {
+                title: "Before the Signature",
+                text: "Lord, guide me through this signature. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this prospect can make an informed decision. Amen."
+            },
+            {
+                title: "Clarify the Rollout",
+                text: "Lord, bring clarity to this implementation. Help me answer this prospect's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            },
+            {
+                title: "No Last-Minute Pressure",
+                text: "Lord, I have reached this final decision. Give me courage to ask clearly, patience to listen after I ask, and integrity to accept whatever decision this prospect makes. Amen."
+            },
+            {
+                title: "Trust the Discovery",
+                text: "Lord, guide me through this solution decision. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this prospect can make an informed decision. Amen."
+            },
+            {
+                title: "Close the Partnership",
+                text: "Lord, bring clarity to this partnership. Help me answer this prospect's final concerns honestly, ask for the next step confidently, and never let pressure replace service. Amen."
+            }
+        ],
+        roughDay: [
+            {
+                title: "Cold Calls Going Nowhere",
+                text: "Lord, this cold outreach is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next prospect and focus on what I can still control. Amen."
+            },
+            {
+                title: "Pipeline Stalled",
+                text: "Lord, when stalled pipeline makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each prospect with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Deals Pushed Again",
+                text: "Lord, I am discouraged by delayed deals. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Ghosted Prospects",
+                text: "Lord, this silent prospects is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next prospect and focus on what I can still control. Amen."
+            },
+            {
+                title: "Proposal Losses",
+                text: "Lord, when lost proposals makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each prospect with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Long Sales Cycle",
+                text: "Lord, I am discouraged by long sales cycle. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "Quarter Pressure",
+                text: "Lord, this quota pressure is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next prospect and focus on what I can still control. Amen."
+            },
+            {
+                title: "Meetings Canceled",
+                text: "Lord, when canceled meetings makes the day feel heavier, bring me back to discipline, perspective, and purpose. Help me keep serving each prospect with professionalism even when results are slow. Amen."
+            },
+            {
+                title: "Procurement Friction",
+                text: "Lord, I am discouraged by procurement delays. Give me enough energy for the next useful action, enough humility to learn, and enough faith not to decide the whole day is lost. Amen."
+            },
+            {
+                title: "One Useful Action",
+                text: "Lord, this remaining pipeline is wearing on me. Help me reset instead of letting frustration control the rest of my day. Give me strength for the next prospect and focus on what I can still control. Amen."
+            }
+        ]
     }
-
 };

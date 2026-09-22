@@ -17,6 +17,7 @@ let feedbackRating = 0;
 
 let activePrayerMode = null;
 let activeModePrayerIndex = 0;
+let modePrayerQueues = {};
 
 
 /* ========================================
@@ -1071,6 +1072,35 @@ function getModePrayerList(
 }
 
 
+function getModeQueueKey(mode) {
+    return getCurrentIndustry() + "-" + mode;
+}
+
+function refillModePrayerQueue(mode, prayerList) {
+    const key = getModeQueueKey(mode);
+    const indexes = prayerList.map(function(_, index) { return index; });
+
+    for (let i = indexes.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+    }
+
+    if (indexes.length > 1 && indexes[indexes.length - 1] === activeModePrayerIndex) {
+        [indexes[0], indexes[indexes.length - 1]] = [indexes[indexes.length - 1], indexes[0]];
+    }
+
+    modePrayerQueues[key] = indexes;
+}
+
+function getNextModePrayerIndex(mode, prayerList) {
+    const key = getModeQueueKey(mode);
+    if (!modePrayerQueues[key] || modePrayerQueues[key].length === 0) {
+        refillModePrayerQueue(mode, prayerList);
+    }
+    return modePrayerQueues[key].pop();
+}
+
+
 function openPrayerMode(
     mode
 ) {
@@ -1098,12 +1128,7 @@ function openPrayerMode(
         mode;
 
 
-    activeModePrayerIndex =
-        Math.floor(
-            Math.random()
-            *
-            prayerList.length
-        );
+    activeModePrayerIndex = getNextModePrayerIndex(mode, prayerList);
 
 
     hideAllScreens();
@@ -1261,49 +1286,13 @@ function renderPrayerMode() {
 
 
 function giveAnotherModePrayer() {
+    if (!activePrayerMode) return;
 
-    if (!activePrayerMode) {
-
-        return;
-    }
-
-
-    const prayerList =
-        getModePrayerList(
-            activePrayerMode
-        );
-
-
-    if (
-        prayerList.length <= 1
-    ) {
-
-        return;
-    }
-
-
-    let nextIndex =
-        activeModePrayerIndex;
-
-
-    while (
-        nextIndex
-        === activeModePrayerIndex
-    ) {
-
-        nextIndex =
-            Math.floor(
-                Math.random()
-                *
-                prayerList.length
-            );
-
-    }
-
+    const prayerList = getModePrayerList(activePrayerMode);
+    if (prayerList.length <= 1) return;
 
     activeModePrayerIndex =
-        nextIndex;
-
+        getNextModePrayerIndex(activePrayerMode, prayerList);
 
     renderPrayerMode();
 }
