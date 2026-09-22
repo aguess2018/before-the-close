@@ -305,7 +305,35 @@
         class="settings-saved"
         id="settingsSaved"
     ></div>
+<!-- ========================================
+     TESTER FEEDBACK
+========================================= -->
 
+<div class="feedback-section">
+
+    <div class="feedback-divider"></div>
+
+    <div class="eyebrow">
+        Help Build Before the Close
+    </div>
+
+    <h2 class="feedback-heading">
+        Got feedback? 👀
+    </h2>
+
+    <p class="feedback-description">
+        Found a bug, have an idea, or think something
+        could be better? You're helping shape the app.
+    </p>
+
+    <button
+        class="feedback-open-button"
+        onclick="openFeedback()"
+    >
+        💬 Send Feedback
+    </button>
+
+</div>
 </div>
 
 
@@ -418,6 +446,183 @@
 </script>
 
 
-</body>
+<!-- ========================================
+     FEEDBACK MODAL
+========================================= -->
+
+<div
+    class="feedback-overlay"
+    id="feedbackOverlay"
+    onclick="handleFeedbackOverlay(event)"
+>
+
+    <div class="feedback-modal">
+
+        <button
+            class="feedback-close"
+            onclick="closeFeedback()"
+            aria-label="Close feedback"
+        >
+            ×
+        </button>
+
+        <div class="eyebrow">
+            Tester Feedback
+        </div>
+
+        <h2>
+            Help us make it better.
+        </h2>
+
+        <p class="feedback-modal-description">
+            Tell us what's working, what's broken,
+            or what you'd love to see next.
+        </p>
+
+
+        <div class="feedback-field">
+
+            <label for="feedbackType">
+                FEEDBACK TYPE
+            </label>
+
+            <select id="feedbackType">
+
+                <option value="Bug Report">
+                    🐛 Bug Report
+                </option>
+
+                <option value="Feature Idea">
+                    💡 Feature Idea
+                </option>
+
+                <option value="Prayer Feedback">
+                    🙏 Prayer Feedback
+                </option>
+
+                <option value="General Feedback">
+                    💬 General Feedback
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="feedback-field">
+
+            <label>
+                HOW'S THE APP SO FAR?
+            </label>
+
+            <div
+                class="rating-buttons"
+                id="ratingButtons"
+            >
+
+                <button
+                    type="button"
+                    onclick="setFeedbackRating(1)"
+                >
+                    1
+                </button>
+
+                <button
+                    type="button"
+                    onclick="setFeedbackRating(2)"
+                >
+                    2
+                </button>
+
+                <button
+                    type="button"
+                    onclick="setFeedbackRating(3)"
+                >
+                    3
+                </button>
+
+                <button
+                    type="button"
+                    onclick="setFeedbackRating(4)"
+                >
+                    4
+                </button>
+
+                <button
+                    type="button"
+                    onclick="setFeedbackRating(5)"
+                >
+                    5
+                </button>
+
+            </div>
+
+            <div class="rating-labels">
+
+                <span>
+                    Needs work
+                </span>
+
+                <span>
+                    Love it
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="feedback-field">
+
+            <label for="feedbackName">
+                YOUR NAME
+                <span>(optional)</span>
+            </label>
+
+            <input
+                type="text"
+                id="feedbackName"
+                placeholder="Your name"
+            >
+
+        </div>
+
+
+        <div class="feedback-field">
+
+            <label for="feedbackMessage">
+                YOUR FEEDBACK
+            </label>
+
+            <textarea
+                id="feedbackMessage"
+                placeholder="Tell us what you think..."
+                rows="6"
+            ></textarea>
+
+        </div>
+
+
+        <div
+            class="feedback-error"
+            id="feedbackError"
+        ></div>
+
+
+        <button
+            class="feedback-submit"
+            onclick="submitFeedback()"
+        >
+            Send Feedback →
+        </button>
+
+        <p class="feedback-note">
+            This will open your email app with your
+            feedback already filled out.
+        </p>
+
+    </div>
+
+</div></body>
 
 </html>

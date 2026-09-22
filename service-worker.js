@@ -4,7 +4,7 @@
 ======================================== */
 
 const CACHE_NAME =
-    "before-the-close-v1";
+    "before-the-close-v2";
 
 
 const APP_FILES = [

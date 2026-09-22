@@ -1344,5 +1344,291 @@ function startApp() {
     getDailyPrayer();
 }
 
+/* ========================================
+   TESTER FEEDBACK
+======================================== */
 
+let feedbackRating = 0;
+
+
+function openFeedback() {
+
+    const overlay =
+        document.getElementById(
+            "feedbackOverlay"
+        );
+
+
+    if (!overlay) {
+
+        return;
+    }
+
+
+    const savedName =
+        localStorage.getItem(
+            "userName"
+        );
+
+
+    if (savedName) {
+
+        document
+            .getElementById(
+                "feedbackName"
+            )
+            .value =
+            savedName;
+    }
+
+
+    document
+        .getElementById(
+            "feedbackError"
+        )
+        .innerText =
+        "";
+
+
+    overlay.classList.add(
+        "open"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+}
+
+
+function closeFeedback() {
+
+    const overlay =
+        document.getElementById(
+            "feedbackOverlay"
+        );
+
+
+    if (!overlay) {
+
+        return;
+    }
+
+
+    overlay.classList.remove(
+        "open"
+    );
+
+
+    document.body.style.overflow =
+        "";
+}
+
+
+function handleFeedbackOverlay(
+    event
+) {
+
+    if (
+        event.target.id
+        === "feedbackOverlay"
+    ) {
+
+        closeFeedback();
+
+    }
+}
+
+
+function setFeedbackRating(
+    rating
+) {
+
+    feedbackRating =
+        rating;
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#ratingButtons button"
+        );
+
+
+    buttons.forEach(
+        function(
+            button,
+            index
+        ) {
+
+            if (
+                index + 1
+                === rating
+            ) {
+
+                button.classList.add(
+                    "selected"
+                );
+
+            }
+
+            else {
+
+                button.classList.remove(
+                    "selected"
+                );
+
+            }
+
+        }
+    );
+}
+
+
+function submitFeedback() {
+
+    const type =
+        document
+            .getElementById(
+                "feedbackType"
+            )
+            .value;
+
+
+    const name =
+        document
+            .getElementById(
+                "feedbackName"
+            )
+            .value
+            .trim();
+
+
+    const message =
+        document
+            .getElementById(
+                "feedbackMessage"
+            )
+            .value
+            .trim();
+
+
+    const error =
+        document
+            .getElementById(
+                "feedbackError"
+            );
+
+
+    if (!message) {
+
+        error.innerText =
+            "Tell us a little about your feedback first.";
+
+        return;
+    }
+
+
+    error.innerText =
+        "";
+
+
+    const industry =
+        getCurrentIndustry();
+
+
+    const industryName =
+        industryNames[industry]
+        || industry;
+
+
+    const ratingText =
+        feedbackRating
+        ?
+        feedbackRating
+        + "/5"
+        :
+        "Not provided";
+
+
+    const testerName =
+        name
+        ||
+        "Anonymous tester";
+
+
+    const subject =
+        "Before the Close - "
+        + type;
+
+
+    const body =
+
+        "BEFORE THE CLOSE TESTER FEEDBACK"
+        + "\n\n"
+
+        + "Type: "
+        + type
+        + "\n"
+
+        + "Rating: "
+        + ratingText
+        + "\n"
+
+        + "Tester: "
+        + testerName
+        + "\n"
+
+        + "Sales Industry: "
+        + industryName
+        + "\n\n"
+
+        + "FEEDBACK"
+        + "\n"
+        + "--------------------"
+        + "\n"
+
+        + message
+        + "\n\n"
+
+        + "--------------------"
+        + "\n"
+
+        + "Sent from Before the Close";
+
+
+    const mailto =
+        "mailto:beforetheclose@gmail.com"
+        + "?subject="
+        + encodeURIComponent(
+            subject
+        )
+        + "&body="
+        + encodeURIComponent(
+            body
+        );
+
+
+    window.location.href =
+        mailto;
+}
+
+
+/* ========================================
+   ESCAPE KEY CLOSES FEEDBACK
+======================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key
+            === "Escape"
+        ) {
+
+            closeFeedback();
+
+        }
+
+    }
+);
 startApp();
