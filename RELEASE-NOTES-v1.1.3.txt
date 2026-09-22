@@ -1,0 +1,5 @@
+Before the Close v1.1.3 Cloud Dev
+- Fixes iPhone bottom-scroll snapback/cutoff behind fixed navigation.
+- Adds larger safe-area-aware bottom clearance to all four primary screens.
+- Tightens Journey spacing below Daily Check-In on mobile.
+- No prayer/content or cloud-schema changes in this patch.
