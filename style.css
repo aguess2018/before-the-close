@@ -1806,3 +1806,17 @@ html, body {
     .bottom-nav .nav-item { font-size: 9px; }
     .bottom-nav .nav-icon { font-size: 18px; }
 }
+
+/* ========================================
+   v1.4.1 — PRAY NAV MOBILE TAP FIX
+======================================== */
+#prayNav {
+    pointer-events: auto !important;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    z-index: 2;
+}
+#prayScreen {
+    padding-bottom: calc(150px + env(safe-area-inset-bottom));
+}

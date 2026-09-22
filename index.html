@@ -14,7 +14,7 @@
 <title>Before the Close</title>
 <link href="manifest.json" rel="manifest"/>
 <link href="icons/icon-192.png" rel="apple-touch-icon"/>
-<link href="style.css?v=1.1.4" rel="stylesheet"/>
+<link href="style.css?v=1.4.1" rel="stylesheet"/>
 </head>
 <body>
 <div aria-hidden="true" class="btc-launch-splash" id="btcLaunchSplash">
@@ -686,7 +686,7 @@
 <span class="nav-icon">🧭</span>
         Journey
     </div>
-<div class="nav-item" id="prayNav" onclick="showPray()"><span class="nav-icon">🙏</span> Pray</div><div class="nav-item" id="favoritesNav" onclick="showFavorites()">
+<div class="nav-item" id="prayNav" role="button" tabindex="0" aria-label="Pray" onclick="showPray()"><span class="nav-icon">🙏</span> Pray</div><div class="nav-item" id="favoritesNav" onclick="showFavorites()">
 <span class="nav-icon">
             ❤️
         </span>
@@ -734,10 +734,23 @@
 <!-- ========================================
      JAVASCRIPT
 ========================================= -->
-<script src="prayers.js?v=1200"></script>
-<script src="app.js?v=1.3.0"></script>
+<script src="prayers.js?v=1.4.1"></script>
+<script src="app.js?v=1.4.1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="cloud.js?v=1.3.0"></script>
+<script src="cloud.js?v=1.4.1"></script>
+<script>
+// v1.4.1: robust Pray-tab binding for mobile browsers/PWA shells.
+window.addEventListener("DOMContentLoaded", function () {
+  var prayNav = document.getElementById("prayNav");
+  if (!prayNav) return;
+  prayNav.addEventListener("keydown", function (event) {
+    if ((event.key === "Enter" || event.key === " ") && typeof window.showPray === "function") {
+      event.preventDefault();
+      window.showPray();
+    }
+  });
+});
+</script>
 <!-- ========================================
      SERVICE WORKER
 ========================================= -->

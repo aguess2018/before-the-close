@@ -1,0 +1,5 @@
+Before the Close v1.4.1 — Pray Navigation Fix
+
+- Fixed Pray tab not responding on mobile/PWA.
+- Cache-busted app assets so v1.4 JavaScript cannot be mixed with older v1.3 HTML/JS.
+- Added explicit mobile touch handling and Pray-screen bottom safe area.
