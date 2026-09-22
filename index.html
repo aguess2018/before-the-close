@@ -49,7 +49,7 @@
 
     <link
         rel="stylesheet"
-        href="style.css"
+        href="style.css?v=3"
     >
 
 </head>
@@ -150,9 +150,212 @@
         </div>
 
     </div>
+<!-- ========================================
+     PRAYER MODES
+========================================= -->
+
+<div class="prayer-modes-section">
+
+    <div class="prayer-modes-heading">
+
+        <div class="eyebrow">
+            Pray for the Moment
+        </div>
+
+        <h2>
+            What do you need right now?
+        </h2>
+
+    </div>
+
+
+    <div class="prayer-modes-grid">
+
+        <button
+            class="prayer-mode-button"
+            onclick="openPrayerMode('approach')"
+        >
+
+            <span class="prayer-mode-icon">
+                🚶
+            </span>
+
+            <span class="prayer-mode-name">
+                Before the Approach
+            </span>
+
+            <span class="prayer-mode-description">
+                Walk in with confidence.
+            </span>
+
+        </button>
+
+
+        <button
+            class="prayer-mode-button"
+            onclick="openPrayerMode('rejection')"
+        >
+
+            <span class="prayer-mode-icon">
+                💪
+            </span>
+
+            <span class="prayer-mode-name">
+                After Rejection
+            </span>
+
+            <span class="prayer-mode-description">
+                Reset. Don't carry it.
+            </span>
+
+        </button>
+
+
+        <button
+            class="prayer-mode-button"
+            onclick="openPrayerMode('close')"
+        >
+
+            <span class="prayer-mode-icon">
+                🤝
+            </span>
+
+            <span class="prayer-mode-name">
+                Before the Close
+            </span>
+
+            <span class="prayer-mode-description">
+                Ask with confidence.
+            </span>
+
+        </button>
+
+
+        <button
+            class="prayer-mode-button"
+            onclick="openPrayerMode('roughDay')"
+        >
+
+            <span class="prayer-mode-icon">
+                🌧️
+            </span>
+
+            <span class="prayer-mode-name">
+                Rough Day
+            </span>
+
+            <span class="prayer-mode-description">
+                Regroup and keep moving.
+            </span>
+
+        </button>
+
+    </div>
 
 </div>
+</div>
+<!-- ========================================
+     PRAYER MODE SCREEN
+========================================= -->
 
+<div
+    class="app"
+    id="prayerModeScreen"
+    style="display: none;"
+>
+
+    <div class="mode-header">
+
+        <button
+            class="mode-back-button"
+            onclick="closePrayerMode()"
+        >
+            ← Back
+        </button>
+
+        <div class="brand">
+            BEFORE THE CLOSE
+        </div>
+
+    </div>
+
+
+    <div class="mode-intro">
+
+        <div
+            class="eyebrow"
+            id="modeEyebrow"
+        >
+            Pray for the Moment
+        </div>
+
+        <h1 id="modeHeading">
+            Before the Approach
+        </h1>
+
+        <p
+            class="subtitle"
+            id="modeSubtitle"
+        >
+            Walk into the next opportunity with purpose.
+        </p>
+
+    </div>
+
+
+    <div class="prayer-card mode-prayer-card">
+
+        <div
+            class="prayer-icon"
+            id="modeIcon"
+        >
+            🚶
+        </div>
+
+        <div class="prayer-label">
+            Prayer for Right Now
+        </div>
+
+        <div
+            class="prayer-title"
+            id="modePrayerTitle"
+        >
+            Ready for the Next One
+        </div>
+
+        <p id="modePrayerText">
+            Loading prayer...
+        </p>
+
+
+        <button
+            class="favorite-button"
+            id="modeFavoriteButton"
+            onclick="toggleModeFavorite()"
+        >
+            ♡ Save Prayer
+        </button>
+
+
+        <button
+            class="another-prayer-button"
+            onclick="giveAnotherModePrayer()"
+        >
+            ↻ Give Me Another
+        </button>
+
+    </div>
+
+
+    <div class="mode-message">
+
+        <span id="modeIndustryLabel">
+            Personalized for your sales industry.
+        </span>
+
+    </div>
+
+</div>
 
 
 <!-- ========================================
@@ -396,9 +599,9 @@
      JAVASCRIPT
 ========================================= -->
 
-<script src="prayers.js"></script>
+<script src="prayers.js?v=3"></script>
 
-<script src="app.js"></script>
+<script src="app.js?v=3"></script>
 
 
 <!-- ========================================

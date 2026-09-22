@@ -1,17 +1,55 @@
 /* ========================================
    BEFORE THE CLOSE
-   APP LOGIC
+   APP.JS
 ======================================== */
 
 
 /* ========================================
-   DEV MODE
+   APP STATE
 ======================================== */
 
 let devMode = false;
 let devPrayerIndex = null;
 let logoClickCount = 0;
 let logoClickTimer = null;
+
+let feedbackRating = 0;
+
+let activePrayerMode = null;
+let activeModePrayerIndex = 0;
+
+
+/* ========================================
+   PRAYER MODE INFORMATION
+======================================== */
+
+const prayerModeInfo = {
+
+    approach: {
+        heading: "Before the Approach",
+        subtitle: "Walk into the next opportunity with purpose.",
+        icon: "🚶"
+    },
+
+    rejection: {
+        heading: "After Rejection",
+        subtitle: "Leave the last answer behind you.",
+        icon: "💪"
+    },
+
+    close: {
+        heading: "Before the Close",
+        subtitle: "You've done the work. Ask with confidence.",
+        icon: "🤝"
+    },
+
+    roughDay: {
+        heading: "Rough Day",
+        subtitle: "Reset your mind and finish with purpose.",
+        icon: "🌧️"
+    }
+
+};
 
 
 /* ========================================
@@ -43,8 +81,7 @@ function getDailyPrayerIndex(
     selectedPrayers
 ) {
 
-    const today =
-        new Date();
+    const today = new Date();
 
     const dateString =
         getDateString(today);
@@ -55,6 +92,7 @@ function getDailyPrayerIndex(
         + salesType;
 
     let hash = 0;
+
 
     for (
         let i = 0;
@@ -68,6 +106,7 @@ function getDailyPrayerIndex(
 
         hash |= 0;
     }
+
 
     return (
         Math.abs(hash)
@@ -84,6 +123,7 @@ function getDailyPrayer() {
 
     const salesType =
         getCurrentIndustry();
+
 
     const selectedPrayers =
         prayers[salesType];
@@ -184,22 +224,20 @@ function getFavorites() {
         return favorites.map(
             function(item) {
 
+                /*
+                    Support favorites from
+                    older app versions.
+                */
+
                 if (
                     typeof item
                     === "string"
                 ) {
 
                     return {
-
-                        text:
-                            item,
-
-                        title:
-                            "Saved Prayer",
-
-                        industry:
-                            "general"
-
+                        text: item,
+                        title: "Saved Prayer",
+                        industry: "general"
                     };
 
                 }
@@ -290,12 +328,28 @@ function toggleFavorite() {
                 prayerTitle,
 
             industry:
-                salesType
+                salesType,
+
+            mode:
+                "daily"
 
         });
 
     }
 
+
+    saveFavorites(
+        favorites
+    );
+
+
+    updateFavoriteButton();
+}
+
+
+function saveFavorites(
+    favorites
+) {
 
     localStorage.setItem(
 
@@ -306,19 +360,15 @@ function toggleFavorite() {
         )
 
     );
-
-
-    updateFavoriteButton();
 }
 
 
 function updateFavoriteButton() {
 
     const button =
-        document
-            .getElementById(
-                "favoriteButton"
-            );
+        document.getElementById(
+            "favoriteButton"
+        );
 
 
     if (!button) {
@@ -387,10 +437,9 @@ function displayFavorites() {
 
 
     const list =
-        document
-            .getElementById(
-                "favoritesList"
-            );
+        document.getElementById(
+            "favoritesList"
+        );
 
 
     list.innerHTML = "";
@@ -421,10 +470,9 @@ function displayFavorites() {
         ) {
 
             const card =
-                document
-                    .createElement(
-                        "div"
-                    );
+                document.createElement(
+                    "div"
+                );
 
 
             card.className =
@@ -432,10 +480,9 @@ function displayFavorites() {
 
 
             const industry =
-                document
-                    .createElement(
-                        "div"
-                    );
+                document.createElement(
+                    "div"
+                );
 
 
             industry.className =
@@ -451,10 +498,9 @@ function displayFavorites() {
 
 
             const title =
-                document
-                    .createElement(
-                        "div"
-                    );
+                document.createElement(
+                    "div"
+                );
 
 
             title.className =
@@ -466,10 +512,9 @@ function displayFavorites() {
 
 
             const text =
-                document
-                    .createElement(
-                        "p"
-                    );
+                document.createElement(
+                    "p"
+                );
 
 
             text.innerText =
@@ -477,10 +522,9 @@ function displayFavorites() {
 
 
             const removeButton =
-                document
-                    .createElement(
-                        "button"
-                    );
+                document.createElement(
+                    "button"
+                );
 
 
             removeButton.className =
@@ -527,7 +571,9 @@ function displayFavorites() {
 }
 
 
-function removeFavorite(index) {
+function removeFavorite(
+    index
+) {
 
     let favorites =
         getFavorites();
@@ -539,20 +585,16 @@ function removeFavorite(index) {
     );
 
 
-    localStorage.setItem(
-
-        "favorites",
-
-        JSON.stringify(
-            favorites
-        )
-
+    saveFavorites(
+        favorites
     );
 
 
     displayFavorites();
 
     updateFavoriteButton();
+
+    updateModeFavoriteButton();
 }
 
 
@@ -596,7 +638,9 @@ function updateStreak() {
         === todayString
     ) {
 
-        // Already counted today.
+        /*
+            Already counted today.
+        */
 
     }
 
@@ -668,10 +712,9 @@ function updateWelcome() {
 
 
     const title =
-        document
-            .getElementById(
-                "welcomeTitle"
-            );
+        document.getElementById(
+            "welcomeTitle"
+        );
 
 
     if (!name) {
@@ -814,7 +857,8 @@ function saveSettings() {
         switching industries.
     */
 
-    devPrayerIndex = null;
+    devPrayerIndex =
+        null;
 
 
     updateWelcome();
@@ -827,7 +871,9 @@ function saveSettings() {
    NAVIGATION
 ======================================== */
 
-function setActiveNav(activeNav) {
+function setActiveNav(
+    activeNav
+) {
 
     document
         .querySelectorAll(
@@ -856,28 +902,37 @@ function setActiveNav(activeNav) {
 
 function hideAllScreens() {
 
-    document
-        .getElementById(
-            "todayScreen"
-        )
-        .style.display =
-        "none";
+    const screens = [
+
+        "todayScreen",
+
+        "favoritesScreen",
+
+        "settingsScreen",
+
+        "prayerModeScreen"
+
+    ];
 
 
-    document
-        .getElementById(
-            "favoritesScreen"
-        )
-        .style.display =
-        "none";
+    screens.forEach(
+        function(screenId) {
+
+            const screen =
+                document.getElementById(
+                    screenId
+                );
 
 
-    document
-        .getElementById(
-            "settingsScreen"
-        )
-        .style.display =
-        "none";
+            if (screen) {
+
+                screen.style.display =
+                    "none";
+
+            }
+
+        }
+    );
 }
 
 
@@ -958,6 +1013,758 @@ function showSettings() {
 
 
 /* ========================================
+   PRAYER MODES
+======================================== */
+
+function getModePrayerList(
+    mode
+) {
+
+    const industry =
+        getCurrentIndustry();
+
+
+    /*
+        Use industry-specific prayers
+        whenever they exist.
+    */
+
+    if (
+        typeof modePrayers !== "undefined"
+        &&
+        modePrayers[industry]
+        &&
+        modePrayers[industry][mode]
+        &&
+        modePrayers[industry][mode].length
+    ) {
+
+        return modePrayers[
+            industry
+        ][mode];
+
+    }
+
+
+    /*
+        Otherwise use the General
+        Sales prayer library.
+    */
+
+    if (
+        typeof modePrayers !== "undefined"
+        &&
+        modePrayers.general
+        &&
+        modePrayers.general[mode]
+    ) {
+
+        return modePrayers
+            .general[
+                mode
+            ];
+
+    }
+
+
+    return [];
+}
+
+
+function openPrayerMode(
+    mode
+) {
+
+    const prayerList =
+        getModePrayerList(
+            mode
+        );
+
+
+    if (
+        prayerList.length === 0
+    ) {
+
+        console.error(
+            "No mode prayers found for:",
+            mode
+        );
+
+        return;
+    }
+
+
+    activePrayerMode =
+        mode;
+
+
+    activeModePrayerIndex =
+        Math.floor(
+            Math.random()
+            *
+            prayerList.length
+        );
+
+
+    hideAllScreens();
+
+
+    const screen =
+        document.getElementById(
+            "prayerModeScreen"
+        );
+
+
+    if (!screen) {
+
+        console.error(
+            "Prayer Mode screen not found."
+        );
+
+        return;
+    }
+
+
+    screen.style.display =
+        "block";
+
+
+    /*
+        Remove bottom nav highlight
+        while inside a prayer mode.
+    */
+
+    document
+        .querySelectorAll(
+            ".nav-item"
+        )
+        .forEach(
+            function(item) {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    renderPrayerMode();
+
+
+    window.scrollTo(
+        0,
+        0
+    );
+}
+
+
+function renderPrayerMode() {
+
+    if (!activePrayerMode) {
+
+        return;
+    }
+
+
+    const info =
+        prayerModeInfo[
+            activePrayerMode
+        ];
+
+
+    const prayerList =
+        getModePrayerList(
+            activePrayerMode
+        );
+
+
+    if (
+        !info
+        ||
+        prayerList.length === 0
+    ) {
+
+        return;
+    }
+
+
+    const prayer =
+        prayerList[
+            activeModePrayerIndex
+        ];
+
+
+    document
+        .getElementById(
+            "modeHeading"
+        )
+        .innerText =
+        info.heading;
+
+
+    document
+        .getElementById(
+            "modeSubtitle"
+        )
+        .innerText =
+        info.subtitle;
+
+
+    document
+        .getElementById(
+            "modeIcon"
+        )
+        .innerText =
+        info.icon;
+
+
+    document
+        .getElementById(
+            "modePrayerTitle"
+        )
+        .innerText =
+        prayer.title;
+
+
+    document
+        .getElementById(
+            "modePrayerText"
+        )
+        .innerText =
+        prayer.text;
+
+
+    const industry =
+        getCurrentIndustry();
+
+
+    const industryLabel =
+        industryNames[
+            industry
+        ]
+        ||
+        "Sales";
+
+
+    document
+        .getElementById(
+            "modeIndustryLabel"
+        )
+        .innerText =
+        industryLabel
+        + " • Prayer for right now";
+
+
+    updateModeFavoriteButton();
+}
+
+
+function giveAnotherModePrayer() {
+
+    if (!activePrayerMode) {
+
+        return;
+    }
+
+
+    const prayerList =
+        getModePrayerList(
+            activePrayerMode
+        );
+
+
+    if (
+        prayerList.length <= 1
+    ) {
+
+        return;
+    }
+
+
+    let nextIndex =
+        activeModePrayerIndex;
+
+
+    while (
+        nextIndex
+        === activeModePrayerIndex
+    ) {
+
+        nextIndex =
+            Math.floor(
+                Math.random()
+                *
+                prayerList.length
+            );
+
+    }
+
+
+    activeModePrayerIndex =
+        nextIndex;
+
+
+    renderPrayerMode();
+}
+
+
+function closePrayerMode() {
+
+    activePrayerMode =
+        null;
+
+
+    showToday();
+
+
+    window.scrollTo(
+        0,
+        0
+    );
+}
+
+
+/* ========================================
+   PRAYER MODE FAVORITES
+======================================== */
+
+function toggleModeFavorite() {
+
+    if (!activePrayerMode) {
+
+        return;
+    }
+
+
+    const prayerText =
+        document
+            .getElementById(
+                "modePrayerText"
+            )
+            .innerText;
+
+
+    const prayerTitle =
+        document
+            .getElementById(
+                "modePrayerTitle"
+            )
+            .innerText;
+
+
+    const salesType =
+        getCurrentIndustry();
+
+
+    let favorites =
+        getFavorites();
+
+
+    const alreadySaved =
+        favorites.some(
+            function(item) {
+
+                return (
+                    item.text
+                    === prayerText
+                );
+
+            }
+        );
+
+
+    if (alreadySaved) {
+
+        favorites =
+            favorites.filter(
+                function(item) {
+
+                    return (
+                        item.text
+                        !== prayerText
+                    );
+
+                }
+            );
+
+    }
+
+    else {
+
+        favorites.push({
+
+            text:
+                prayerText,
+
+            title:
+                prayerTitle,
+
+            industry:
+                salesType,
+
+            mode:
+                activePrayerMode
+
+        });
+
+    }
+
+
+    saveFavorites(
+        favorites
+    );
+
+
+    updateModeFavoriteButton();
+}
+
+
+function updateModeFavoriteButton() {
+
+    const button =
+        document.getElementById(
+            "modeFavoriteButton"
+        );
+
+
+    if (
+        !button
+        ||
+        !activePrayerMode
+    ) {
+
+        return;
+    }
+
+
+    const prayerTextElement =
+        document.getElementById(
+            "modePrayerText"
+        );
+
+
+    if (!prayerTextElement) {
+
+        return;
+    }
+
+
+    const prayerText =
+        prayerTextElement.innerText;
+
+
+    const favorites =
+        getFavorites();
+
+
+    const alreadySaved =
+        favorites.some(
+            function(item) {
+
+                return (
+                    item.text
+                    === prayerText
+                );
+
+            }
+        );
+
+
+    if (alreadySaved) {
+
+        button.innerText =
+            "♥ Saved";
+
+        button.classList.add(
+            "saved"
+        );
+
+    }
+
+    else {
+
+        button.innerText =
+            "♡ Save Prayer";
+
+        button.classList.remove(
+            "saved"
+        );
+
+    }
+}
+
+
+/* ========================================
+   TESTER FEEDBACK
+======================================== */
+
+function openFeedback() {
+
+    const overlay =
+        document.getElementById(
+            "feedbackOverlay"
+        );
+
+
+    if (!overlay) {
+
+        return;
+    }
+
+
+    const savedName =
+        localStorage.getItem(
+            "userName"
+        );
+
+
+    if (savedName) {
+
+        document
+            .getElementById(
+                "feedbackName"
+            )
+            .value =
+            savedName;
+
+    }
+
+
+    document
+        .getElementById(
+            "feedbackError"
+        )
+        .innerText =
+        "";
+
+
+    overlay.classList.add(
+        "open"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+}
+
+
+function closeFeedback() {
+
+    const overlay =
+        document.getElementById(
+            "feedbackOverlay"
+        );
+
+
+    if (!overlay) {
+
+        return;
+    }
+
+
+    overlay.classList.remove(
+        "open"
+    );
+
+
+    document.body.style.overflow =
+        "";
+}
+
+
+function handleFeedbackOverlay(
+    event
+) {
+
+    if (
+        event.target.id
+        === "feedbackOverlay"
+    ) {
+
+        closeFeedback();
+
+    }
+}
+
+
+function setFeedbackRating(
+    rating
+) {
+
+    feedbackRating =
+        rating;
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#ratingButtons button"
+        );
+
+
+    buttons.forEach(
+        function(
+            button,
+            index
+        ) {
+
+            if (
+                index + 1
+                === rating
+            ) {
+
+                button.classList.add(
+                    "selected"
+                );
+
+            }
+
+            else {
+
+                button.classList.remove(
+                    "selected"
+                );
+
+            }
+
+        }
+    );
+}
+
+
+function submitFeedback() {
+
+    const type =
+        document
+            .getElementById(
+                "feedbackType"
+            )
+            .value;
+
+
+    const name =
+        document
+            .getElementById(
+                "feedbackName"
+            )
+            .value
+            .trim();
+
+
+    const message =
+        document
+            .getElementById(
+                "feedbackMessage"
+            )
+            .value
+            .trim();
+
+
+    const error =
+        document.getElementById(
+            "feedbackError"
+        );
+
+
+    if (!message) {
+
+        error.innerText =
+            "Tell us a little about your feedback first.";
+
+        return;
+    }
+
+
+    error.innerText =
+        "";
+
+
+    const industry =
+        getCurrentIndustry();
+
+
+    const industryName =
+        industryNames[
+            industry
+        ]
+        ||
+        industry;
+
+
+    const ratingText =
+        feedbackRating
+        ?
+        feedbackRating
+        + "/5"
+        :
+        "Not provided";
+
+
+    const testerName =
+        name
+        ||
+        "Anonymous tester";
+
+
+    const subject =
+        "Before the Close - "
+        + type;
+
+
+    const body =
+
+        "BEFORE THE CLOSE TESTER FEEDBACK"
+        + "\n\n"
+
+        + "Type: "
+        + type
+        + "\n"
+
+        + "Rating: "
+        + ratingText
+        + "\n"
+
+        + "Tester: "
+        + testerName
+        + "\n"
+
+        + "Sales Industry: "
+        + industryName
+        + "\n\n"
+
+        + "FEEDBACK"
+        + "\n"
+
+        + "--------------------"
+        + "\n"
+
+        + message
+        + "\n\n"
+
+        + "--------------------"
+        + "\n"
+
+        + "Sent from Before the Close";
+
+
+    const mailto =
+        "mailto:beforetheclose@gmail.com"
+        + "?subject="
+        + encodeURIComponent(
+            subject
+        )
+        + "&body="
+        + encodeURIComponent(
+            body
+        );
+
+
+    window.location.href =
+        mailto;
+}
+
+
+/* ========================================
    DEV MODE
 ======================================== */
 
@@ -1027,8 +1834,11 @@ function toggleDevMode() {
         const salesType =
             getCurrentIndustry();
 
+
         const selectedPrayers =
-            prayers[salesType];
+            prayers[
+                salesType
+            ];
 
 
         devPrayerIndex =
@@ -1174,7 +1984,9 @@ function updateDevPanel() {
 
 
     const selectedPrayers =
-        prayers[salesType];
+        prayers[
+            salesType
+        ];
 
 
     if (
@@ -1191,7 +2003,9 @@ function updateDevPanel() {
 
 
     status.innerText =
-        industryNames[salesType]
+        industryNames[
+            salesType
+        ]
         + " • Prayer "
         + (devPrayerIndex + 1)
         + " of "
@@ -1206,14 +2020,17 @@ function nextDevPrayer() {
 
 
     const selectedPrayers =
-        prayers[salesType];
+        prayers[
+            salesType
+        ];
 
 
     if (
         devPrayerIndex === null
     ) {
 
-        devPrayerIndex = 0;
+        devPrayerIndex =
+            0;
 
     }
 
@@ -1240,14 +2057,17 @@ function previousDevPrayer() {
 
 
     const selectedPrayers =
-        prayers[salesType];
+        prayers[
+            salesType
+        ];
 
 
     if (
         devPrayerIndex === null
     ) {
 
-        devPrayerIndex = 0;
+        devPrayerIndex =
+            0;
 
     }
 
@@ -1279,7 +2099,9 @@ function randomDevPrayer() {
 
 
     const selectedPrayers =
-        prayers[salesType];
+        prayers[
+            salesType
+        ];
 
 
     devPrayerIndex =
@@ -1292,6 +2114,52 @@ function randomDevPrayer() {
 
     getDailyPrayer();
 }
+
+
+/* ========================================
+   KEYBOARD CONTROLS
+======================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key
+            === "Escape"
+        ) {
+
+            const feedbackOverlay =
+                document.getElementById(
+                    "feedbackOverlay"
+                );
+
+
+            if (
+                feedbackOverlay
+                &&
+                feedbackOverlay.classList
+                    .contains("open")
+            ) {
+
+                closeFeedback();
+
+                return;
+            }
+
+
+            if (
+                activePrayerMode
+            ) {
+
+                closePrayerMode();
+
+            }
+
+        }
+
+    }
+);
 
 
 /* ========================================
@@ -1344,291 +2212,5 @@ function startApp() {
     getDailyPrayer();
 }
 
-/* ========================================
-   TESTER FEEDBACK
-======================================== */
 
-let feedbackRating = 0;
-
-
-function openFeedback() {
-
-    const overlay =
-        document.getElementById(
-            "feedbackOverlay"
-        );
-
-
-    if (!overlay) {
-
-        return;
-    }
-
-
-    const savedName =
-        localStorage.getItem(
-            "userName"
-        );
-
-
-    if (savedName) {
-
-        document
-            .getElementById(
-                "feedbackName"
-            )
-            .value =
-            savedName;
-    }
-
-
-    document
-        .getElementById(
-            "feedbackError"
-        )
-        .innerText =
-        "";
-
-
-    overlay.classList.add(
-        "open"
-    );
-
-
-    document.body.style.overflow =
-        "hidden";
-}
-
-
-function closeFeedback() {
-
-    const overlay =
-        document.getElementById(
-            "feedbackOverlay"
-        );
-
-
-    if (!overlay) {
-
-        return;
-    }
-
-
-    overlay.classList.remove(
-        "open"
-    );
-
-
-    document.body.style.overflow =
-        "";
-}
-
-
-function handleFeedbackOverlay(
-    event
-) {
-
-    if (
-        event.target.id
-        === "feedbackOverlay"
-    ) {
-
-        closeFeedback();
-
-    }
-}
-
-
-function setFeedbackRating(
-    rating
-) {
-
-    feedbackRating =
-        rating;
-
-
-    const buttons =
-        document.querySelectorAll(
-            "#ratingButtons button"
-        );
-
-
-    buttons.forEach(
-        function(
-            button,
-            index
-        ) {
-
-            if (
-                index + 1
-                === rating
-            ) {
-
-                button.classList.add(
-                    "selected"
-                );
-
-            }
-
-            else {
-
-                button.classList.remove(
-                    "selected"
-                );
-
-            }
-
-        }
-    );
-}
-
-
-function submitFeedback() {
-
-    const type =
-        document
-            .getElementById(
-                "feedbackType"
-            )
-            .value;
-
-
-    const name =
-        document
-            .getElementById(
-                "feedbackName"
-            )
-            .value
-            .trim();
-
-
-    const message =
-        document
-            .getElementById(
-                "feedbackMessage"
-            )
-            .value
-            .trim();
-
-
-    const error =
-        document
-            .getElementById(
-                "feedbackError"
-            );
-
-
-    if (!message) {
-
-        error.innerText =
-            "Tell us a little about your feedback first.";
-
-        return;
-    }
-
-
-    error.innerText =
-        "";
-
-
-    const industry =
-        getCurrentIndustry();
-
-
-    const industryName =
-        industryNames[industry]
-        || industry;
-
-
-    const ratingText =
-        feedbackRating
-        ?
-        feedbackRating
-        + "/5"
-        :
-        "Not provided";
-
-
-    const testerName =
-        name
-        ||
-        "Anonymous tester";
-
-
-    const subject =
-        "Before the Close - "
-        + type;
-
-
-    const body =
-
-        "BEFORE THE CLOSE TESTER FEEDBACK"
-        + "\n\n"
-
-        + "Type: "
-        + type
-        + "\n"
-
-        + "Rating: "
-        + ratingText
-        + "\n"
-
-        + "Tester: "
-        + testerName
-        + "\n"
-
-        + "Sales Industry: "
-        + industryName
-        + "\n\n"
-
-        + "FEEDBACK"
-        + "\n"
-        + "--------------------"
-        + "\n"
-
-        + message
-        + "\n\n"
-
-        + "--------------------"
-        + "\n"
-
-        + "Sent from Before the Close";
-
-
-    const mailto =
-        "mailto:beforetheclose@gmail.com"
-        + "?subject="
-        + encodeURIComponent(
-            subject
-        )
-        + "&body="
-        + encodeURIComponent(
-            body
-        );
-
-
-    window.location.href =
-        mailto;
-}
-
-
-/* ========================================
-   ESCAPE KEY CLOSES FEEDBACK
-======================================== */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            event.key
-            === "Escape"
-        ) {
-
-            closeFeedback();
-
-        }
-
-    }
-);
 startApp();

@@ -1,156 +1,25 @@
-/* ========================================
-   BEFORE THE CLOSE
-   SERVICE WORKER
-======================================== */
+const CACHE_NAME = "before-the-close-v3";
+const APP_FILES = ["./","./index.html","./style.css","./prayers.js","./app.js","./manifest.json","./icons/icon-192.png","./icons/icon-512.png"];
 
-const CACHE_NAME =
-    "before-the-close-v2";
+self.addEventListener("install", event => {
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_FILES)));
+  self.skipWaiting();
+});
 
+self.addEventListener("activate", event => {
+  event.waitUntil(caches.keys().then(names => Promise.all(names.map(name => name !== CACHE_NAME ? caches.delete(name) : null))));
+  self.clients.claim();
+});
 
-const APP_FILES = [
-
-    "./",
-
-    "./index.html",
-
-    "./style.css",
-
-    "./prayers.js",
-
-    "./app.js",
-
-    "./manifest.json",
-
-    "./icons/icon-192.png",
-
-    "./icons/icon-512.png"
-
-];
-
-
-/* ========================================
-   INSTALL
-======================================== */
-
-self.addEventListener(
-    "install",
-    function(event) {
-
-        event.waitUntil(
-
-            caches
-                .open(CACHE_NAME)
-                .then(
-                    function(cache) {
-
-                        return cache.addAll(
-                            APP_FILES
-                        );
-
-                    }
-                )
-
-        );
-
-
-        self.skipWaiting();
-
-    }
-);
-
-
-/* ========================================
-   ACTIVATE
-======================================== */
-
-self.addEventListener(
-    "activate",
-    function(event) {
-
-        event.waitUntil(
-
-            caches
-                .keys()
-                .then(
-                    function(cacheNames) {
-
-                        return Promise.all(
-
-                            cacheNames.map(
-                                function(cacheName) {
-
-                                    if (
-                                        cacheName
-                                        !== CACHE_NAME
-                                    ) {
-
-                                        return caches.delete(
-                                            cacheName
-                                        );
-
-                                    }
-
-                                }
-                            )
-
-                        );
-
-                    }
-                )
-
-        );
-
-
-        self.clients.claim();
-
-    }
-);
-
-
-/* ========================================
-   FETCH
-======================================== */
-
-self.addEventListener(
-    "fetch",
-    function(event) {
-
-        if (
-            event.request.method
-            !== "GET"
-        ) {
-
-            return;
-
-        }
-
-
-        event.respondWith(
-
-            caches
-                .match(
-                    event.request
-                )
-                .then(
-                    function(cachedResponse) {
-
-                        if (
-                            cachedResponse
-                        ) {
-
-                            return cachedResponse;
-
-                        }
-
-
-                        return fetch(
-                            event.request
-                        );
-
-                    }
-                )
-
-        );
-
-    }
-);
+self.addEventListener("fetch", event => {
+  if (event.request.method !== "GET") return;
+  event.respondWith(
+    fetch(event.request).then(response => {
+      if (response && response.status === 200 && event.request.url.startsWith(self.location.origin)) {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+      }
+      return response;
+    }).catch(() => caches.match(event.request).then(cached => cached || (event.request.mode === "navigate" ? caches.match("./index.html") : undefined)))
+  );
+});

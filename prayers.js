@@ -997,3 +997,93 @@ const industryNames = {
     d2d: "\ud83d\udeaa DOOR-TO-DOOR",
     b2b: "\ud83e\udd1d B2B SALES"
 };
+/* ========================================
+   SITUATIONAL PRAYER MODES
+======================================== */
+
+const modePrayers = {
+
+    general: {
+
+        approach: [
+
+            {
+                title: "Walk In With Purpose",
+                text: "Lord, steady my mind before this next conversation. Help me walk in confident but humble, prepared but present. Keep me from prejudging the opportunity before it begins. Let me listen well, serve honestly, and give this person my best. Amen."
+            },
+
+            {
+                title: "The Next Opportunity",
+                text: "Lord, clear away whatever happened before this moment. Give me fresh energy for the person in front of me. Help me approach with curiosity instead of assumptions and confidence instead of fear. Amen."
+            },
+
+            {
+                title: "Confidence to Begin",
+                text: "Lord, keep me from overthinking the approach. Give me the courage to begin the conversation, ask the first question, and trust that momentum will come once I move. Amen."
+            }
+
+        ],
+
+
+        rejection: [
+
+            {
+                title: "Leave It Here",
+                text: "Lord, help me leave that rejection where it happened. Keep one person's answer from changing how I see myself or how I approach the next opportunity. Let me learn what I can, release the rest, and move forward. Amen."
+            },
+
+            {
+                title: "No Is Not the End",
+                text: "Lord, remind me that hearing no is part of doing work that requires courage. Protect my confidence from becoming dependent on every outcome. Give me enough strength to try again. Amen."
+            },
+
+            {
+                title: "Reset My Mind",
+                text: "Lord, reset my attitude before I carry frustration into the next conversation. Help me stay professional, optimistic, and focused on what I can control. Amen."
+            }
+
+        ],
+
+
+        close: [
+
+            {
+                title: "Ask With Confidence",
+                text: "Lord, I have listened, explained, and served. If this is the right solution for this person, give me the confidence to ask for their business clearly. Keep fear of rejection from making me hesitate when it is time to close. Amen."
+            },
+
+            {
+                title: "Clarity at the Close",
+                text: "Lord, give me wisdom in this final moment. Help me answer honestly, communicate clearly, and recognize what this person still needs before making a decision. Let confidence replace pressure. Amen."
+            },
+
+            {
+                title: "Trust the Work",
+                text: "Lord, help me trust the work I have already done. Keep me from talking past the moment or creating pressure out of nervousness. Give me the courage to ask, then the patience to listen. Amen."
+            }
+
+        ],
+
+
+        roughDay: [
+
+            {
+                title: "This Day Isn't Over",
+                text: "Lord, this day has been harder than I expected. Help me stop measuring the rest of it by what has already happened. Give me enough energy for the next opportunity and enough perspective to remember that one difficult day does not define me. Amen."
+            },
+
+            {
+                title: "When Nothing Is Landing",
+                text: "Lord, when every conversation seems to go nowhere, keep frustration from taking over. Help me return to the fundamentals, control my effort, and continue doing the work with integrity. Amen."
+            },
+
+            {
+                title: "Strength for the Rest",
+                text: "Lord, I am tired and discouraged. Give me strength for what remains today. Help me slow down, reset my mind, and finish with purpose instead of simply waiting for the day to end. Amen."
+            }
+
+        ]
+
+    }
+
+};
