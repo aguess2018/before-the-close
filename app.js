@@ -3412,3 +3412,65 @@ document.addEventListener("DOMContentLoaded",()=>{
     setTimeout(()=>splash?.classList.add("hide"),720);
     setTimeout(()=>splash?.remove(),1100);
 });
+
+/* ========================================
+   v1.3 — JOURNEY CALENDAR + MILESTONES + DAYPART PRAYERS
+======================================== */
+const BTC_MOMENT_KEY="btcMilestoneMoments";
+let btcCalendarCursor=new Date(new Date().getFullYear(),new Date().getMonth(),1);
+
+const BTC_DAYPART_PRAYERS={
+ morning:[
+  ["Before the Day Begins","God, thank You for another day to work, serve, and grow. Keep me from chasing outcomes so hard that I forget the people in front of me. Give me courage for the first conversation, patience for the difficult ones, and integrity in every word. Help me do today's work faithfully and trust You with what comes from it. Amen."],
+  ["Ready for the Work","Lord, steady my mind before the noise of the day begins. Help me listen well, work with purpose, and walk into every opportunity without fear or desperation. Let my confidence come from preparation, honesty, and faith—not from needing every answer to be yes. Amen."],
+  ["Open Hands","God, I bring You my goals for today, but I hold the outcome with open hands. Help me show up prepared, serve people honestly, and keep moving when plans change. Give me energy for the work and wisdom to know what matters most. Amen."]
+ ],
+ midday:[
+  ["Midday Reset","God, meet me right here in the middle of the day. Whatever happened this morning, help me leave it where it belongs. Clear the frustration, calm the pressure, and give me fresh energy for the next conversation. I don't need to win the whole day at once—help me be faithful with the next opportunity. Amen."],
+  ["Fresh Start","Lord, reset my attitude before I carry the last result into the next person. Keep rejection from making me guarded and success from making me careless. Help me stay present, curious, and willing to serve. Give me enough strength for the next right action. Amen."],
+  ["Second Half","God, thank You that a day is not defined by one rough hour. Give me patience for the second half, discipline when motivation fades, and courage to keep showing up with the same integrity I started with. Amen."]
+ ],
+ evening:[
+  ["Release the Results","God, the work is done for today. Thank You for the doors that opened, the lessons in the ones that did not, and the strength to keep going. Help me learn without obsessing, rest without guilt, and release the results I cannot control. Prepare me to return tomorrow with a clear heart. Amen."],
+  ["Grateful for the Work","Lord, thank You for every conversation, every lesson, and every chance to grow today. Show me what I should carry forward and what I need to leave behind. Let tonight restore me so tomorrow's work gets the best of me, not what's left of me. Amen."],
+  ["End the Day in Peace","God, quiet the scoreboard in my head. Where I succeeded, keep me humble. Where I struggled, keep me hopeful. Help me remember that my worth is bigger than today's numbers. Give me peace, rest, and wisdom for tomorrow. Amen."]
+ ]
+};
+function btcOpenDaypartPrayer(part){
+ const list=BTC_DAYPART_PRAYERS[part]||BTC_DAYPART_PRAYERS.morning;
+ const daySeed=Number(btcTodayKey().replaceAll("-","")); const offsets={morning:0,midday:1,evening:2};
+ const p=list[(daySeed+(offsets[part]||0))%list.length];
+ incrementJourneyPrayerCount();
+ btcShowAchievementToast(part==="morning"?"🌅":part==="midday"?"☀️":"🌙",p[0],part==="morning"?"Start grounded.":part==="midday"?"Reset and keep moving.":"Release the day.");
+ setTimeout(()=>alert(p[0]+"\n\n"+p[1]),180);
+}
+function btcGetMilestoneMoments(){try{const x=JSON.parse(localStorage.getItem(BTC_MOMENT_KEY)||"[]");return Array.isArray(x)?x:[]}catch(_){return[]}}
+function btcOpenMilestoneComposer(){const m=document.getElementById("btcMilestoneModal");if(m)m.hidden=false;}
+function btcCloseMilestoneComposer(){const m=document.getElementById("btcMilestoneModal");if(m)m.hidden=true;}
+function btcSaveMilestoneMoment(){
+ const type=document.getElementById("btcMilestoneType")?.value||"other", note=document.getElementById("btcMilestoneNote")?.value.trim()||"";
+ const items=btcGetMilestoneMoments(); items.unshift({id:Date.now(),date:btcTodayKey(),type,note}); localStorage.setItem(BTC_MOMENT_KEY,JSON.stringify(items.slice(0,100)));
+ const noteEl=document.getElementById("btcMilestoneNote");if(noteEl)noteEl.value=""; btcCloseMilestoneComposer(); btcRenderMilestoneMoments(); btcRenderJourneyCalendar(); btcShowAchievementToast("★","Milestone Saved","Carry the win forward.");
+}
+function btcMilestoneLabel(type){return {appointment:"Booked the Appointment",close:"Closed the Deal","first-sale":"First Sale",goal:"Hit a Goal",breakthrough:"Personal Breakthrough",other:"Milestone"}[type]||"Milestone";}
+function btcRenderMilestoneMoments(){
+ const box=document.getElementById("btcMilestoneList");if(!box)return; const items=btcGetMilestoneMoments().slice(0,5);
+ if(!items.length){box.innerHTML='<div class="btc-empty-state">Your meaningful wins will show up here.</div>';return;}
+ box.innerHTML=items.map(x=>'<div class="btc-milestone-item"><strong>★ '+btcEscapeJourney(btcMilestoneLabel(x.type))+'</strong><small>'+btcEscapeJourney(x.date)+'</small>'+(x.note?'<p>'+btcEscapeJourney(x.note)+'</p>':'')+'</div>').join("");
+}
+function btcEscapeJourney(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function btcMoveCalendar(delta){btcCalendarCursor=new Date(btcCalendarCursor.getFullYear(),btcCalendarCursor.getMonth()+delta,1);btcRenderJourneyCalendar();}
+function btcRenderJourneyCalendar(){
+ const grid=document.getElementById("btcCalendarGrid"), title=document.getElementById("btcCalendarMonth");if(!grid||!title)return;
+ const y=btcCalendarCursor.getFullYear(),m=btcCalendarCursor.getMonth(),first=new Date(y,m,1),days=new Date(y,m+1,0).getDate(); title.textContent=first.toLocaleDateString(undefined,{month:"long",year:"numeric"});
+ const check=getDailyCheckins(), refs=btcGetReflections(), moments=btcGetMilestoneMoments(); let html=""; for(let i=0;i<first.getDay();i++)html+='<span class="btc-calendar-day empty"></span>';
+ for(let d=1;d<=days;d++){const key=y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0"), has=!!check[key]||!!refs[key]||moments.some(x=>x.date===key), star=moments.some(x=>x.date===key);html+='<button type="button" class="btc-calendar-day '+(has?'has-data ':'')+(star?'has-milestone ':'')+(key===btcTodayKey()?'today':'')+'" onclick="btcShowCalendarDay(\''+key+'\')">'+d+'</button>';}
+ grid.innerHTML=html;
+}
+function btcShowCalendarDay(key){
+ const detail=document.getElementById("btcCalendarDetail");if(!detail)return; const check=getDailyCheckins()[key], ref=btcGetReflections()[key], moments=btcGetMilestoneMoments().filter(x=>x.date===key); const mood={locked:"Locked In",good:"Feeling Good",here:"Just Here",struggling:"Struggling"}[check];
+ let bits=['<strong>'+btcEscapeJourney(new Date(key+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}))+'</strong>']; if(mood)bits.push('Check-in: '+mood); if(ref?.mood)bits.push('Reflection: '+ref.mood+(ref.note?' — '+btcEscapeJourney(ref.note):'')); moments.forEach(x=>bits.push('★ '+btcEscapeJourney(btcMilestoneLabel(x.type))+(x.note?' — '+btcEscapeJourney(x.note):''))); if(bits.length===1)bits.push('No Journey activity saved for this day.'); detail.innerHTML=bits.join('<br>');
+}
+const btcV13RenderJourney=renderJourney;
+renderJourney=function(){btcV13RenderJourney();btcRenderJourneyCalendar();btcRenderMilestoneMoments();};
+document.addEventListener("DOMContentLoaded",()=>{btcRenderJourneyCalendar();btcRenderMilestoneMoments();});

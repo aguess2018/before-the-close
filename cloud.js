@@ -12,7 +12,7 @@
   const SYNC_KEYS = new Set([
     "favorites","userName","salesType","salesStyle","firstName","name","industry","selectedIndustry","userIndustry",
     "btcJourneyStats","btcDailyCheckins","btcPrayerHistory","btcWeeklyFocus","btcOnboardingComplete",
-    "btcDailyReminder","btcMilestones","btcAchievementUnlocks","btcReflections","streak","lastVisit"
+    "btcDailyReminder","btcMilestones","btcAchievementUnlocks","btcReflections","btcMilestoneMoments","streak","lastVisit"
   ]);
 
   let client = null;
