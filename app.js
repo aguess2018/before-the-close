@@ -77,6 +77,32 @@ function getCurrentIndustry() {
 }
 
 
+function getCurrentSalesStyle() {
+    const industry=getCurrentIndustry();
+    const options=(typeof salesStyleOptions!=="undefined" && salesStyleOptions[industry]) || [];
+    const saved=localStorage.getItem("salesStyle") || "";
+    return options.some(o=>o.value===saved) ? saved : (options[0]?.value || "inperson");
+}
+
+function populateSalesStyleSelect(selectId, industry, preferred) {
+    const select=document.getElementById(selectId);
+    if(!select || typeof salesStyleOptions==="undefined") return;
+    const options=salesStyleOptions[industry] || salesStyleOptions.general || [];
+    select.innerHTML="";
+    options.forEach(opt=>{
+        const el=document.createElement("option"); el.value=opt.value; el.textContent=opt.label; select.appendChild(el);
+    });
+    if(preferred && options.some(o=>o.value===preferred)) select.value=preferred;
+}
+
+function refreshSalesStyleSelectors() {
+    const settingsIndustry=document.getElementById("settingsSalesType")?.value || getCurrentIndustry();
+    populateSalesStyleSelect("settingsSalesStyle",settingsIndustry,localStorage.getItem("salesStyle"));
+    const onboardingIndustry=document.getElementById("onboardingIndustry")?.value || settingsIndustry;
+    populateSalesStyleSelect("onboardingSalesStyle",onboardingIndustry,localStorage.getItem("salesStyle"));
+}
+
+
 function getDailyPrayerIndex(
     salesType,
     selectedPrayers
@@ -126,8 +152,10 @@ function getDailyPrayer() {
         getCurrentIndustry();
 
 
+    const salesStyle = getCurrentSalesStyle();
     const selectedPrayers =
-        prayers[salesType];
+        (typeof salesStylePrayers !== "undefined" && salesStylePrayers[salesType]?.[salesStyle]?.daily)
+        || prayers[salesType];
 
 
     if (
@@ -163,7 +191,7 @@ function getDailyPrayer() {
 
         prayerNumber =
             getDailyPrayerIndex(
-                salesType,
+                salesType + "-" + salesStyle,
                 selectedPrayers
             );
 
@@ -839,6 +867,8 @@ function loadSettings() {
         )
         .value =
         savedIndustry;
+
+    populateSalesStyleSelect("settingsSalesStyle", savedIndustry, localStorage.getItem("salesStyle"));
 }
 
 
@@ -860,6 +890,8 @@ function saveSettings() {
             )
             .value;
 
+    const salesStyle = document.getElementById("settingsSalesStyle")?.value || "";
+
 
     localStorage.setItem(
         "userName",
@@ -871,6 +903,8 @@ function saveSettings() {
         "salesType",
         industry
     );
+
+    if(salesStyle) localStorage.setItem("salesStyle", salesStyle);
 
 
     document
@@ -1061,6 +1095,11 @@ function getModePrayerList(
 
     const industry =
         getCurrentIndustry();
+    const salesStyle = getCurrentSalesStyle();
+
+    if (typeof salesStylePrayers !== "undefined" && salesStylePrayers[industry]?.[salesStyle]?.[mode]?.length) {
+        return salesStylePrayers[industry][salesStyle][mode];
+    }
 
 
     /*
@@ -2744,7 +2783,8 @@ function btcFindProfileKeys() {
        These common keys preserve compatibility without changing existing settings logic. */
     return {
         nameKeys:["firstName","userName","name"],
-        industryKeys:["industry","selectedIndustry","userIndustry"]
+        industryKeys:["industry","selectedIndustry","userIndustry"],
+        styleKeys:["salesStyle"]
     };
 }
 
@@ -2773,18 +2813,22 @@ function btcPrefillOnboarding() {
     const industry=document.getElementById("onboardingIndustry");
     const savedName=btcReadFirstStored(keys.nameKeys);
     const savedIndustry=btcReadFirstStored(keys.industryKeys);
+    const savedStyle=btcReadFirstStored(keys.styleKeys);
     if(name && savedName) name.value=savedName;
     if(industry && savedIndustry && Array.from(industry.options).some(o=>o.value===savedIndustry)) {
         industry.value=savedIndustry;
     }
+    populateSalesStyleSelect("onboardingSalesStyle", industry?.value || "general", savedStyle);
 }
 
 function saveOnboardingProfile() {
     const name=document.getElementById("onboardingName").value.trim();
     const industry=document.getElementById("onboardingIndustry").value;
+    const salesStyle=document.getElementById("onboardingSalesStyle")?.value || "";
     const keys=btcFindProfileKeys();
     if(name) btcWriteExistingOrPrimary(keys.nameKeys,name);
     btcWriteExistingOrPrimary(keys.industryKeys,industry);
+    if(salesStyle) btcWriteExistingOrPrimary(keys.styleKeys,salesStyle);
     goToOnboardingStep(3);
 }
 
@@ -2805,6 +2849,15 @@ function replayOnboarding() {
     onboarding.hidden=false;
     document.body.style.overflow="hidden";
 }
+
+
+document.addEventListener("DOMContentLoaded",function(){
+    const settingsIndustry=document.getElementById("settingsSalesType");
+    if(settingsIndustry) settingsIndustry.addEventListener("change",function(){ populateSalesStyleSelect("settingsSalesStyle",this.value,""); });
+    const onboardingIndustry=document.getElementById("onboardingIndustry");
+    if(onboardingIndustry) onboardingIndustry.addEventListener("change",function(){ populateSalesStyleSelect("onboardingSalesStyle",this.value,""); });
+    refreshSalesStyleSelectors();
+});
 
 document.addEventListener("DOMContentLoaded",function(){
     if(localStorage.getItem(BTC_ONBOARDING_KEY)!=="true") {

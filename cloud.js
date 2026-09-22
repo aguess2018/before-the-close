@@ -10,7 +10,7 @@
   const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_FvLb2iX5rg0_IfEJVVXcOw_hbmZbIU2";
   const MIGRATION_KEY = "btcCloudMigrationV1";
   const SYNC_KEYS = new Set([
-    "favorites","userName","salesType","firstName","name","industry","selectedIndustry","userIndustry",
+    "favorites","userName","salesType","salesStyle","firstName","name","industry","selectedIndustry","userIndustry",
     "btcJourneyStats","btcDailyCheckins","btcPrayerHistory","btcWeeklyFocus","btcOnboardingComplete",
     "btcDailyReminder","btcMilestones","btcAchievementUnlocks","btcReflections","streak","lastVisit"
   ]);
@@ -139,6 +139,7 @@
         const localName=localStorage.getItem("userName")||localStorage.getItem("firstName")||"";
         if(!localName && p.first_name){ localStorage.setItem("userName",p.first_name); localStorage.setItem("firstName",p.first_name); }
         if(!localStorage.getItem("salesType") && p.industry) localStorage.setItem("salesType",p.industry);
+        if(!localStorage.getItem("salesStyle") && p.sales_style) localStorage.setItem("salesStyle",p.sales_style);
         if(p.onboarding_complete) localStorage.setItem("btcOnboardingComplete","true");
       }
       const localC=safeJSON("btcDailyCheckins",{}); (checkins.data||[]).forEach(x=>{ if(!localC[x.checkin_date]) localC[x.checkin_date]=x.mood; }); localStorage.setItem("btcDailyCheckins",JSON.stringify(localC));
@@ -160,7 +161,8 @@
     const name=localStorage.getItem("userName")||localStorage.getItem("firstName")||"";
     const industry=localStorage.getItem("salesType")||localStorage.getItem("industry")||"general";
     const onboarding=localStorage.getItem("btcOnboardingComplete")==="true";
-    let r=await client.from("profiles").upsert({id:uid,first_name:name||null,industry,onboarding_complete:onboarding},{onConflict:"id"}); if(r.error)throw r.error;
+    const salesStyle=localStorage.getItem("salesStyle")||null;
+    let r=await client.from("profiles").upsert({id:uid,first_name:name||null,industry,sales_style:salesStyle,onboarding_complete:onboarding},{onConflict:"id"}); if(r.error)throw r.error;
 
     const checkins=safeJSON("btcDailyCheckins",{}); const checkRows=Object.entries(checkins).map(([d,m])=>({user_id:uid,checkin_date:d,mood:m})); if(checkRows.length){ r=await client.from("daily_checkins").upsert(checkRows,{onConflict:"user_id,checkin_date"}); if(r.error)throw r.error; }
     const refs=safeJSON("btcReflections",{}); const refRows=Object.entries(refs).filter(([,v])=>v&&v.mood).map(([d,v])=>({user_id:uid,reflection_date:d,mood:v.mood,note:(v.note||"").slice(0,180)})); if(refRows.length){ r=await client.from("reflections").upsert(refRows,{onConflict:"user_id,reflection_date"}); if(r.error)throw r.error; }

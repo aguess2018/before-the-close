@@ -104,6 +104,9 @@
                 <option value="d2d">Door-to-Door</option>
                 <option value="b2b">B2B</option>
             </select>
+
+            <label class="onboarding-label" for="onboardingSalesStyle">How do you primarily sell?</label>
+            <select id="onboardingSalesStyle" class="onboarding-input"></select>
             <div class="onboarding-actions">
                 <button class="onboarding-secondary" type="button" onclick="goToOnboardingStep(1)">Back</button>
                 <button class="onboarding-primary" type="button" onclick="saveOnboardingProfile()">Continue</button>
@@ -121,7 +124,7 @@
                 <div>🤝<strong>Before the Close</strong></div>
                 <div>🌧️<strong>Rough Day</strong></div>
             </div>
-            <p class="onboarding-footnote">You can change your name or industry anytime in Settings.</p>
+            <p class="onboarding-footnote">You can change your name, industry, or sales style anytime in Settings.</p>
             <button class="onboarding-primary" type="button" onclick="finishOnboarding()">Take Me to Today</button>
         </div>
     </div>
@@ -671,6 +674,12 @@
 
     </div>
 
+    <div class="settings-group">
+        <label for="settingsSalesStyle">HOW DO YOU PRIMARILY SELL?</label>
+        <select id="settingsSalesStyle"></select>
+        <p class="settings-helper">Your sales style changes the language and situations used in your prayers.</p>
+    </div>
+
 
     <button
         class="save-settings"
@@ -1027,12 +1036,12 @@
      JAVASCRIPT
 ========================================= -->
 
-<script src="prayers.js?v=1111"></script>
+<script src="prayers.js?v=1200"></script>
 
-<script src="app.js?v=1.1.4"></script>
+<script src="app.js?v=1.2.0"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="cloud.js?v=1.1.4"></script>
+<script src="cloud.js?v=1.2.0"></script>
 
 
 <!-- ========================================

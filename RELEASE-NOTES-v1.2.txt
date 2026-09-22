@@ -1,0 +1,10 @@
+BEFORE THE CLOSE v1.2 CLOUD DEV — SALES STYLE PERSONALIZATION
+
+- Adds industry-aware Sales Style selection to onboarding and Settings.
+- Only shows selling motions that make sense for the selected industry.
+- Daily Prayer and all four Prayer Modes now use Industry + Sales Style context.
+- Adds 8 style-personalized daily prayers and 20 situational prayers for every supported Industry/Style combination.
+- Sales Style syncs to Supabase profiles.sales_style.
+- Keeps v1.1.4 structural mobile scroll fix and cloud/auth behavior.
+
+IMPORTANT: Run SUPABASE-v1.2-SALES-STYLE.sql once before testing cloud sync.

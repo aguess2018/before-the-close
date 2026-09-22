@@ -1760,3 +1760,6 @@ html, body {
     flex: 0 0 auto;
     pointer-events: none;
 }
+
+/* v1.2 Sales Style personalization */
+.settings-helper{margin:.55rem 0 0;color:var(--muted,#a8a8a8);font-size:.82rem;line-height:1.45;}

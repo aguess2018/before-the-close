@@ -2364,3 +2364,122 @@ const modePrayers = {
         ]
     }
 };
+
+
+/* ========================================
+   v1.2 — SALES STYLE PERSONALIZATION
+   Industry + real-world selling motion
+======================================== */
+const salesStyleOptions = {
+    general: [
+        {value:"inperson", label:"🤝 In-Person / Walk-In"},
+        {value:"coldcall", label:"📞 Cold Calling / Outbound"},
+        {value:"appointments", label:"📅 Appointments / Leads"}
+    ],
+    solar: [
+        {value:"d2d", label:"🚪 Door-to-Door"},
+        {value:"appointments", label:"📅 Appointments / Leads"},
+        {value:"coldcall", label:"📞 Phone / Cold Calling"}
+    ],
+    cars: [
+        {value:"showroom", label:"🚗 Showroom / Walk-In"},
+        {value:"internet", label:"💻 Internet Leads"},
+        {value:"coldcall", label:"📞 Phone / Follow-Up"}
+    ],
+    realestate: [
+        {value:"appointments", label:"🏠 Appointments / Referrals"},
+        {value:"coldcall", label:"📞 Cold Calling / Prospecting"},
+        {value:"d2d", label:"🚪 Door Knocking"}
+    ],
+    insurance: [
+        {value:"appointments", label:"📅 Appointments / Leads"},
+        {value:"coldcall", label:"📞 Cold Calling / Outbound"},
+        {value:"d2d", label:"🚪 Door-to-Door"}
+    ],
+    cellular: [
+        {value:"retail", label:"📱 Retail / Walk-In"},
+        {value:"coldcall", label:"📞 Outbound / Cold Calling"}
+    ],
+    d2d: [
+        {value:"residential", label:"🚪 Residential Door-to-Door"},
+        {value:"canvassing", label:"🗺️ Canvassing / Lead Generation"}
+    ],
+    b2b: [
+        {value:"coldcall", label:"📞 Cold Calling / Outbound"},
+        {value:"walkin", label:"🏢 Walk-In / Field Prospecting"},
+        {value:"appointments", label:"📅 Appointments / Demos"}
+    ]
+};
+
+const salesStyleContext = {
+    inperson:{name:"In-Person", approach:"the next face-to-face conversation", rejection:"a conversation that did not go my way", close:"asking clearly for the business", rough:"a slow stretch of in-person conversations", work:"stay present, read the room, ask good questions, and serve the person in front of me"},
+    coldcall:{name:"Cold Calling", approach:"dialing the next number", rejection:"a hang-up, brush-off, or no", close:"asking for the appointment or next step", rough:"a run of unanswered calls and rejection", work:"keep dialing with energy, respect people's time, get through the opener, and earn the next conversation"},
+    appointments:{name:"Appointments", approach:"walking into the next appointment", rejection:"an appointment that did not move forward", close:"asking for a clear decision or next step", rough:"a day of cancellations, stalls, or missed opportunities", work:"prepare well, listen carefully, uncover the real need, and guide the conversation without forcing it"},
+    d2d:{name:"Door-to-Door", approach:"walking up to the next door", rejection:"hearing no at the last door", close:"earning the appointment or asking for the next step at the door", rough:"a hard block of no answers, quick no's, and rejection", work:"keep walking the turf, knock without prejudging, respect the homeowner, and give the next door fresh energy"},
+    showroom:{name:"Showroom", approach:"greeting the next customer who walks onto the lot", rejection:"a customer leaving without buying", close:"asking for the deal after earning their trust", rough:"a slow showroom day or a string of shoppers who walk", work:"welcome people without pressure, ask what brought them in, learn what matters, and guide them toward the right vehicle"},
+    internet:{name:"Internet Leads", approach:"responding to the next internet lead", rejection:"a lead going quiet or choosing somewhere else", close:"turning interest into a firm appointment or commitment", rough:"a day of ghosting, unanswered messages, and weak leads", work:"respond quickly, be useful instead of pushy, create a reason to visit, and follow up with discipline"},
+    retail:{name:"Retail", approach:"greeting the next customer who walks in", rejection:"a customer walking away or saying no", close:"asking for the upgrade, add-on, or commitment", rough:"a slow retail day with low traffic or missed opportunities", work:"stay ready between customers, qualify naturally, solve the real problem, and make every walk-in count"},
+    residential:{name:"Residential Door-to-Door", approach:"stepping onto the next porch", rejection:"the last homeowner's no", close:"asking confidently for the next step at the door", rough:"a long stretch of doors with little traction", work:"walk the next house with fresh energy, respect the homeowner, keep the opener simple, and trust the process"},
+    canvassing:{name:"Canvassing", approach:"starting the next doorstep conversation", rejection:"a homeowner who was not interested", close:"earning the lead, appointment, or next conversation", rough:"a block where the doors are not turning into opportunities", work:"cover the turf with discipline, create honest curiosity, qualify quickly, and leave every interaction respectfully"},
+    walkin:{name:"Field Prospecting", approach:"walking into the next business", rejection:"a gatekeeper, brush-off, or business that said no", close:"earning the meeting, demo, or next step", rough:"a route full of gatekeepers and quick no's", work:"walk in professionally, respect their time, get to the business problem quickly, and earn the right to continue"}
+};
+
+const industryStyleLanguage = {
+    general:{people:"customer", value:"the value I can genuinely provide", outcome:"the right next step"},
+    solar:{people:"homeowner", value:"whether solar and energy savings genuinely fit their home", outcome:"the next step toward a qualified solar appointment"},
+    cars:{people:"customer", value:"the vehicle and buying path that genuinely fit their needs", outcome:"the right vehicle and a clear next step"},
+    realestate:{people:"client", value:"clarity about their home, move, or real-estate goals", outcome:"the next useful step in their real-estate decision"},
+    insurance:{people:"client", value:"coverage that genuinely protects what matters to them", outcome:"the right coverage decision or follow-up"},
+    cellular:{people:"customer", value:"the device, plan, and service that genuinely fit how they use their phone", outcome:"the right upgrade, plan, or next step"},
+    d2d:{people:"homeowner", value:"a respectful conversation about whether what I offer can help", outcome:"the appointment, lead, or next step I have earned"},
+    b2b:{people:"business owner", value:"a solution tied to a real business problem", outcome:"the meeting, demo, or next business step"}
+};
+
+function buildSalesStylePack(industry, style) {
+    const c=salesStyleContext[style] || salesStyleContext.inperson;
+    const i=industryStyleLanguage[industry] || industryStyleLanguage.general;
+    const dailyTitles=["Work the Way in Front of Me","Fresh Energy for the Next One","Discipline Over Mood","Serve Before the Result","Courage for the Ask","Stay Present","Trust the Process","One More Honest Conversation"];
+    const daily=dailyTitles.map((title,n)=>({title,text:[
+        `Lord, meet me in the real work of ${c.name.toLowerCase()} today. Help me ${c.work}. Keep my focus on serving the ${i.people}, communicating ${i.value}, and earning ${i.outcome} with integrity. Amen.`,
+        `Lord, give me fresh energy for ${c.approach}. Do not let the last result decide the attitude I bring to the next ${i.people}. Help me listen well, speak honestly, and do the work in front of me. Amen.`,
+        `Lord, when motivation fades, give me discipline. Help me ${c.work}. Let consistency carry me when emotion cannot, and keep my character stronger than my need for a result. Amen.`,
+        `Lord, keep me from treating people like numbers. In ${c.name.toLowerCase()}, help me understand the ${i.people} first and communicate ${i.value} clearly. Let service come before commission. Amen.`,
+        `Lord, give me courage when it is time for ${c.close}. Keep me from shrinking back because I fear hearing no. Help me ask clearly, accept the answer professionally, and trust You with the outcome. Amen.`,
+        `Lord, slow my mind down enough to be fully present. Help me notice what this ${i.people} is actually saying, ask better questions, and respond instead of rushing through a script. Amen.`,
+        `Lord, remind me that I control the work, not every outcome. Help me ${c.work}. Let me measure today by faithfulness, effort, integrity, and the next right action. Amen.`,
+        `Lord, give me the willingness to have one more honest conversation. Help me communicate ${i.value}, respect the ${i.people}'s decision, and keep moving with purpose whatever the answer is. Amen.`
+    ][n]}));
+    const mk=(mode,titles,texts)=>titles.map((title,n)=>({title,text:texts[n]}));
+    return {daily,
+      approach:mk("approach",["The Next Approach","No Prejudging","Calm Before I Begin","Lead With Service","Start the Conversation"],[
+        `Lord, steady me before ${c.approach}. Help me ${c.work}. Let me begin with confidence, humility, and genuine respect for the ${i.people}. Amen.`,
+        `Lord, keep me from deciding how this will go before it begins. As I face ${c.approach}, help me give this ${i.people} a fresh, honest opportunity and bring my full effort. Amen.`,
+        `Lord, quiet the nerves before ${c.approach}. Help me remember my preparation, speak naturally, and focus on understanding rather than performing. Amen.`,
+        `Lord, before I try to sell anything, help me discover whether ${i.value}. Give me curiosity, patience, and questions that make this conversation useful. Amen.`,
+        `Lord, give me courage to simply begin. Help me take the next action, open the conversation, and trust that clarity comes through movement. Amen.`]),
+      rejection:mk("rejection",["Leave the Last One","No Is Not My Identity","Reset the Energy","Learn and Release","Fresh Start"],[
+        `Lord, help me release ${c.rejection}. Keep me from carrying frustration into the next opportunity. Let the lesson stay and the weight leave. Amen.`,
+        `Lord, remind me that rejection is information, not my identity. Help me respect the ${i.people}'s answer, keep my confidence grounded, and return to the work. Amen.`,
+        `Lord, reset my energy after ${c.rejection}. Keep my tone, posture, and attitude from changing for the worse. The next person deserves my best. Amen.`,
+        `Lord, show me anything useful I can learn from that no, then help me stop replaying it. Give me wisdom without overthinking and resilience without bitterness. Amen.`,
+        `Lord, make the next opportunity a fresh start. Help me ${c.work}, without making the next ${i.people} pay for the last result. Amen.`]),
+      close:mk("close",["Earned the Ask","Clarity at the Decision","Confidence Without Pressure","Trust the Outcome","Ask and Listen"],[
+        `Lord, if I have served well and created real value, give me courage for ${c.close}. Help me be direct without pressure and confident without arrogance. Amen.`,
+        `Lord, bring clarity to this decision. Help me summarize ${i.value}, answer what still needs answering, and make ${i.outcome} simple and honest. Amen.`,
+        `Lord, keep desperation out of my voice. Help me ask confidently, give the ${i.people} room to decide, and never trade integrity for a result. Amen.`,
+        `Lord, I have done the work I can do. As I move toward ${c.close}, help me trust the outcome, accept the answer, and keep my peace either way. Amen.`,
+        `Lord, give me courage to ask, then patience to listen. Keep me from talking past the moment. Let the decision come from clarity, not pressure. Amen.`]),
+      roughDay:mk("roughDay",["Through the Hard Stretch","One More","Do Not Chase the Scoreboard","Reset the Pace","Finish With Purpose"],[
+        `Lord, meet me in ${c.rough}. Help me stop fighting the whole day at once and return to the next useful action. Amen.`,
+        `Lord, give me enough strength for one more. One more ${c.approach}, one more honest conversation, one more chance to serve well. Amen.`,
+        `Lord, keep me from letting today's numbers control my worth or my attitude. Help me focus on effort, preparation, integrity, and what I can still do with the time left. Amen.`,
+        `Lord, reset my pace. If I am rushing, slow me down. If I am discouraged, get me moving. Help me ${c.work}. Amen.`,
+        `Lord, help me finish this day with purpose even if it has not gone how I wanted. Let my final conversations receive the same professionalism and faith as my first. Amen.`])
+    };
+}
+
+const salesStylePrayers={};
+Object.keys(salesStyleOptions).forEach(industry=>{
+    salesStylePrayers[industry]={};
+    salesStyleOptions[industry].forEach(opt=>{ salesStylePrayers[industry][opt.value]=buildSalesStylePack(industry,opt.value); });
+});
