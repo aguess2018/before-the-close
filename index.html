@@ -13,7 +13,7 @@
 <title>Before the Close</title>
 <link href="manifest.json" rel="manifest"/>
 <link href="icons/icon-192.png" rel="apple-touch-icon"/>
-<link href="style.css?v=1.5" rel="stylesheet"/>
+<link href="style.css?v=1.5.1" rel="stylesheet"/>
 </head>
 <body>
 <div aria-hidden="true" class="btc-launch-splash" id="btcLaunchSplash">
@@ -187,6 +187,20 @@
 <button class="checkin-btn" data-mood="struggling" onclick="saveDailyCheckin('struggling')">😓 <span>Struggling</span></button>
 </div>
 <div class="checkin-response" hidden="" id="checkinResponse"></div>
+</section>
+<section class="reflection-card" id="btcEndOfDayCard">
+<div class="eyebrow">End Your Day</div>
+<h3>How did today go?</h3>
+<p class="checkin-copy">Take a second to reflect, then carry the lesson forward.</p>
+<div class="reflection-moods">
+<button onclick="btcSaveReflection('great')" type="button">🙌<span>Great</span></button>
+<button onclick="btcSaveReflection('solid')" type="button">👍<span>Solid</span></button>
+<button onclick="btcSaveReflection('tough')" type="button">😐<span>Tough</span></button>
+<button onclick="btcSaveReflection('brutal')" type="button">🥴<span>Brutal</span></button>
+</div>
+<textarea id="btcReflectionNote" maxlength="180" placeholder="What are you taking into tomorrow? (optional)"></textarea>
+<button class="reflection-save" onclick="btcSaveReflectionNote()" type="button">Save Reflection</button>
+<div class="reflection-saved" id="btcReflectionSaved"></div>
 </section>
 </div>
 <!-- ========================================
@@ -404,19 +418,7 @@
         💬 Send Feedback
     </button>
 </div>
-<section class="reflection-card">
-<div class="eyebrow">End of Day</div>
-<h3>How did today go?</h3>
-<div class="reflection-moods">
-<button onclick="btcSaveReflection('great')" type="button">🙌<span>Great</span></button>
-<button onclick="btcSaveReflection('solid')" type="button">👍<span>Solid</span></button>
-<button onclick="btcSaveReflection('tough')" type="button">😐<span>Tough</span></button>
-<button onclick="btcSaveReflection('brutal')" type="button">🥴<span>Brutal</span></button>
-</div>
-<textarea id="btcReflectionNote" maxlength="180" placeholder="What are you taking into tomorrow? (optional)"></textarea>
-<button class="reflection-save" onclick="btcSaveReflectionNote()" type="button">Save Reflection</button>
-<div class="reflection-saved" id="btcReflectionSaved"></div>
-</section>
+
 </div>
 <!-- ========================================
      JOURNEY
@@ -733,10 +735,10 @@
 <!-- ========================================
      JAVASCRIPT
 ========================================= -->
-<script src="prayers.js?v=1.5"></script>
-<script src="app.js?v=1.5"></script>
+<script src="prayers.js?v=1.5.1"></script>
+<script src="app.js?v=1.5.1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="cloud.js?v=1.5"></script>
+<script src="cloud.js?v=1.5.1"></script>
 <script>
 // v1.4.1: robust Pray-tab binding for mobile browsers/PWA shells.
 window.addEventListener("DOMContentLoaded", function () {

@@ -3360,7 +3360,12 @@ function btcSaveReflectionNote(silent){
     if(msg && !silent) msg.textContent="Saved. Carry the lesson forward.";
 }
 function btcRenderReflection(){
-    const item=btcGetReflections()[btcTodayKey()];
+    const card=document.getElementById("btcEndOfDayCard");
+    const existingToday=btcGetReflections()[btcTodayKey()];
+    // Keep Today focused during the workday. Show reflection from 5 PM onward,
+    // or all day once today's reflection has already been started/saved.
+    if(card) card.hidden = new Date().getHours() < 17 && !existingToday;
+    const item=existingToday;
     if(!item)return;
     btcReflectionMood=item.mood;
     const note=document.getElementById("btcReflectionNote"); if(note)note.value=item.note||"";

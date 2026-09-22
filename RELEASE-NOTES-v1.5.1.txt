@@ -1,0 +1,7 @@
+Before the Close v1.5.1 — End-of-Day Home Fix
+
+- Moved End-of-Day Reflection out of Settings and into Today.
+- Reflection appears from 5 PM onward, or remains available if today already has a saved reflection.
+- Settings is now reserved for app/account/preferences.
+- Preserves Social Share Studio and all v1.5 behavior.
+- Cache bumped to before-the-close-v151.
