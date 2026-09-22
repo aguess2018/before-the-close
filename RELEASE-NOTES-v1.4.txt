@@ -1,0 +1,11 @@
+Before the Close v1.4 — Focused Tabs
+
+- Added a dedicated Pray tab.
+- Bottom navigation is now Today / Journey / Pray / Favorites / Settings.
+- Moved Quick Reset and all four situational Prayer Modes from Today to Pray.
+- Moved Morning / Midday / Evening Prayer Through the Day from Journey to Pray.
+- Moved Pray Over My Goal into Pray.
+- Journey is now focused on progress, goals, history, achievements, calendar, milestones, records, and reflections.
+- Today is simplified around the daily experience.
+- Prayer Mode Back now returns to Pray.
+- Preserves v1.3 Journey Plus, v1.2 Sales Styles, cloud auth/sync, and mobile structural fixes.

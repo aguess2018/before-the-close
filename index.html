@@ -1,1094 +1,746 @@
+
+&lt;!-- Before the Close v1.4 Focused Tabs --&gt;
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    >
-
-    <meta
-        name="theme-color"
-        content="#111111"
-    >
-
-    <meta
-        name="description"
-        content="Daily faith and motivation for sales professionals."
-    >
-
-    <meta
-        name="apple-mobile-web-app-capable"
-        content="yes"
-    >
-
-    <meta
-        name="apple-mobile-web-app-status-bar-style"
-        content="black-translucent"
-    >
-
-    <meta
-        name="apple-mobile-web-app-title"
-        content="Before the Close"
-    >
-
-    <title>Before the Close</title>
-
-    <link
-        rel="manifest"
-        href="manifest.json"
-    >
-
-    <link
-        rel="apple-touch-icon"
-        href="icons/icon-192.png"
-    >
-
-    <link
-        rel="stylesheet"
-        href="style.css?v=1.1.4"
-    >
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="#111111" name="theme-color"/>
+<meta content="Daily faith and motivation for sales professionals." name="description"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Before the Close" name="apple-mobile-web-app-title"/>
+<title>Before the Close</title>
+<link href="manifest.json" rel="manifest"/>
+<link href="icons/icon-192.png" rel="apple-touch-icon"/>
+<link href="style.css?v=1.1.4" rel="stylesheet"/>
 </head>
-
-
 <body>
-    <div id="btcLaunchSplash" class="btc-launch-splash" aria-hidden="true">
-        <div class="btc-launch-mark">✝</div>
-        <div class="btc-launch-name">BEFORE THE CLOSE</div>
-        <div class="btc-launch-tag">FAITH • FOCUS • PURPOSE</div>
-    </div>
-
+<div aria-hidden="true" class="btc-launch-splash" id="btcLaunchSplash">
+<div class="btc-launch-mark">✝</div>
+<div class="btc-launch-name">BEFORE THE CLOSE</div>
+<div class="btc-launch-tag">FAITH • FOCUS • PURPOSE</div>
+</div>
 <!-- ========================================
      BETA v0.8 — FIRST-LAUNCH ONBOARDING
 ========================================= -->
-<div class="onboarding" id="onboarding" hidden>
-    <div class="onboarding-card">
-        <div class="onboarding-progress" aria-hidden="true">
-            <span id="onboardingDot1" class="active"></span>
-            <span id="onboardingDot2"></span>
-            <span id="onboardingDot3"></span>
-        </div>
-
-        <div class="onboarding-step" id="onboardingStep1">
-            <div class="onboarding-mark">✝</div>
-            <div class="eyebrow">Welcome to</div>
-            <h1>Before the Close</h1>
-            <p>Faith, focus, and purpose for the moments that test you in sales.</p>
-            <div class="onboarding-feature-list">
-                <div><span>🙏</span><strong>Daily Prayer</strong><small>Start the day grounded.</small></div>
-                <div><span>⚡</span><strong>Prayer Modes</strong><small>Get perspective when the moment gets real.</small></div>
-                <div><span>🏆</span><strong>Your Journey</strong><small>Build consistency and track your progress.</small></div>
-            </div>
-            <button class="onboarding-primary" type="button" onclick="goToOnboardingStep(2)">Get Started</button>
-        </div>
-
-        <div class="onboarding-step" id="onboardingStep2" hidden>
-            <div class="eyebrow">Make it yours</div>
-            <h2>Who are we talking to?</h2>
-            <p class="onboarding-copy">This personalizes your greeting and the prayers you see.</p>
-            <label class="onboarding-label" for="onboardingName">First name</label>
-            <input id="onboardingName" class="onboarding-input" type="text" maxlength="24" placeholder="Your first name" autocomplete="given-name">
-
-            <label class="onboarding-label" for="onboardingIndustry">Sales industry</label>
-            <select id="onboardingIndustry" class="onboarding-input">
-                <option value="general">General Sales</option>
-                <option value="solar">Solar</option>
-                <option value="cars">Automotive</option>
-                <option value="realestate">Real Estate</option>
-                <option value="insurance">Insurance</option>
-                <option value="cellular">Cellular</option>
-                <option value="d2d">Door-to-Door</option>
-                <option value="b2b">B2B</option>
-            </select>
-
-            <label class="onboarding-label" for="onboardingSalesStyle">How do you primarily sell?</label>
-            <select id="onboardingSalesStyle" class="onboarding-input"></select>
-            <div class="onboarding-actions">
-                <button class="onboarding-secondary" type="button" onclick="goToOnboardingStep(1)">Back</button>
-                <button class="onboarding-primary" type="button" onclick="saveOnboardingProfile()">Continue</button>
-            </div>
-        </div>
-
-        <div class="onboarding-step" id="onboardingStep3" hidden>
-            <div class="onboarding-mark">⚡</div>
-            <div class="eyebrow">Built for the moment</div>
-            <h2>Use Prayer Modes anytime.</h2>
-            <p class="onboarding-copy">Your daily prayer starts the day. Prayer Modes are there whenever you need to reset.</p>
-            <div class="onboarding-mode-grid">
-                <div>🚶<strong>Before the Approach</strong></div>
-                <div>💪<strong>After Rejection</strong></div>
-                <div>🤝<strong>Before the Close</strong></div>
-                <div>🌧️<strong>Rough Day</strong></div>
-            </div>
-            <p class="onboarding-footnote">You can change your name, industry, or sales style anytime in Settings.</p>
-            <button class="onboarding-primary" type="button" onclick="finishOnboarding()">Take Me to Today</button>
-        </div>
-    </div>
+<div class="onboarding" hidden="" id="onboarding">
+<div class="onboarding-card">
+<div aria-hidden="true" class="onboarding-progress">
+<span class="active" id="onboardingDot1"></span>
+<span id="onboardingDot2"></span>
+<span id="onboardingDot3"></span>
 </div>
-
-
-
+<div class="onboarding-step" id="onboardingStep1">
+<div class="onboarding-mark">✝</div>
+<div class="eyebrow">Welcome to</div>
+<h1>Before the Close</h1>
+<p>Faith, focus, and purpose for the moments that test you in sales.</p>
+<div class="onboarding-feature-list">
+<div><span>🙏</span><strong>Daily Prayer</strong><small>Start the day grounded.</small></div>
+<div><span>⚡</span><strong>Prayer Modes</strong><small>Get perspective when the moment gets real.</small></div>
+<div><span>🏆</span><strong>Your Journey</strong><small>Build consistency and track your progress.</small></div>
+</div>
+<button class="onboarding-primary" onclick="goToOnboardingStep(2)" type="button">Get Started</button>
+</div>
+<div class="onboarding-step" hidden="" id="onboardingStep2">
+<div class="eyebrow">Make it yours</div>
+<h2>Who are we talking to?</h2>
+<p class="onboarding-copy">This personalizes your greeting and the prayers you see.</p>
+<label class="onboarding-label" for="onboardingName">First name</label>
+<input autocomplete="given-name" class="onboarding-input" id="onboardingName" maxlength="24" placeholder="Your first name" type="text"/>
+<label class="onboarding-label" for="onboardingIndustry">Sales industry</label>
+<select class="onboarding-input" id="onboardingIndustry">
+<option value="general">General Sales</option>
+<option value="solar">Solar</option>
+<option value="cars">Automotive</option>
+<option value="realestate">Real Estate</option>
+<option value="insurance">Insurance</option>
+<option value="cellular">Cellular</option>
+<option value="d2d">Door-to-Door</option>
+<option value="b2b">B2B</option>
+</select>
+<label class="onboarding-label" for="onboardingSalesStyle">How do you primarily sell?</label>
+<select class="onboarding-input" id="onboardingSalesStyle"></select>
+<div class="onboarding-actions">
+<button class="onboarding-secondary" onclick="goToOnboardingStep(1)" type="button">Back</button>
+<button class="onboarding-primary" onclick="saveOnboardingProfile()" type="button">Continue</button>
+</div>
+</div>
+<div class="onboarding-step" hidden="" id="onboardingStep3">
+<div class="onboarding-mark">⚡</div>
+<div class="eyebrow">Built for the moment</div>
+<h2>Use Prayer Modes anytime.</h2>
+<p class="onboarding-copy">Your daily prayer starts the day. Prayer Modes are there whenever you need to reset.</p>
+<div class="onboarding-mode-grid">
+<div>🚶<strong>Before the Approach</strong></div>
+<div>💪<strong>After Rejection</strong></div>
+<div>🤝<strong>Before the Close</strong></div>
+<div>🌧️<strong>Rough Day</strong></div>
+</div>
+<p class="onboarding-footnote">You can change your name, industry, or sales style anytime in Settings.</p>
+<button class="onboarding-primary" onclick="finishOnboarding()" type="button">Take Me to Today</button>
+</div>
+</div>
+</div>
 <!-- ========================================
      TODAY
 ========================================= -->
-
-<div
-    class="app"
-    id="todayScreen"
->
-
-    <div class="header">
-
-        <div class="brand">
+<div class="app" id="todayScreen">
+<div class="header">
+<div class="brand">
             BEFORE THE CLOSE
         </div>
-
-        <div class="streak">
+<div class="streak">
             🔥
             <span id="streakNumber">1</span>
             Day Streak
         </div>
-
-    </div>
-
-
-    <div class="welcome">
-
-        <div class="eyebrow">
+</div>
+<div class="welcome">
+<div class="eyebrow">
             Before you make the next move
         </div>
-
-        <h1 id="welcomeTitle">
+<h1 id="welcomeTitle">
             Start with purpose.
         </h1>
-
-        <p class="subtitle">
+<p class="subtitle">
             Faith • Focus • Purpose
         </p>
-
-    </div>
-
-
-    <input
-        type="hidden"
-        id="salesType"
-        value="general"
-    >
-
-
-    
-        <section class="quick-reset-card">
-            <div>
-                <span class="eyebrow">Need a reset?</span>
-                <strong>I Need Something Right Now</strong>
-                <p>One tap. One prayer. Back to the next conversation.</p>
-            </div>
-            <button type="button" onclick="btcQuickReset()">Reset Me →</button>
-        </section>
+</div>
+<input id="salesType" type="hidden" value="general"/>
 
 <div class="prayer-card">
-
-        <div class="prayer-icon">
+<div class="prayer-icon">
             🙏
         </div>
-
-        <div class="prayer-label">
+<div class="prayer-label">
             Today's Prayer
         </div>
-
-        <div
-            class="prayer-title"
-            id="prayerTitle"
-        >
+<div class="prayer-title" id="prayerTitle">
             Today's Prayer
         </div>
-
-        <p id="prayerText">
+<p id="prayerText">
             Loading today's prayer...
         </p>
-
-        <button
-            class="favorite-button"
-            id="favoriteButton"
-            onclick="toggleFavorite()"
-        >
+<button class="favorite-button" id="favoriteButton" onclick="toggleFavorite()">
             ♡ Save Prayer
         </button>
-
-    </div>
-
-
-    <div class="daily-message">
-
-        <div class="daily-message-title">
+</div>
+<div class="daily-message">
+<div class="daily-message-title">
             Today's Reminder
         </div>
-
-        <div class="daily-message-text">
+<div class="daily-message-text">
             One bad conversation doesn't define your day.
             Reset and take the next opportunity.
         </div>
-
-    </div>
+</div>
 <!-- ========================================
      PRAYER MODES
 ========================================= -->
 
-<div class="prayer-modes-section">
-
-    <div class="prayer-modes-heading">
-
-        <div class="eyebrow">
-            Pray for the Moment
-        </div>
-
-        <h2>
-            What do you need right now?
-        </h2>
-
-    </div>
-
-
-    <div class="prayer-modes-grid">
-
-        <button
-            class="prayer-mode-button"
-            onclick="openPrayerMode('approach')"
-        >
-
-            <span class="prayer-mode-icon">
-                🚶
-            </span>
-
-            <span class="prayer-mode-name">
-                Before the Approach
-            </span>
-
-            <span class="prayer-mode-description">
-                Walk in with confidence.
-            </span>
-
-        </button>
-
-
-        <button
-            class="prayer-mode-button"
-            onclick="openPrayerMode('rejection')"
-        >
-
-            <span class="prayer-mode-icon">
-                💪
-            </span>
-
-            <span class="prayer-mode-name">
-                After Rejection
-            </span>
-
-            <span class="prayer-mode-description">
-                Reset. Don't carry it.
-            </span>
-
-        </button>
-
-
-        <button
-            class="prayer-mode-button"
-            onclick="openPrayerMode('close')"
-        >
-
-            <span class="prayer-mode-icon">
-                🤝
-            </span>
-
-            <span class="prayer-mode-name">
-                Before the Close
-            </span>
-
-            <span class="prayer-mode-description">
-                Ask with confidence.
-            </span>
-
-        </button>
-
-
-        <button
-            class="prayer-mode-button"
-            onclick="openPrayerMode('roughDay')"
-        >
-
-            <span class="prayer-mode-icon">
-                🌧️
-            </span>
-
-            <span class="prayer-mode-name">
-                Rough Day
-            </span>
-
-            <span class="prayer-mode-description">
-                Regroup and keep moving.
-            </span>
-
-        </button>
-
-    </div>
-
+<!-- Beta v0.7: Weekly Goal + Intention -->
+<section class="focus-card" id="focusCard">
+<div class="focus-card-top">
+<div>
+<div class="eyebrow">This Week</div>
+<h2>Your Focus</h2>
 </div>
-
-    
-    <!-- Beta v0.7: Weekly Goal + Intention -->
-    <section class="focus-card" id="focusCard">
-        <div class="focus-card-top">
-            <div>
-                <div class="eyebrow">This Week</div>
-                <h2>Your Focus</h2>
-            </div>
-            <button class="focus-edit-btn" type="button" onclick="openFocusEditor()">Edit</button>
-        </div>
-        <div id="focusEmpty" class="focus-empty">
-            <p>Set a weekly sales goal and one intention to carry into the work.</p>
-            <button class="focus-primary-btn" type="button" onclick="openFocusEditor()">Set My Focus</button>
-        </div>
-        <div id="focusSummary" class="focus-summary" hidden>
-            <div class="focus-goal-line">
-                <span id="focusGoalIcon">🎯</span>
-                <div>
-                    <small>Weekly Goal</small>
-                    <strong id="focusGoalDisplay"></strong>
-                </div>
-            </div>
-            <div class="focus-progress-row">
-                <button type="button" class="focus-step-btn" onclick="changeGoalProgress(-1)">−</button>
-                <div class="focus-progress-center">
-                    <div class="focus-progress-text"><span id="focusProgressDisplay">0 / 0</span></div>
-                    <div class="focus-progress-track"><div id="focusProgressFill" class="focus-progress-fill"></div></div>
-                </div>
-                <button type="button" class="focus-step-btn" onclick="changeGoalProgress(1)">+</button>
-            </div>
-            <div class="focus-intention-line">
-                <small>My Intention</small>
-                <p id="focusIntentionDisplay"></p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Beta v0.4: Daily Check-In -->
-    <section class="daily-checkin-section" id="dailyCheckinSection">
-        <div class="eyebrow">Daily Check-In</div>
-        <h2>How are you walking into today?</h2>
-        <p class="checkin-copy">Check in once a day. No judgment—just be honest about where you are.</p>
-        <div class="checkin-options" id="checkinOptions">
-            <button class="checkin-btn" data-mood="locked" onclick="saveDailyCheckin('locked')">🔥 <span>Locked In</span></button>
-            <button class="checkin-btn" data-mood="good" onclick="saveDailyCheckin('good')">🙂 <span>Feeling Good</span></button>
-            <button class="checkin-btn" data-mood="here" onclick="saveDailyCheckin('here')">😐 <span>Just Here</span></button>
-            <button class="checkin-btn" data-mood="struggling" onclick="saveDailyCheckin('struggling')">😓 <span>Struggling</span></button>
-        </div>
-        <div class="checkin-response" id="checkinResponse" hidden></div>
-    </section>
-
+<button class="focus-edit-btn" onclick="openFocusEditor()" type="button">Edit</button>
+</div>
+<div class="focus-empty" id="focusEmpty">
+<p>Set a weekly sales goal and one intention to carry into the work.</p>
+<button class="focus-primary-btn" onclick="openFocusEditor()" type="button">Set My Focus</button>
+</div>
+<div class="focus-summary" hidden="" id="focusSummary">
+<div class="focus-goal-line">
+<span id="focusGoalIcon">🎯</span>
+<div>
+<small>Weekly Goal</small>
+<strong id="focusGoalDisplay"></strong>
+</div>
+</div>
+<div class="focus-progress-row">
+<button class="focus-step-btn" onclick="changeGoalProgress(-1)" type="button">−</button>
+<div class="focus-progress-center">
+<div class="focus-progress-text"><span id="focusProgressDisplay">0 / 0</span></div>
+<div class="focus-progress-track"><div class="focus-progress-fill" id="focusProgressFill"></div></div>
+</div>
+<button class="focus-step-btn" onclick="changeGoalProgress(1)" type="button">+</button>
+</div>
+<div class="focus-intention-line">
+<small>My Intention</small>
+<p id="focusIntentionDisplay"></p>
+</div>
+</div>
+</section>
+<!-- Beta v0.4: Daily Check-In -->
+<section class="daily-checkin-section" id="dailyCheckinSection">
+<div class="eyebrow">Daily Check-In</div>
+<h2>How are you walking into today?</h2>
+<p class="checkin-copy">Check in once a day. No judgment—just be honest about where you are.</p>
+<div class="checkin-options" id="checkinOptions">
+<button class="checkin-btn" data-mood="locked" onclick="saveDailyCheckin('locked')">🔥 <span>Locked In</span></button>
+<button class="checkin-btn" data-mood="good" onclick="saveDailyCheckin('good')">🙂 <span>Feeling Good</span></button>
+<button class="checkin-btn" data-mood="here" onclick="saveDailyCheckin('here')">😐 <span>Just Here</span></button>
+<button class="checkin-btn" data-mood="struggling" onclick="saveDailyCheckin('struggling')">😓 <span>Struggling</span></button>
+</div>
+<div class="checkin-response" hidden="" id="checkinResponse"></div>
+</section>
 </div>
 <!-- ========================================
      PRAYER MODE SCREEN
 ========================================= -->
-
-<div
-    class="app"
-    id="prayerModeScreen"
-    style="display: none;"
->
-
-    <div class="mode-header">
-
-        <button
-            class="mode-back-button"
-            onclick="closePrayerMode()"
-        >
+<div class="app" id="prayerModeScreen" style="display: none;">
+<div class="mode-header">
+<button class="mode-back-button" onclick="closePrayerMode()">
             ← Back
         </button>
-
-        <div class="brand">
+<div class="brand">
             BEFORE THE CLOSE
         </div>
-
-    </div>
-
-
-    <div class="mode-intro">
-
-        <div
-            class="eyebrow"
-            id="modeEyebrow"
-        >
+</div>
+<div class="mode-intro">
+<div class="eyebrow" id="modeEyebrow">
             Pray for the Moment
         </div>
-
-        <h1 id="modeHeading">
+<h1 id="modeHeading">
             Before the Approach
         </h1>
-
-        <p
-            class="subtitle"
-            id="modeSubtitle"
-        >
+<p class="subtitle" id="modeSubtitle">
             Walk into the next opportunity with purpose.
         </p>
-
-    </div>
-
-
-    <div class="prayer-card mode-prayer-card">
-
-        <div
-            class="prayer-icon"
-            id="modeIcon"
-        >
+</div>
+<div class="prayer-card mode-prayer-card">
+<div class="prayer-icon" id="modeIcon">
             🚶
         </div>
-
-        <div class="prayer-label">
+<div class="prayer-label">
             Prayer for Right Now
         </div>
-
-        <div
-            class="prayer-title"
-            id="modePrayerTitle"
-        >
+<div class="prayer-title" id="modePrayerTitle">
             Ready for the Next One
         </div>
-
-        <p id="modePrayerText">
+<p id="modePrayerText">
             Loading prayer...
         </p>
-
-
-        <button
-            class="favorite-button"
-            id="modeFavoriteButton"
-            onclick="toggleModeFavorite()"
-        >
+<button class="favorite-button" id="modeFavoriteButton" onclick="toggleModeFavorite()">
             ♡ Save Prayer
         </button>
-
-
-        <button
-            class="another-prayer-button"
-            onclick="giveAnotherModePrayer()"
-        >
+<button class="another-prayer-button" onclick="giveAnotherModePrayer()">
             ↻ Give Me Another
         </button>
-
-    </div>
-
-
-    <div class="mode-message">
-
-        <span id="modeIndustryLabel">
+</div>
+<div class="mode-message">
+<span id="modeIndustryLabel">
             Personalized for your sales industry.
         </span>
-
-    </div>
-
 </div>
-
-
+</div>
 <!-- ========================================
      FAVORITES
 ========================================= -->
-
-<div
-    class="app"
-    id="favoritesScreen"
-    style="display: none;"
->
-
-    <div class="header">
-
-        <div class="brand">
+<div class="app" id="favoritesScreen" style="display: none;">
+<div class="header">
+<div class="brand">
             BEFORE THE CLOSE
         </div>
-
-    </div>
-
-
-    <div class="welcome">
-
-        <div class="eyebrow">
+</div>
+<div class="welcome">
+<div class="eyebrow">
             Your Collection
         </div>
-
-        <h1>
+<h1>
             Favorite Prayers ❤️
         </h1>
-
-        <p class="subtitle">
+<p class="subtitle">
             The prayers worth coming back to.
         </p>
-
-    </div>
-
-
-    <div id="favoritesList"></div>
-
 </div>
-
-
-
+<div id="favoritesList"></div>
+</div>
 <!-- ========================================
      SETTINGS
 ========================================= -->
-
-<div
-    class="app"
-    id="settingsScreen"
-    style="display: none;"
->
-
-    <div class="header">
-
-        <div class="brand">
+<div class="app" id="settingsScreen" style="display: none;">
+<div class="header">
+<div class="brand">
             BEFORE THE CLOSE
         
     <!-- Beta v0.9: Daily Reminder -->
-    <section class="reminder-settings-card">
-        <div class="eyebrow">Daily Reminder
+<section class="reminder-settings-card">
+<div class="eyebrow">Daily Reminder
     <!-- v1.0: About -->
-    <section class="about-card">
-        <div class="eyebrow">About</div>
-        <h2>Before the Close</h2>
-        <p>Faith, focus, and purpose for people who sell.</p>
-        <div class="about-meta">
-            <span>Version</span><strong>1.0.0</strong>
-        </div>
-        <div class="about-meta">
-            <span>Prayer Library</span><strong>560 prayers</strong>
-        </div>
-        <div class="about-meta">
-            <span>Release</span><strong>Public Release</strong>
-        </div>
-    </section>
-
+<section class="about-card">
+<div class="eyebrow">About</div>
+<h2>Before the Close</h2>
+<p>Faith, focus, and purpose for people who sell.</p>
+<div class="about-meta">
+<span>Version</span><strong>1.0.0</strong>
 </div>
-        <h2>Start with purpose.</h2>
-        <p>Choose when you want Before the Close to remind you to check in and read your prayer.</p>
-
-        <div class="reminder-row">
-            <div>
-                <strong>Daily reminder</strong>
-                <small id="reminderStatusText">Off</small>
-            </div>
-            <label class="reminder-switch">
-                <input id="reminderEnabled" type="checkbox" onchange="toggleDailyReminder(this.checked)">
-                <span></span>
-            </label>
-        </div>
-
-        <div id="reminderTimeWrap" class="reminder-time-wrap" hidden>
-            <label for="reminderTime">Reminder time</label>
-            <input id="reminderTime" type="time" value="08:00" onchange="saveReminderTime(this.value)">
-            <p id="reminderSupportNote"></p>
-            <button type="button" class="reminder-test-btn" onclick="testReminder()">Test Reminder</button>
-        </div>
-    </section>
-
+<div class="about-meta">
+<span>Prayer Library</span><strong>560 prayers</strong>
 </div>
-
-    </div>
-
-
-    <div class="welcome">
-
-        <div class="eyebrow">
+<div class="about-meta">
+<span>Release</span><strong>Public Release</strong>
+</div>
+</section>
+</div>
+<h2>Start with purpose.</h2>
+<p>Choose when you want Before the Close to remind you to check in and read your prayer.</p>
+<div class="reminder-row">
+<div>
+<strong>Daily reminder</strong>
+<small id="reminderStatusText">Off</small>
+</div>
+<label class="reminder-switch">
+<input id="reminderEnabled" onchange="toggleDailyReminder(this.checked)" type="checkbox"/>
+<span></span>
+</label>
+</div>
+<div class="reminder-time-wrap" hidden="" id="reminderTimeWrap">
+<label for="reminderTime">Reminder time</label>
+<input id="reminderTime" onchange="saveReminderTime(this.value)" type="time" value="08:00"/>
+<p id="reminderSupportNote"></p>
+<button class="reminder-test-btn" onclick="testReminder()" type="button">Test Reminder</button>
+</div>
+</section>
+</div>
+</div>
+<div class="welcome">
+<div class="eyebrow">
             Personalize Your Experience
         </div>
-
-        <h1>
+<h1>
             Settings ⚙️
         </h1>
-
-        <p class="subtitle">
+<p class="subtitle">
             Make Before the Close yours.
         </p>
-
-    </div>
-
-
-    <div class="settings-group">
-
-        <label for="userName">
+</div>
+<div class="settings-group">
+<label for="userName">
             YOUR NAME
         </label>
-
-        <input
-            type="text"
-            id="userName"
-            placeholder="Enter your first name"
-        >
-
-    </div>
-
-
-    <div class="settings-group">
-
-        <label for="settingsSalesType">
+<input id="userName" placeholder="Enter your first name" type="text"/>
+</div>
+<div class="settings-group">
+<label for="settingsSalesType">
             YOUR SALES INDUSTRY
         </label>
-
-        <select id="settingsSalesType">
-
-            <option value="general">
+<select id="settingsSalesType">
+<option value="general">
                 💼 General Sales
             </option>
-
-            <option value="solar">
+<option value="solar">
                 ☀️ Solar
             </option>
-
-            <option value="cars">
+<option value="cars">
                 🚗 Automotive
             </option>
-
-            <option value="realestate">
+<option value="realestate">
                 🏠 Real Estate
             </option>
-
-            <option value="insurance">
+<option value="insurance">
                 🛡️ Insurance
             </option>
-
-            <option value="cellular">
+<option value="cellular">
                 📱 Cellular
             </option>
-
-            <option value="d2d">
+<option value="d2d">
                 🚪 Door-to-Door
             </option>
-
-            <option value="b2b">
+<option value="b2b">
                 🤝 B2B Sales
             </option>
-
-        </select>
-
-    </div>
-
-    <div class="settings-group">
-        <label for="settingsSalesStyle">HOW DO YOU PRIMARILY SELL?</label>
-        <select id="settingsSalesStyle"></select>
-        <p class="settings-helper">Your sales style changes the language and situations used in your prayers.</p>
-    </div>
-
-
-    <button
-        class="save-settings"
-        onclick="saveSettings()"
-    >
+</select>
+</div>
+<div class="settings-group">
+<label for="settingsSalesStyle">HOW DO YOU PRIMARILY SELL?</label>
+<select id="settingsSalesStyle"></select>
+<p class="settings-helper">Your sales style changes the language and situations used in your prayers.</p>
+</div>
+<button class="save-settings" onclick="saveSettings()">
         Save Settings
     </button>
-
-
-    <div
-        class="settings-saved"
-        id="settingsSaved"
-    ></div>
+<div class="settings-saved" id="settingsSaved"></div>
 <!-- ========================================
      ACCOUNT + CLOUD SYNC
 ========================================= -->
 <section class="btc-account-card" id="btcAccountCard">
-    <div class="eyebrow">Account & Cloud</div>
-    <h2>Your Before the Close Account</h2>
-    <p id="btcAccountCopy">Sign in to back up your Journey and carry it across devices.</p>
-    <div id="btcSignedOutActions" class="btc-account-actions">
-        <button type="button" class="btc-account-primary" onclick="btcOpenAuth('signup')">Create Account</button>
-        <button type="button" class="btc-account-secondary" onclick="btcOpenAuth('signin')">Sign In</button>
-    </div>
-    <div id="btcSignedInActions" hidden>
-        <div class="btc-account-user"><span>Signed in as</span><strong id="btcAccountEmail"></strong></div>
-        <div class="btc-cloud-status" id="btcCloudStatus">Cloud sync ready.</div>
-        <div class="btc-account-actions">
-            <button type="button" class="btc-account-secondary" onclick="btcSyncNow(true)">Sync Now</button>
-            <button type="button" class="btc-account-secondary" onclick="btcSignOut()">Sign Out</button>
-        </div>
-    </div>
+<div class="eyebrow">Account &amp; Cloud</div>
+<h2>Your Before the Close Account</h2>
+<p id="btcAccountCopy">Sign in to back up your Journey and carry it across devices.</p>
+<div class="btc-account-actions" id="btcSignedOutActions">
+<button class="btc-account-primary" onclick="btcOpenAuth('signup')" type="button">Create Account</button>
+<button class="btc-account-secondary" onclick="btcOpenAuth('signin')" type="button">Sign In</button>
+</div>
+<div hidden="" id="btcSignedInActions">
+<div class="btc-account-user"><span>Signed in as</span><strong id="btcAccountEmail"></strong></div>
+<div class="btc-cloud-status" id="btcCloudStatus">Cloud sync ready.</div>
+<div class="btc-account-actions">
+<button class="btc-account-secondary" onclick="btcSyncNow(true)" type="button">Sync Now</button>
+<button class="btc-account-secondary" onclick="btcSignOut()" type="button">Sign Out</button>
+</div>
+</div>
 </section>
-
 <!-- ========================================
      TESTER FEEDBACK
 ========================================= -->
-
 <div class="feedback-section">
-
-    <div class="feedback-divider"></div>
-
-    <div class="eyebrow">
+<div class="feedback-divider"></div>
+<div class="eyebrow">
         Help Build Before the Close
     </div>
-
-    <h2 class="feedback-heading">
+<h2 class="feedback-heading">
         Got feedback? 👀
     </h2>
-
-    <p class="feedback-description">
+<p class="feedback-description">
         Found a bug, have an idea, or think something
         could be better? You're helping shape the app.
     </p>
-
-    <button
-        class="feedback-open-button"
-        onclick="openFeedback()"
-    >
+<button class="feedback-open-button" onclick="openFeedback()">
         💬 Send Feedback
     </button>
-
 </div>
-
-        <section class="reflection-card">
-            <div class="eyebrow">End of Day</div>
-            <h3>How did today go?</h3>
-            <div class="reflection-moods">
-                <button type="button" onclick="btcSaveReflection('great')">🙌<span>Great</span></button>
-                <button type="button" onclick="btcSaveReflection('solid')">👍<span>Solid</span></button>
-                <button type="button" onclick="btcSaveReflection('tough')">😐<span>Tough</span></button>
-                <button type="button" onclick="btcSaveReflection('brutal')">🥴<span>Brutal</span></button>
-            </div>
-            <textarea id="btcReflectionNote" maxlength="180" placeholder="What are you taking into tomorrow? (optional)"></textarea>
-            <button class="reflection-save" type="button" onclick="btcSaveReflectionNote()">Save Reflection</button>
-            <div id="btcReflectionSaved" class="reflection-saved"></div>
-        </section>
-
+<section class="reflection-card">
+<div class="eyebrow">End of Day</div>
+<h3>How did today go?</h3>
+<div class="reflection-moods">
+<button onclick="btcSaveReflection('great')" type="button">🙌<span>Great</span></button>
+<button onclick="btcSaveReflection('solid')" type="button">👍<span>Solid</span></button>
+<button onclick="btcSaveReflection('tough')" type="button">😐<span>Tough</span></button>
+<button onclick="btcSaveReflection('brutal')" type="button">🥴<span>Brutal</span></button>
 </div>
-
-
-
-
+<textarea id="btcReflectionNote" maxlength="180" placeholder="What are you taking into tomorrow? (optional)"></textarea>
+<button class="reflection-save" onclick="btcSaveReflectionNote()" type="button">Save Reflection</button>
+<div class="reflection-saved" id="btcReflectionSaved"></div>
+</section>
+</div>
 <!-- ========================================
      JOURNEY
 ========================================= -->
-<div class="app" id="journeyScreen" style="display:none;">
-    <div class="header">
-        <div class="brand">BEFORE THE CLOSE</div>
-    </div>
-
-    <div class="welcome">
-        <div class="eyebrow">Your Journey</div>
-        <h1>Keep showing up.</h1>
-        <p class="subtitle">Progress • Consistency • Purpose</p>
-    </div>
-
-    <section class="journey-section" id="journeySection">
-        <div class="journey-grid">
-            <div class="journey-stat"><strong id="journeyStreak">0</strong><span>Day Streak</span></div>
-            <div class="journey-stat"><strong id="journeyCheckins">0</strong><span>Check-Ins</span></div>
-            <div class="journey-stat"><strong id="journeyPrayers">0</strong><span>Prayers Opened</span></div>
-            <div class="journey-stat"><strong id="journeyFavorites">0</strong><span>Favorites</span></div>
-            <div class="journey-stat journey-stat-wide"><strong id="journeyBestStreak">0</strong><span>Personal Best Streak</span></div>
+<div class="app" id="prayScreen" style="display:none;"><div class="header"><div class="brand">BEFORE THE CLOSE</div></div><div class="welcome"><div class="eyebrow">Prayer Center</div><h1>Meet the moment.</h1><p class="subtitle">Prepare • Reset • Reflect</p></div><section class="btc-pray-intro">Choose what you need right now. Your prayers stay personalized to your industry and how you sell.</section><section class="quick-reset-card">
+<div>
+<span class="eyebrow">Need a reset?</span>
+<strong>I Need Something Right Now</strong>
+<p>One tap. One prayer. Back to the next conversation.</p>
+</div>
+<button onclick="btcQuickReset()" type="button">Reset Me →</button>
+</section><div class="prayer-modes-section">
+<div class="prayer-modes-heading">
+<div class="eyebrow">
+            Pray for the Moment
         </div>
-        <div class="journey-goal-card" id="journeyGoalCard">
-            <div class="eyebrow">Weekly Sales Goal</div>
-            <div id="journeyGoalEmpty" class="journey-goal-empty">Set a goal on Today to start tracking your week.</div>
-            <div id="journeyGoalContent" hidden>
-                <div class="journey-goal-top">
-                    <strong id="journeyGoalName"></strong>
-                    <span id="journeyGoalNumbers"></span>
-                </div>
-                <div class="focus-progress-track"><div id="journeyGoalFill" class="focus-progress-fill"></div></div>
-                <p id="journeyIntention"></p>
-            </div>
-        </div>
-
-
-        
-        <!-- Beta v0.5: Weekly Challenge -->
-        <div class="weekly-challenge-card">
-            <div class="challenge-topline">
-                <div>
-                    <div class="eyebrow">Weekly Challenge</div>
-                    <h2 id="weeklyChallengeTitle">Show Up 5 Days</h2>
-                </div>
-                <div class="challenge-badge" id="weeklyChallengeBadge">0 / 5</div>
-            </div>
-            <p id="weeklyChallengeCopy">Complete a daily check-in on 5 different days this week.</p>
-            <div class="challenge-progress">
-                <div class="challenge-progress-fill" id="weeklyChallengeFill"></div>
-            </div>
-            <div class="challenge-days" id="weeklyChallengeDays"></div>
-        </div>
-
-        <!-- Beta v0.5: Recent Activity -->
-        <div class="recent-activity-card">
-            <div class="eyebrow">Recent Activity</div>
-            <h2>Your Last 7 Days</h2>
-            <div class="activity-week" id="activityWeek"></div>
-            <div class="activity-summary" id="activitySummary"></div>
-        </div>
-
-        
-        <!-- Beta v0.6: Prayer History -->
-        <div class="prayer-history-card">
-            <div class="history-heading">
-                <div>
-                    <div class="eyebrow">Prayer History</div>
-                    <h2>Recently Read</h2>
-                </div>
-                <button class="history-clear-btn" onclick="clearPrayerHistory()">Clear</button>
-            </div>
-            <p class="history-copy">Your recent prayers stay on this device.</p>
-            <div class="prayer-history-list" id="prayerHistoryList"></div>
-        </div>
-
-        <div class="achievements-wrap">
-            <div class="eyebrow">Achievements</div>
-            
-            <div class="achievement-summary">
-                <div>
-                    <strong id="achievementUnlockedCount">0 / 22</strong>
-                    <span>Unlocked</span>
-                </div>
-                <div class="achievement-overall-track">
-                    <div id="achievementOverallFill" class="achievement-overall-fill"></div>
-                </div>
-            </div>
-            <div class="achievement-filters" id="achievementFilters">
-                <button class="active" type="button" data-achievement-filter="all" onclick="setAchievementFilter('all')">All</button>
-                <button type="button" data-achievement-filter="faith" onclick="setAchievementFilter('faith')">Faith</button>
-                <button type="button" data-achievement-filter="consistency" onclick="setAchievementFilter('consistency')">Consistency</button>
-                <button type="button" data-achievement-filter="growth" onclick="setAchievementFilter('growth')">Growth</button>
-                <button type="button" data-achievement-filter="action" onclick="setAchievementFilter('action')">Action</button>
-            </div>
-            <div class="achievement-list" id="achievementList"></div>
-        </div>
-    </section>
-
-    <!-- v1.0 Journey enhancements -->
+<h2>
+            What do you need right now?
+        </h2>
+</div>
+<div class="prayer-modes-grid">
+<button class="prayer-mode-button" onclick="openPrayerMode('approach')">
+<span class="prayer-mode-icon">
+                🚶
+            </span>
+<span class="prayer-mode-name">
+                Before the Approach
+            </span>
+<span class="prayer-mode-description">
+                Walk in with confidence.
+            </span>
+</button>
+<button class="prayer-mode-button" onclick="openPrayerMode('rejection')">
+<span class="prayer-mode-icon">
+                💪
+            </span>
+<span class="prayer-mode-name">
+                After Rejection
+            </span>
+<span class="prayer-mode-description">
+                Reset. Don't carry it.
+            </span>
+</button>
+<button class="prayer-mode-button" onclick="openPrayerMode('close')">
+<span class="prayer-mode-icon">
+                🤝
+            </span>
+<span class="prayer-mode-name">
+                Before the Close
+            </span>
+<span class="prayer-mode-description">
+                Ask with confidence.
+            </span>
+</button>
+<button class="prayer-mode-button" onclick="openPrayerMode('roughDay')">
+<span class="prayer-mode-icon">
+                🌧️
+            </span>
+<span class="prayer-mode-name">
+                Rough Day
+            </span>
+<span class="prayer-mode-description">
+                Regroup and keep moving.
+            </span>
+</button>
+</div>
+</div><section class="btc-daypart-card">
+<div class="eyebrow">Prayer Through the Day</div>
+<h3>Meet the moment you're in.</h3>
+<p>Start grounded, reset in the middle of the work, or close the day with gratitude.</p>
+<div class="btc-daypart-actions">
+<button onclick="btcOpenDaypartPrayer('morning')" type="button">🌅<span>Morning</span><small>Prepare</small></button>
+<button onclick="btcOpenDaypartPrayer('midday')" type="button">☀️<span>Midday</span><small>Reset</small></button>
+<button onclick="btcOpenDaypartPrayer('evening')" type="button">🌙<span>Evening</span><small>Reflect</small></button>
+</div>
+</section><div id="btcPrayGoalSlot"></div><div aria-hidden="true" class="journey-bottom-spacer"></div></div><div class="app" id="journeyScreen" style="display:none;">
+<div class="header">
+<div class="brand">BEFORE THE CLOSE</div>
+</div>
+<div class="welcome">
+<div class="eyebrow">Your Journey</div>
+<h1>Keep showing up.</h1>
+<p class="subtitle">Progress • Consistency • Purpose</p>
+</div>
+<section class="journey-section" id="journeySection">
+<div class="journey-grid">
+<div class="journey-stat"><strong id="journeyStreak">0</strong><span>Day Streak</span></div>
+<div class="journey-stat"><strong id="journeyCheckins">0</strong><span>Check-Ins</span></div>
+<div class="journey-stat"><strong id="journeyPrayers">0</strong><span>Prayers Opened</span></div>
+<div class="journey-stat"><strong id="journeyFavorites">0</strong><span>Favorites</span></div>
+<div class="journey-stat journey-stat-wide"><strong id="journeyBestStreak">0</strong><span>Personal Best Streak</span></div>
+</div>
+<div class="journey-goal-card" id="journeyGoalCard">
+<div class="eyebrow">Weekly Sales Goal</div>
+<div class="journey-goal-empty" id="journeyGoalEmpty">Set a goal on Today to start tracking your week.</div>
+<div hidden="" id="journeyGoalContent">
+<div class="journey-goal-top">
+<strong id="journeyGoalName"></strong>
+<span id="journeyGoalNumbers"></span>
+</div>
+<div class="focus-progress-track"><div class="focus-progress-fill" id="journeyGoalFill"></div></div>
+<p id="journeyIntention"></p>
+</div>
+</div>
+<!-- Beta v0.5: Weekly Challenge -->
+<div class="weekly-challenge-card">
+<div class="challenge-topline">
+<div>
+<div class="eyebrow">Weekly Challenge</div>
+<h2 id="weeklyChallengeTitle">Show Up 5 Days</h2>
+</div>
+<div class="challenge-badge" id="weeklyChallengeBadge">0 / 5</div>
+</div>
+<p id="weeklyChallengeCopy">Complete a daily check-in on 5 different days this week.</p>
+<div class="challenge-progress">
+<div class="challenge-progress-fill" id="weeklyChallengeFill"></div>
+</div>
+<div class="challenge-days" id="weeklyChallengeDays"></div>
+</div>
+<!-- Beta v0.5: Recent Activity -->
+<div class="recent-activity-card">
+<div class="eyebrow">Recent Activity</div>
+<h2>Your Last 7 Days</h2>
+<div class="activity-week" id="activityWeek"></div>
+<div class="activity-summary" id="activitySummary"></div>
+</div>
+<!-- Beta v0.6: Prayer History -->
+<div class="prayer-history-card">
+<div class="history-heading">
+<div>
+<div class="eyebrow">Prayer History</div>
+<h2>Recently Read</h2>
+</div>
+<button class="history-clear-btn" onclick="clearPrayerHistory()">Clear</button>
+</div>
+<p class="history-copy">Your recent prayers stay on this device.</p>
+<div class="prayer-history-list" id="prayerHistoryList"></div>
+</div>
+<div class="achievements-wrap">
+<div class="eyebrow">Achievements</div>
+<div class="achievement-summary">
+<div>
+<strong id="achievementUnlockedCount">0 / 22</strong>
+<span>Unlocked</span>
+</div>
+<div class="achievement-overall-track">
+<div class="achievement-overall-fill" id="achievementOverallFill"></div>
+</div>
+</div>
+<div class="achievement-filters" id="achievementFilters">
+<button class="active" data-achievement-filter="all" onclick="setAchievementFilter('all')" type="button">All</button>
+<button data-achievement-filter="faith" onclick="setAchievementFilter('faith')" type="button">Faith</button>
+<button data-achievement-filter="consistency" onclick="setAchievementFilter('consistency')" type="button">Consistency</button>
+<button data-achievement-filter="growth" onclick="setAchievementFilter('growth')" type="button">Growth</button>
+<button data-achievement-filter="action" onclick="setAchievementFilter('action')" type="button">Action</button>
+</div>
+<div class="achievement-list" id="achievementList"></div>
+</div>
+</section>
+<!-- v1.0 Journey enhancements -->
 <section class="weekly-recap-card">
-            <div class="eyebrow">Your Week Before the Close</div>
-            <h3 id="btcRecapHeadline">Keep showing up.</h3>
-            <div class="recap-grid">
-                <div><strong id="btcRecapCheckins">0</strong><span>Check-ins</span></div>
-                <div><strong id="btcRecapPrayers">0</strong><span>Prayers</span></div>
-                <div><strong id="btcRecapBest">0</strong><span>Best Streak</span></div>
-                <div><strong id="btcRecapGoals">0</strong><span>Goals Hit</span></div>
-            </div>
-            <p id="btcRecapMessage"></p>
-        </section>
-
-        <section class="records-card">
-            <div class="eyebrow">Personal Records</div>
-            <div class="records-grid">
-                <div><span>🔥</span><strong id="btcRecordStreak">0</strong><small>Best Streak</small></div>
-                <div><span>🙏</span><strong id="btcRecordPrayers">0</strong><small>Prayers Opened</small></div>
-                <div><span>↗</span><strong id="btcRecordShares">0</strong><small>Prayers Shared</small></div>
-                <div><span>🎯</span><strong id="btcRecordGoals">0</strong><small>Goals Completed</small></div>
-            </div>
-        </section>
-
-        <section class="prayer-week-card">
-            <div class="eyebrow">Prayer Worth Carrying Forward</div>
-            <h3 id="btcPrayerWeekTitle">Your prayer of the week</h3>
-            <p id="btcPrayerWeekText">Open and save prayers this week and one will surface here.</p>
-        </section>
-
-        <section class="btc-daypart-card">
-            <div class="eyebrow">Prayer Through the Day</div>
-            <h3>Meet the moment you're in.</h3>
-            <p>Start grounded, reset in the middle of the work, or close the day with gratitude.</p>
-            <div class="btc-daypart-actions">
-                <button type="button" onclick="btcOpenDaypartPrayer('morning')">🌅<span>Morning</span><small>Prepare</small></button>
-                <button type="button" onclick="btcOpenDaypartPrayer('midday')">☀️<span>Midday</span><small>Reset</small></button>
-                <button type="button" onclick="btcOpenDaypartPrayer('evening')">🌙<span>Evening</span><small>Reflect</small></button>
-            </div>
-        </section>
-
-        <section class="btc-calendar-card">
-            <div class="btc-section-heading">
-                <div><div class="eyebrow">Journey Calendar</div><h3 id="btcCalendarMonth">This Month</h3></div>
-                <div class="btc-calendar-nav"><button type="button" onclick="btcMoveCalendar(-1)" aria-label="Previous month">‹</button><button type="button" onclick="btcMoveCalendar(1)" aria-label="Next month">›</button></div>
-            </div>
-            <div class="btc-calendar-weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
-            <div id="btcCalendarGrid" class="btc-calendar-grid"></div>
-            <div id="btcCalendarDetail" class="btc-calendar-detail">Tap a highlighted day to revisit it.</div>
-        </section>
-
-        <section class="btc-milestone-card">
-            <div class="eyebrow">Milestone Moments</div>
-            <h3>Remember the wins that mattered.</h3>
-            <p>Not every breakthrough belongs on a scoreboard. Save the moments you want to carry with you.</p>
-            <button class="btc-primary-action" type="button" onclick="btcOpenMilestoneComposer()">＋ Record a Milestone</button>
-            <div id="btcMilestoneList" class="btc-milestone-list"></div>
-        </section>
-
-    <div class="journey-bottom-spacer" aria-hidden="true"></div>
+<div class="eyebrow">Your Week Before the Close</div>
+<h3 id="btcRecapHeadline">Keep showing up.</h3>
+<div class="recap-grid">
+<div><strong id="btcRecapCheckins">0</strong><span>Check-ins</span></div>
+<div><strong id="btcRecapPrayers">0</strong><span>Prayers</span></div>
+<div><strong id="btcRecapBest">0</strong><span>Best Streak</span></div>
+<div><strong id="btcRecapGoals">0</strong><span>Goals Hit</span></div>
 </div>
-
-
-<div class="focus-modal" id="btcMilestoneModal" hidden>
-    <div class="focus-modal-backdrop" onclick="btcCloseMilestoneComposer()"></div>
-    <div class="focus-modal-panel" role="dialog" aria-modal="true" aria-labelledby="btcMilestoneModalTitle">
-        <div class="focus-modal-head"><div><div class="eyebrow">Milestone Moment</div><h2 id="btcMilestoneModalTitle">What happened?</h2></div><button type="button" class="focus-close-btn" onclick="btcCloseMilestoneComposer()">×</button></div>
-        <label class="focus-label" for="btcMilestoneType">Moment</label>
-        <select id="btcMilestoneType" class="focus-input"><option value="appointment">Booked the Appointment</option><option value="close">Closed the Deal</option><option value="first-sale">First Sale</option><option value="goal">Hit a Goal</option><option value="breakthrough">Personal Breakthrough</option><option value="other">Something Else</option></select>
-        <label class="focus-label" for="btcMilestoneNote">What made it meaningful?</label>
-        <textarea id="btcMilestoneNote" class="focus-input focus-textarea" maxlength="180" placeholder="A sentence or two for future you..."></textarea>
-        <button class="btc-primary-action" type="button" onclick="btcSaveMilestoneMoment()">Save Milestone</button>
-    </div>
+<p id="btcRecapMessage"></p>
+</section>
+<section class="records-card">
+<div class="eyebrow">Personal Records</div>
+<div class="records-grid">
+<div><span>🔥</span><strong id="btcRecordStreak">0</strong><small>Best Streak</small></div>
+<div><span>🙏</span><strong id="btcRecordPrayers">0</strong><small>Prayers Opened</small></div>
+<div><span>↗</span><strong id="btcRecordShares">0</strong><small>Prayers Shared</small></div>
+<div><span>🎯</span><strong id="btcRecordGoals">0</strong><small>Goals Completed</small></div>
 </div>
+</section>
+<section class="prayer-week-card">
+<div class="eyebrow">Prayer Worth Carrying Forward</div>
+<h3 id="btcPrayerWeekTitle">Your prayer of the week</h3>
+<p id="btcPrayerWeekText">Open and save prayers this week and one will surface here.</p>
+</section>
 
+<section class="btc-calendar-card">
+<div class="btc-section-heading">
+<div><div class="eyebrow">Journey Calendar</div><h3 id="btcCalendarMonth">This Month</h3></div>
+<div class="btc-calendar-nav"><button aria-label="Previous month" onclick="btcMoveCalendar(-1)" type="button">‹</button><button aria-label="Next month" onclick="btcMoveCalendar(1)" type="button">›</button></div>
+</div>
+<div class="btc-calendar-weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+<div class="btc-calendar-grid" id="btcCalendarGrid"></div>
+<div class="btc-calendar-detail" id="btcCalendarDetail">Tap a highlighted day to revisit it.</div>
+</section>
+<section class="btc-milestone-card">
+<div class="eyebrow">Milestone Moments</div>
+<h3>Remember the wins that mattered.</h3>
+<p>Not every breakthrough belongs on a scoreboard. Save the moments you want to carry with you.</p>
+<button class="btc-primary-action" onclick="btcOpenMilestoneComposer()" type="button">＋ Record a Milestone</button>
+<div class="btc-milestone-list" id="btcMilestoneList"></div>
+</section>
+<div aria-hidden="true" class="journey-bottom-spacer"></div>
+</div>
+<div class="focus-modal" hidden="" id="btcMilestoneModal">
+<div class="focus-modal-backdrop" onclick="btcCloseMilestoneComposer()"></div>
+<div aria-labelledby="btcMilestoneModalTitle" aria-modal="true" class="focus-modal-panel" role="dialog">
+<div class="focus-modal-head"><div><div class="eyebrow">Milestone Moment</div><h2 id="btcMilestoneModalTitle">What happened?</h2></div><button class="focus-close-btn" onclick="btcCloseMilestoneComposer()" type="button">×</button></div>
+<label class="focus-label" for="btcMilestoneType">Moment</label>
+<select class="focus-input" id="btcMilestoneType"><option value="appointment">Booked the Appointment</option><option value="close">Closed the Deal</option><option value="first-sale">First Sale</option><option value="goal">Hit a Goal</option><option value="breakthrough">Personal Breakthrough</option><option value="other">Something Else</option></select>
+<label class="focus-label" for="btcMilestoneNote">What made it meaningful?</label>
+<textarea class="focus-input focus-textarea" id="btcMilestoneNote" maxlength="180" placeholder="A sentence or two for future you..."></textarea>
+<button class="btc-primary-action" onclick="btcSaveMilestoneMoment()" type="button">Save Milestone</button>
+</div>
+</div>
 <!-- Beta v0.7: Focus Editor -->
-<div class="focus-modal" id="focusModal" hidden>
-    <div class="focus-modal-backdrop" onclick="closeFocusEditor()"></div>
-    <div class="focus-modal-panel" role="dialog" aria-modal="true" aria-labelledby="focusModalTitle">
-        <div class="focus-modal-head">
-            <div>
-                <div class="eyebrow">Weekly Focus</div>
-                <h2 id="focusModalTitle">Set Your Target</h2>
-            </div>
-            <button type="button" class="focus-close-btn" onclick="closeFocusEditor()">×</button>
-        </div>
-
-        <label class="focus-label" for="goalType">What are you chasing?</label>
-        <select id="goalType" class="focus-input">
-            <option value="Appointments">Appointments</option>
-            <option value="Closes">Closes</option>
-            <option value="Doors Knocked">Doors Knocked</option>
-            <option value="Calls">Calls</option>
-            <option value="Follow-Ups">Follow-Ups</option>
-            <option value="Demos">Demos</option>
-            <option value="Quotes">Quotes</option>
-            <option value="Custom">Custom Goal</option>
-        </select>
-
-        <div id="customGoalWrap" hidden>
-            <label class="focus-label" for="customGoalType">Goal name</label>
-            <input id="customGoalType" class="focus-input" type="text" maxlength="28" placeholder="Example: Test Drives">
-        </div>
-
-        <label class="focus-label" for="goalTarget">Weekly target</label>
-        <input id="goalTarget" class="focus-input" type="number" min="1" max="9999" inputmode="numeric" placeholder="Example: 10">
-
-        <label class="focus-label" for="weeklyIntention">What do you want to remember this week?</label>
-        <textarea id="weeklyIntention" class="focus-input focus-textarea" maxlength="140" placeholder="Example: Stay patient, listen first, and ask confidently for the sale."></textarea>
-        <div class="focus-suggestions">
-            <button type="button" onclick="useIntentionSuggestion('Serve before I sell.')">Serve before I sell</button>
-            <button type="button" onclick="useIntentionSuggestion('Stay patient and trust the process.')">Trust the process</button>
-            <button type="button" onclick="useIntentionSuggestion('Listen first. Speak with purpose.')">Listen first</button>
-            <button type="button" onclick="useIntentionSuggestion('Ask confidently for the sale.')">Ask for the sale</button>
-        </div>
-
-        <button type="button" class="focus-save-btn" onclick="saveWeeklyFocus()">Save Weekly Focus</button>
-    </div>
+<div class="focus-modal" hidden="" id="focusModal">
+<div class="focus-modal-backdrop" onclick="closeFocusEditor()"></div>
+<div aria-labelledby="focusModalTitle" aria-modal="true" class="focus-modal-panel" role="dialog">
+<div class="focus-modal-head">
+<div>
+<div class="eyebrow">Weekly Focus</div>
+<h2 id="focusModalTitle">Set Your Target</h2>
 </div>
-
+<button class="focus-close-btn" onclick="closeFocusEditor()" type="button">×</button>
+</div>
+<label class="focus-label" for="goalType">What are you chasing?</label>
+<select class="focus-input" id="goalType">
+<option value="Appointments">Appointments</option>
+<option value="Closes">Closes</option>
+<option value="Doors Knocked">Doors Knocked</option>
+<option value="Calls">Calls</option>
+<option value="Follow-Ups">Follow-Ups</option>
+<option value="Demos">Demos</option>
+<option value="Quotes">Quotes</option>
+<option value="Custom">Custom Goal</option>
+</select>
+<div hidden="" id="customGoalWrap">
+<label class="focus-label" for="customGoalType">Goal name</label>
+<input class="focus-input" id="customGoalType" maxlength="28" placeholder="Example: Test Drives" type="text"/>
+</div>
+<label class="focus-label" for="goalTarget">Weekly target</label>
+<input class="focus-input" id="goalTarget" inputmode="numeric" max="9999" min="1" placeholder="Example: 10" type="number"/>
+<label class="focus-label" for="weeklyIntention">What do you want to remember this week?</label>
+<textarea class="focus-input focus-textarea" id="weeklyIntention" maxlength="140" placeholder="Example: Stay patient, listen first, and ask confidently for the sale."></textarea>
+<div class="focus-suggestions">
+<button onclick="useIntentionSuggestion('Serve before I sell.')" type="button">Serve before I sell</button>
+<button onclick="useIntentionSuggestion('Stay patient and trust the process.')" type="button">Trust the process</button>
+<button onclick="useIntentionSuggestion('Listen first. Speak with purpose.')" type="button">Listen first</button>
+<button onclick="useIntentionSuggestion('Ask confidently for the sale.')" type="button">Ask for the sale</button>
+</div>
+<button class="focus-save-btn" onclick="saveWeeklyFocus()" type="button">Save Weekly Focus</button>
+</div>
+</div>
 <!-- ========================================
      BOTTOM NAVIGATION
 ========================================= -->
-
 <div class="bottom-nav">
-
-    <div
-        class="nav-item active"
-        id="todayNav"
-        onclick="showToday()"
-    >
-
-        <span class="nav-icon">
-            🙏
-        </span>
+<div class="nav-item active" id="todayNav" onclick="showToday()">
+<span class="nav-icon">☀️</span>
 
         Today
 
     </div>
-
-
-    <div
-        class="nav-item"
-        id="journeyNav"
-        onclick="showJourney()"
-    >
-        <span class="nav-icon">🏆</span>
+<div class="nav-item" id="journeyNav" onclick="showJourney()">
+<span class="nav-icon">🧭</span>
         Journey
     </div>
-
-
-    <div
-        class="nav-item"
-        id="favoritesNav"
-        onclick="showFavorites()"
-    >
-
-        <span class="nav-icon">
+<div class="nav-item" id="prayNav" onclick="showPray()"><span class="nav-icon">🙏</span> Pray</div><div class="nav-item" id="favoritesNav" onclick="showFavorites()">
+<span class="nav-icon">
             ❤️
         </span>
 
         Favorites
 
     </div>
-
-
-    <div
-        class="nav-item"
-        id="settingsNav"
-        onclick="showSettings()"
-    >
-
-        <span class="nav-icon">
+<div class="nav-item" id="settingsNav" onclick="showSettings()">
+<span class="nav-icon">
             ⚙️
         </span>
 
         Settings
 
     </div>
-
 </div>
-
-
-
-<div class="btc-auth-modal" id="btcAuthModal" hidden>
-    <div class="btc-auth-backdrop" onclick="btcCloseAuth()"></div>
-    <div class="btc-auth-panel" role="dialog" aria-modal="true" aria-labelledby="btcAuthTitle">
-        <button class="btc-auth-close" type="button" onclick="btcCloseAuth()" aria-label="Close">×</button>
-        <div class="onboarding-mark">✝</div>
-        <div class="eyebrow">Before the Close</div>
-        <h2 id="btcAuthTitle">Create your account</h2>
-        <p id="btcAuthSubtitle">Back up your Journey and keep it with you.</p>
-        <div id="btcAuthNameWrap">
-            <label for="btcAuthName">First name</label>
-            <input id="btcAuthName" type="text" maxlength="24" autocomplete="given-name" placeholder="Your first name">
-        </div>
-        <label for="btcAuthEmail">Email</label>
-        <input id="btcAuthEmail" type="email" autocomplete="email" placeholder="you@example.com">
-        <div id="btcAuthPasswordWrap">
-            <label for="btcAuthPassword">Password</label>
-            <input id="btcAuthPassword" type="password" minlength="8" autocomplete="current-password" placeholder="At least 8 characters">
-        </div>
-        <div id="btcAuthNewPasswordWrap" hidden>
-            <label for="btcAuthNewPassword">New password</label>
-            <input id="btcAuthNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters">
-        </div>
-        <div class="btc-auth-message" id="btcAuthMessage"></div>
-        <button id="btcAuthSubmit" class="btc-account-primary btc-auth-submit" type="button" onclick="btcSubmitAuth()">Create Account</button>
-        <button id="btcForgotPassword" class="btc-auth-link" type="button" onclick="btcOpenAuth('recovery')">Forgot password?</button>
-        <button id="btcAuthSwitch" class="btc-auth-link" type="button" onclick="btcOpenAuth('signin')">Already have an account? Sign in</button>
-    </div>
+<div class="btc-auth-modal" hidden="" id="btcAuthModal">
+<div class="btc-auth-backdrop" onclick="btcCloseAuth()"></div>
+<div aria-labelledby="btcAuthTitle" aria-modal="true" class="btc-auth-panel" role="dialog">
+<button aria-label="Close" class="btc-auth-close" onclick="btcCloseAuth()" type="button">×</button>
+<div class="onboarding-mark">✝</div>
+<div class="eyebrow">Before the Close</div>
+<h2 id="btcAuthTitle">Create your account</h2>
+<p id="btcAuthSubtitle">Back up your Journey and keep it with you.</p>
+<div id="btcAuthNameWrap">
+<label for="btcAuthName">First name</label>
+<input autocomplete="given-name" id="btcAuthName" maxlength="24" placeholder="Your first name" type="text"/>
 </div>
-
+<label for="btcAuthEmail">Email</label>
+<input autocomplete="email" id="btcAuthEmail" placeholder="you@example.com" type="email"/>
+<div id="btcAuthPasswordWrap">
+<label for="btcAuthPassword">Password</label>
+<input autocomplete="current-password" id="btcAuthPassword" minlength="8" placeholder="At least 8 characters" type="password"/>
+</div>
+<div hidden="" id="btcAuthNewPasswordWrap">
+<label for="btcAuthNewPassword">New password</label>
+<input autocomplete="new-password" id="btcAuthNewPassword" minlength="8" placeholder="At least 8 characters" type="password"/>
+</div>
+<div class="btc-auth-message" id="btcAuthMessage"></div>
+<button class="btc-account-primary btc-auth-submit" id="btcAuthSubmit" onclick="btcSubmitAuth()" type="button">Create Account</button>
+<button class="btc-auth-link" id="btcForgotPassword" onclick="btcOpenAuth('recovery')" type="button">Forgot password?</button>
+<button class="btc-auth-link" id="btcAuthSwitch" onclick="btcOpenAuth('signin')" type="button">Already have an account? Sign in</button>
+</div>
+</div>
 <!-- ========================================
      JAVASCRIPT
 ========================================= -->
-
 <script src="prayers.js?v=1200"></script>
-
 <script src="app.js?v=1.3.0"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="cloud.js?v=1.3.0"></script>
-
-
 <!-- ========================================
      SERVICE WORKER
 ========================================= -->
-
 <script>
 
     if ("serviceWorker" in navigator) {
@@ -1128,185 +780,94 @@
     }
 
 </script>
-
-
 <!-- ========================================
      FEEDBACK MODAL
 ========================================= -->
-
-<div
-    class="feedback-overlay"
-    id="feedbackOverlay"
-    onclick="handleFeedbackOverlay(event)"
->
-
-    <div class="feedback-modal">
-
-        <button
-            class="feedback-close"
-            onclick="closeFeedback()"
-            aria-label="Close feedback"
-        >
+<div class="feedback-overlay" id="feedbackOverlay" onclick="handleFeedbackOverlay(event)">
+<div class="feedback-modal">
+<button aria-label="Close feedback" class="feedback-close" onclick="closeFeedback()">
             ×
         </button>
-
-        <div class="eyebrow">
+<div class="eyebrow">
             Tester Feedback
         </div>
-
-        <h2>
+<h2>
             Help us make it better.
         </h2>
-
-        <p class="feedback-modal-description">
+<p class="feedback-modal-description">
             Tell us what's working, what's broken,
             or what you'd love to see next.
         </p>
-
-
-        <div class="feedback-field">
-
-            <label for="feedbackType">
+<div class="feedback-field">
+<label for="feedbackType">
                 FEEDBACK TYPE
             </label>
-
-            <select id="feedbackType">
-
-                <option value="Bug Report">
+<select id="feedbackType">
+<option value="Bug Report">
                     🐛 Bug Report
                 </option>
-
-                <option value="Feature Idea">
+<option value="Feature Idea">
                     💡 Feature Idea
                 </option>
-
-                <option value="Prayer Feedback">
+<option value="Prayer Feedback">
                     🙏 Prayer Feedback
                 </option>
-
-                <option value="General Feedback">
+<option value="General Feedback">
                     💬 General Feedback
                 </option>
-
-            </select>
-
-        </div>
-
-
-        <div class="feedback-field">
-
-            <label>
+</select>
+</div>
+<div class="feedback-field">
+<label>
                 HOW'S THE APP SO FAR?
             </label>
-
-            <div
-                class="rating-buttons"
-                id="ratingButtons"
-            >
-
-                <button
-                    type="button"
-                    onclick="setFeedbackRating(1)"
-                >
+<div class="rating-buttons" id="ratingButtons">
+<button onclick="setFeedbackRating(1)" type="button">
                     1
                 </button>
-
-                <button
-                    type="button"
-                    onclick="setFeedbackRating(2)"
-                >
+<button onclick="setFeedbackRating(2)" type="button">
                     2
                 </button>
-
-                <button
-                    type="button"
-                    onclick="setFeedbackRating(3)"
-                >
+<button onclick="setFeedbackRating(3)" type="button">
                     3
                 </button>
-
-                <button
-                    type="button"
-                    onclick="setFeedbackRating(4)"
-                >
+<button onclick="setFeedbackRating(4)" type="button">
                     4
                 </button>
-
-                <button
-                    type="button"
-                    onclick="setFeedbackRating(5)"
-                >
+<button onclick="setFeedbackRating(5)" type="button">
                     5
                 </button>
-
-            </div>
-
-            <div class="rating-labels">
-
-                <span>
+</div>
+<div class="rating-labels">
+<span>
                     Needs work
                 </span>
-
-                <span>
+<span>
                     Love it
                 </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="feedback-field">
-
-            <label for="feedbackName">
+</div>
+</div>
+<div class="feedback-field">
+<label for="feedbackName">
                 YOUR NAME
                 <span>(optional)</span>
-            </label>
-
-            <input
-                type="text"
-                id="feedbackName"
-                placeholder="Your name"
-            >
-
-        </div>
-
-
-        <div class="feedback-field">
-
-            <label for="feedbackMessage">
+</label>
+<input id="feedbackName" placeholder="Your name" type="text"/>
+</div>
+<div class="feedback-field">
+<label for="feedbackMessage">
                 YOUR FEEDBACK
             </label>
-
-            <textarea
-                id="feedbackMessage"
-                placeholder="Tell us what you think..."
-                rows="6"
-            ></textarea>
-
-        </div>
-
-
-        <div
-            class="feedback-error"
-            id="feedbackError"
-        ></div>
-
-
-        <button
-            class="feedback-submit"
-            onclick="submitFeedback()"
-        >
+<textarea id="feedbackMessage" placeholder="Tell us what you think..." rows="6"></textarea>
+</div>
+<div class="feedback-error" id="feedbackError"></div>
+<button class="feedback-submit" onclick="submitFeedback()">
             Send Feedback →
         </button>
-
-        <p class="feedback-note">
+<p class="feedback-note">
             This will open your email app with your
             feedback already filled out.
         </p>
-
-    </div>
-
+</div>
 </div></body>
-
 </html>

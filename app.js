@@ -983,7 +983,9 @@ function hideAllScreens() {
 
         "prayerModeScreen",
 
-        "journeyScreen"
+        "journeyScreen",
+
+        "prayScreen"
 
     ];
 
@@ -1030,6 +1032,19 @@ function showToday() {
     updateWelcome();
 
     getDailyPrayer();
+}
+
+
+function showPray() {
+
+    hideAllScreens();
+
+    const screen = document.getElementById("prayScreen");
+    if (screen) screen.style.display = "block";
+
+    setActiveNav("prayNav");
+    btcInstallGoalPrayer();
+    window.scrollTo(0,0);
 }
 
 
@@ -1383,7 +1398,7 @@ function closePrayerMode() {
         null;
 
 
-    showToday();
+    showPray();
 
 
     window.scrollTo(
@@ -3213,7 +3228,7 @@ document.addEventListener("DOMContentLoaded",function(){
    v1.0 RC3 — CINEMATIC NAVIGATION
    Keeps existing screen logic; adds directional entrance motion.
 ======================================== */
-const BTC_NAV_ORDER=["today","journey","favorites","settings"];
+const BTC_NAV_ORDER=["today","journey","pray","favorites","settings"];
 let btcLastNavIndex=0;
 
 function btcAnimateScreen(screenId,direction) {
@@ -3244,6 +3259,11 @@ const btcRC3ShowJourney=showJourney;
 showJourney=function() {
     btcRC3ShowJourney();
     btcNavMotion("journey","journeyScreen");
+};
+const btcRC3ShowPray=showPray;
+showPray=function() {
+    btcRC3ShowPray();
+    btcNavMotion("pray","prayScreen");
 };
 const btcRC3ShowFavorites=showFavorites;
 showFavorites=function() {
@@ -3329,12 +3349,12 @@ function btcInstallDailyVerse(){
 
 function btcInstallGoalPrayer(){
     if(document.getElementById("btcGoalPrayerCard"))return;
-    const target=document.querySelector(".journey-goal-card")||document.querySelector("#journeyScreen .focus-card");
+    const target=document.getElementById("btcPrayGoalSlot")||document.querySelector(".journey-goal-card")||document.querySelector("#journeyScreen .focus-card");
     if(!target)return;
     const card=document.createElement("section");
     card.id="btcGoalPrayerCard";card.className="btc-goal-prayer-card";
     card.innerHTML='<div class="eyebrow">Faith in Action</div><h3>Pray Over My Goal</h3><p>Ask for discipline, patience, courage, and the wisdom to serve people well while you work toward the goal.</p><button class="btc-goal-prayer-btn" type="button" onclick="btcPrayOverGoal()">Pray Over My Goal →</button>';
-    target.insertAdjacentElement("afterend",card);
+    target.id==="btcPrayGoalSlot" ? target.appendChild(card) : target.insertAdjacentElement("afterend",card);
 }
 function btcPrayOverGoal(){
     const focus=getWeeklyFocus();
