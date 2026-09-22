@@ -13,7 +13,7 @@
 <title>Before the Close</title>
 <link href="manifest.json" rel="manifest"/>
 <link href="icons/icon-192.png" rel="apple-touch-icon"/>
-<link href="style.css?v=1.5.1" rel="stylesheet"/>
+<link href="style.css?v=1.5.2" rel="stylesheet"/>
 </head>
 <body>
 <div aria-hidden="true" class="btc-launch-splash" id="btcLaunchSplash">
@@ -188,19 +188,19 @@
 </div>
 <div class="checkin-response" hidden="" id="checkinResponse"></div>
 </section>
-<section class="reflection-card" id="btcEndOfDayCard">
-<div class="eyebrow">End Your Day</div>
+<section class="reflection-card btc-end-day-card" id="btcEndOfDayCard" hidden>
+<div class="eyebrow">🌙 End Your Day</div>
 <h3>How did today go?</h3>
-<p class="checkin-copy">Take a second to reflect, then carry the lesson forward.</p>
+<p class="btc-end-day-copy">Take a minute to close the day with honesty and carry the lesson forward.</p>
 <div class="reflection-moods">
-<button onclick="btcSaveReflection('great')" type="button">🙌<span>Great</span></button>
-<button onclick="btcSaveReflection('solid')" type="button">👍<span>Solid</span></button>
-<button onclick="btcSaveReflection('tough')" type="button">😐<span>Tough</span></button>
-<button onclick="btcSaveReflection('brutal')" type="button">🥴<span>Brutal</span></button>
+<button aria-label="Great" onclick="btcSaveReflection('great')" type="button">🙌<span>Great</span></button>
+<button aria-label="Solid" onclick="btcSaveReflection('solid')" type="button">👍<span>Solid</span></button>
+<button aria-label="Tough" onclick="btcSaveReflection('tough')" type="button">😐<span>Tough</span></button>
+<button aria-label="Brutal" onclick="btcSaveReflection('brutal')" type="button">🥴<span>Brutal</span></button>
 </div>
 <textarea id="btcReflectionNote" maxlength="180" placeholder="What are you taking into tomorrow? (optional)"></textarea>
 <button class="reflection-save" onclick="btcSaveReflectionNote()" type="button">Save Reflection</button>
-<div class="reflection-saved" id="btcReflectionSaved"></div>
+<div class="reflection-saved" id="btcReflectionSaved" aria-live="polite"></div>
 </section>
 </div>
 <!-- ========================================
@@ -278,147 +278,45 @@
      SETTINGS
 ========================================= -->
 <div class="app" id="settingsScreen" style="display: none;">
-<div class="header">
-<div class="brand">
-            BEFORE THE CLOSE
-        
-    <!-- Beta v0.9: Daily Reminder -->
-<section class="reminder-settings-card">
-<div class="eyebrow">Daily Reminder
-    <!-- v1.0: About -->
-<section class="about-card">
-<div class="eyebrow">About</div>
-<h2>Before the Close</h2>
-<p>Faith, focus, and purpose for people who sell.</p>
-<div class="about-meta">
-<span>Version</span><strong>1.0.0</strong>
-</div>
-<div class="about-meta">
-<span>Prayer Library</span><strong>560 prayers</strong>
-</div>
-<div class="about-meta">
-<span>Release</span><strong>Public Release</strong>
-</div>
-</section>
-</div>
-<h2>Start with purpose.</h2>
-<p>Choose when you want Before the Close to remind you to check in and read your prayer.</p>
-<div class="reminder-row">
-<div>
-<strong>Daily reminder</strong>
-<small id="reminderStatusText">Off</small>
-</div>
-<label class="reminder-switch">
-<input id="reminderEnabled" onchange="toggleDailyReminder(this.checked)" type="checkbox"/>
-<span></span>
-</label>
-</div>
-<div class="reminder-time-wrap" hidden="" id="reminderTimeWrap">
-<label for="reminderTime">Reminder time</label>
-<input id="reminderTime" onchange="saveReminderTime(this.value)" type="time" value="08:00"/>
-<p id="reminderSupportNote"></p>
-<button class="reminder-test-btn" onclick="testReminder()" type="button">Test Reminder</button>
-</div>
-</section>
-</div>
-</div>
+<div class="header"><div class="brand">BEFORE THE CLOSE</div></div>
 <div class="welcome">
-<div class="eyebrow">
-            Personalize Your Experience
-        </div>
-<h1>
-            Settings ⚙️
-        </h1>
-<p class="subtitle">
-            Make Before the Close yours.
-        </p>
-</div>
-<div class="settings-group">
-<label for="userName">
-            YOUR NAME
-        </label>
-<input id="userName" placeholder="Enter your first name" type="text"/>
-</div>
-<div class="settings-group">
-<label for="settingsSalesType">
-            YOUR SALES INDUSTRY
-        </label>
-<select id="settingsSalesType">
-<option value="general">
-                💼 General Sales
-            </option>
-<option value="solar">
-                ☀️ Solar
-            </option>
-<option value="cars">
-                🚗 Automotive
-            </option>
-<option value="realestate">
-                🏠 Real Estate
-            </option>
-<option value="insurance">
-                🛡️ Insurance
-            </option>
-<option value="cellular">
-                📱 Cellular
-            </option>
-<option value="d2d">
-                🚪 Door-to-Door
-            </option>
-<option value="b2b">
-                🤝 B2B Sales
-            </option>
-</select>
-</div>
-<div class="settings-group">
-<label for="settingsSalesStyle">HOW DO YOU PRIMARILY SELL?</label>
-<select id="settingsSalesStyle"></select>
-<p class="settings-helper">Your sales style changes the language and situations used in your prayers.</p>
-</div>
-<button class="save-settings" onclick="saveSettings()">
-        Save Settings
-    </button>
-<div class="settings-saved" id="settingsSaved"></div>
-<!-- ========================================
-     ACCOUNT + CLOUD SYNC
-========================================= -->
-<section class="btc-account-card" id="btcAccountCard">
-<div class="eyebrow">Account &amp; Cloud</div>
-<h2>Your Before the Close Account</h2>
-<p id="btcAccountCopy">Sign in to back up your Journey and carry it across devices.</p>
-<div class="btc-account-actions" id="btcSignedOutActions">
-<button class="btc-account-primary" onclick="btcOpenAuth('signup')" type="button">Create Account</button>
-<button class="btc-account-secondary" onclick="btcOpenAuth('signin')" type="button">Sign In</button>
-</div>
-<div hidden="" id="btcSignedInActions">
-<div class="btc-account-user"><span>Signed in as</span><strong id="btcAccountEmail"></strong></div>
-<div class="btc-cloud-status" id="btcCloudStatus">Cloud sync ready.</div>
-<div class="btc-account-actions">
-<button class="btc-account-secondary" onclick="btcSyncNow(true)" type="button">Sync Now</button>
-<button class="btc-account-secondary" onclick="btcSignOut()" type="button">Sign Out</button>
-</div>
-</div>
-</section>
-<!-- ========================================
-     TESTER FEEDBACK
-========================================= -->
-<div class="feedback-section">
-<div class="feedback-divider"></div>
-<div class="eyebrow">
-        Help Build Before the Close
-    </div>
-<h2 class="feedback-heading">
-        Got feedback? 👀
-    </h2>
-<p class="feedback-description">
-        Found a bug, have an idea, or think something
-        could be better? You're helping shape the app.
-    </p>
-<button class="feedback-open-button" onclick="openFeedback()">
-        💬 Send Feedback
-    </button>
+<div class="eyebrow">Personalize Your Experience</div>
+<h1>Settings ⚙️</h1>
+<p class="subtitle">Make Before the Close yours.</p>
 </div>
 
+<section class="btc-settings-section">
+<div class="eyebrow">Personalization</div>
+<h2>Your Experience</h2>
+<div class="settings-group"><label for="userName">YOUR NAME</label><input id="userName" placeholder="Enter your first name" type="text"/></div>
+<div class="settings-group"><label for="settingsSalesType">YOUR SALES INDUSTRY</label><select id="settingsSalesType">
+<option value="general">💼 General Sales</option><option value="solar">☀️ Solar</option><option value="cars">🚗 Automotive</option><option value="realestate">🏠 Real Estate</option><option value="insurance">🛡️ Insurance</option><option value="cellular">📱 Cellular</option><option value="d2d">🚪 Door-to-Door</option><option value="b2b">🤝 B2B Sales</option>
+</select></div>
+<div class="settings-group"><label for="settingsSalesStyle">HOW DO YOU PRIMARILY SELL?</label><select id="settingsSalesStyle"></select><p class="settings-helper">Your sales style changes the language and situations used in your prayers.</p></div>
+<button class="save-settings" onclick="saveSettings()" type="button">Save Settings</button><div class="settings-saved" id="settingsSaved" aria-live="polite"></div>
+</section>
+
+<section class="reminder-settings-card btc-settings-section">
+<div class="eyebrow">Reminders</div><h2>Start with purpose.</h2><p>Choose when you want Before the Close to remind you to check in and read your prayer.</p>
+<div class="reminder-row"><div><strong>Daily reminder</strong><small id="reminderStatusText">Off</small></div><label class="reminder-switch"><input id="reminderEnabled" onchange="toggleDailyReminder(this.checked)" type="checkbox"/><span></span></label></div>
+<div class="reminder-time-wrap" hidden id="reminderTimeWrap"><label for="reminderTime">Reminder time</label><input id="reminderTime" onchange="saveReminderTime(this.value)" type="time" value="08:00"/><p id="reminderSupportNote"></p><button class="reminder-test-btn" onclick="testReminder()" type="button">Test Reminder</button></div>
+</section>
+
+<section class="btc-account-card btc-settings-section" id="btcAccountCard">
+<div class="eyebrow">Account &amp; Cloud</div><h2>Your Before the Close Account</h2><p id="btcAccountCopy">Sign in to back up your Journey and carry it across devices.</p>
+<div class="btc-account-actions" id="btcSignedOutActions"><button class="btc-account-primary" onclick="btcOpenAuth('signup')" type="button">Create Account</button><button class="btc-account-secondary" onclick="btcOpenAuth('signin')" type="button">Sign In</button></div>
+<div hidden id="btcSignedInActions"><div class="btc-account-user"><span>Signed in as</span><strong id="btcAccountEmail"></strong></div><div class="btc-cloud-status" id="btcCloudStatus" aria-live="polite">Cloud sync ready.</div><div class="btc-account-actions"><button class="btc-account-secondary" onclick="btcSyncNow(true)" type="button">Sync Now</button><button class="btc-account-secondary" onclick="btcSignOut()" type="button">Sign Out</button></div></div>
+</section>
+
+<section class="feedback-section btc-settings-section">
+<div class="eyebrow">Help Build Before the Close</div><h2 class="feedback-heading">Got feedback? 👀</h2><p class="feedback-description">Found a bug, have an idea, or think something could be better? You're helping shape the app.</p><button class="feedback-open-button" onclick="openFeedback()" type="button">💬 Send Feedback</button>
+</section>
+
+<section class="about-card btc-settings-section">
+<div class="eyebrow">App &amp; Support</div><h2>Before the Close</h2><p>Faith, focus, and purpose for people who sell.</p>
+<div class="about-meta"><span>Build</span><strong>1.5.2 Dev</strong></div><div class="about-meta"><span>Prayer Library</span><strong>560+ prayers</strong></div><div class="about-meta"><span>Status</span><strong>Pre-release testing</strong></div>
+</section>
+<div aria-hidden="true" class="journey-bottom-spacer"></div>
 </div>
 <!-- ========================================
      JOURNEY
@@ -735,10 +633,10 @@
 <!-- ========================================
      JAVASCRIPT
 ========================================= -->
-<script src="prayers.js?v=1.5.1"></script>
-<script src="app.js?v=1.5.1"></script>
+<script src="prayers.js?v=1.5.2"></script>
+<script src="app.js?v=1.5.2"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="cloud.js?v=1.5.1"></script>
+<script src="cloud.js?v=1.5.2"></script>
 <script>
 // v1.4.1: robust Pray-tab binding for mobile browsers/PWA shells.
 window.addEventListener("DOMContentLoaded", function () {

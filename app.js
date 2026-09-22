@@ -3025,7 +3025,7 @@ function renderReminderSettings() {
         } else if(Notification.permission==="denied") {
             note.textContent="Notifications are blocked for this site. Enable them in your browser/site settings to receive alerts.";
         } else {
-            note.textContent="Beta reminder: notifications work while Before the Close is active and can catch up when you reopen it. Full closed-app push reminders will come with the backend notification system.";
+            note.textContent="Reminders work while Before the Close is active and can catch up when you reopen it. Full closed-app push reminders are planned for a future update.";
         }
     }
 }
@@ -3357,21 +3357,25 @@ function btcSaveReflectionNote(silent){
     all[key]={mood:btcReflectionMood||existing.mood||"",note};
     localStorage.setItem(BTC_REFLECTION_KEY,JSON.stringify(all));
     const msg=document.getElementById("btcReflectionSaved");
-    if(msg && !silent) msg.textContent="Saved. Carry the lesson forward.";
+    if(msg && !silent) msg.textContent="Today reflected ✓ — carry the lesson forward.";
+    const card=document.getElementById("btcEndOfDayCard");
+    if(card) card.classList.add("is-complete");
 }
 function btcRenderReflection(){
     const card=document.getElementById("btcEndOfDayCard");
-    const existingToday=btcGetReflections()[btcTodayKey()];
-    // Keep Today focused during the workday. Show reflection from 5 PM onward,
-    // or all day once today's reflection has already been started/saved.
-    if(card) card.hidden = new Date().getHours() < 17 && !existingToday;
-    const item=existingToday;
-    if(!item)return;
+    const item=btcGetReflections()[btcTodayKey()];
+    const afterFive=(new Date()).getHours()>=17;
+    if(card) card.hidden=!(afterFive || !!item);
+    document.querySelectorAll(".reflection-moods button").forEach(b=>b.classList.remove("selected"));
+    if(!item){ btcReflectionMood=null; return; }
     btcReflectionMood=item.mood;
     const note=document.getElementById("btcReflectionNote"); if(note)note.value=item.note||"";
     const moods=["great","solid","tough","brutal"], i=moods.indexOf(item.mood);
     const buttons=document.querySelectorAll(".reflection-moods button");
     if(buttons[i])buttons[i].classList.add("selected");
+    if(card) card.classList.add("is-complete");
+    const msg=document.getElementById("btcReflectionSaved");
+    if(msg) msg.textContent="Today reflected ✓";
 }
 
 function btcQuickReset(){

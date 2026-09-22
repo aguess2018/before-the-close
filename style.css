@@ -1861,3 +1861,35 @@ html, body {
 .btc-share-link-btn { width:100%; margin-top:10px; border-color:rgba(255,255,255,.12); background:rgba(255,255,255,.04); }
 .btc-share-note { margin:12px 2px 0; font-size:.7rem; line-height:1.45; color:rgba(255,255,255,.45); text-align:center; }
 @media(min-width:700px){.btc-share-studio{align-items:center}.btc-share-preview{width:220px}}
+
+
+/* ========================================
+   v1.5.2 — STRUCTURAL POLISH PASS
+========================================= */
+#todayScreen,#journeyScreen,#prayScreen,#favoritesScreen,#settingsScreen{
+    padding-bottom:calc(160px + env(safe-area-inset-bottom));
+}
+#settingsScreen{padding-top:max(0px,env(safe-area-inset-top));}
+.btc-settings-section{margin-top:22px;}
+.btc-settings-section:first-of-type{margin-top:10px;}
+.btc-settings-section h2{margin:7px 0 10px;}
+.btc-settings-section .settings-group:first-of-type{margin-top:16px;}
+#settingsScreen .header{padding-top:max(16px,env(safe-area-inset-top));}
+#settingsScreen .btc-account-user strong{overflow-wrap:anywhere;word-break:break-word;}
+#settingsScreen .feedback-section{padding-top:22px;border-top:1px solid rgba(255,255,255,.09);}
+#settingsScreen .feedback-divider{display:none;}
+.btc-end-day-card{margin-top:24px;}
+.btc-end-day-card[hidden]{display:none!important;}
+.btc-end-day-copy{margin:6px 0 14px;opacity:.64;line-height:1.5;font-size:.78rem;}
+.btc-end-day-card.is-complete{border-color:rgba(212,175,55,.34);}
+.btc-end-day-card.is-complete .reflection-saved{color:#e5c34f;opacity:.9;}
+.reminder-time-wrap input[type="time"]{inline-size:100%!important;max-inline-size:100%!important;}
+button,.nav-item{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.bottom-nav .nav-item.active{transform:translateY(-2px);}
+.bottom-nav .nav-item.active .nav-icon{filter:drop-shadow(0 0 8px rgba(212,175,55,.22));}
+@media(max-width:430px){
+  .btc-settings-section,.btc-account-card,.reminder-settings-card,.about-card{max-width:100%;box-sizing:border-box;}
+  #settingsScreen input,#settingsScreen select,#settingsScreen textarea{max-width:100%;box-sizing:border-box;min-width:0;}
+  .reflection-moods{grid-template-columns:repeat(2,1fr);}
+  .reflection-moods button{min-height:72px;}
+}

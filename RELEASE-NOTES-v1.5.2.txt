@@ -1,0 +1,11 @@
+Before the Close v1.5.2 — Polish Pass
+
+- Structurally moved End Your Day out of Settings and into Today.
+- End Your Day appears after 5 PM, or anytime today already has a saved reflection.
+- Rebuilt Settings into clean Personalization, Reminders, Account & Cloud, Feedback, and App & Support sections.
+- Added iPhone safe-area spacing and tightened mobile input/card sizing.
+- Kept the v1.5 Social Share Studio intact.
+- Improved active navigation feedback and bottom-scroll clearance.
+- Replaced misleading Public Release metadata with pre-release build information.
+- Refined reminder copy and reflection saved state.
+- Cache bumped to before-the-close-v152.
