@@ -1742,3 +1742,21 @@ button, input, select, textarea {
     #journeyScreen .daily-checkin-section { margin-bottom: 34px; }
     #journeyScreen .journey-section { margin-top: 0; }
 }
+
+
+/* ========================================
+   v1.1.4 STRUCTURAL MOBILE SCROLL FIX
+   Journey enhancement cards now live INSIDE journeyScreen.
+========================================= */
+html, body {
+    scroll-padding-bottom: calc(140px + env(safe-area-inset-bottom));
+}
+.app {
+    padding-bottom: calc(140px + env(safe-area-inset-bottom));
+}
+.journey-bottom-spacer {
+    width: 100%;
+    height: calc(110px + env(safe-area-inset-bottom));
+    flex: 0 0 auto;
+    pointer-events: none;
+}

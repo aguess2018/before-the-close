@@ -49,7 +49,7 @@
 
     <link
         rel="stylesheet"
-        href="style.css?v=113"
+        href="style.css?v=1.1.4"
     >
 
 </head>
@@ -851,6 +851,37 @@
             <div class="achievement-list" id="achievementList"></div>
         </div>
     </section>
+
+    <!-- v1.0 Journey enhancements -->
+<section class="weekly-recap-card">
+            <div class="eyebrow">Your Week Before the Close</div>
+            <h3 id="btcRecapHeadline">Keep showing up.</h3>
+            <div class="recap-grid">
+                <div><strong id="btcRecapCheckins">0</strong><span>Check-ins</span></div>
+                <div><strong id="btcRecapPrayers">0</strong><span>Prayers</span></div>
+                <div><strong id="btcRecapBest">0</strong><span>Best Streak</span></div>
+                <div><strong id="btcRecapGoals">0</strong><span>Goals Hit</span></div>
+            </div>
+            <p id="btcRecapMessage"></p>
+        </section>
+
+        <section class="records-card">
+            <div class="eyebrow">Personal Records</div>
+            <div class="records-grid">
+                <div><span>🔥</span><strong id="btcRecordStreak">0</strong><small>Best Streak</small></div>
+                <div><span>🙏</span><strong id="btcRecordPrayers">0</strong><small>Prayers Opened</small></div>
+                <div><span>↗</span><strong id="btcRecordShares">0</strong><small>Prayers Shared</small></div>
+                <div><span>🎯</span><strong id="btcRecordGoals">0</strong><small>Goals Completed</small></div>
+            </div>
+        </section>
+
+        <section class="prayer-week-card">
+            <div class="eyebrow">Prayer Worth Carrying Forward</div>
+            <h3 id="btcPrayerWeekTitle">Your prayer of the week</h3>
+            <p id="btcPrayerWeekText">Open and save prayers this week and one will surface here.</p>
+        </section>
+
+    <div class="journey-bottom-spacer" aria-hidden="true"></div>
 </div>
 
 
@@ -998,10 +1029,10 @@
 
 <script src="prayers.js?v=1111"></script>
 
-<script src="app.js?v=1111"></script>
+<script src="app.js?v=1.1.4"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="cloud.js?v=1112"></script>
+<script src="cloud.js?v=1.1.4"></script>
 
 
 <!-- ========================================
@@ -1228,33 +1259,4 @@
 
 </div></body>
 
-</html
-        <section class="weekly-recap-card">
-            <div class="eyebrow">Your Week Before the Close</div>
-            <h3 id="btcRecapHeadline">Keep showing up.</h3>
-            <div class="recap-grid">
-                <div><strong id="btcRecapCheckins">0</strong><span>Check-ins</span></div>
-                <div><strong id="btcRecapPrayers">0</strong><span>Prayers</span></div>
-                <div><strong id="btcRecapBest">0</strong><span>Best Streak</span></div>
-                <div><strong id="btcRecapGoals">0</strong><span>Goals Hit</span></div>
-            </div>
-            <p id="btcRecapMessage"></p>
-        </section>
-
-        <section class="records-card">
-            <div class="eyebrow">Personal Records</div>
-            <div class="records-grid">
-                <div><span>🔥</span><strong id="btcRecordStreak">0</strong><small>Best Streak</small></div>
-                <div><span>🙏</span><strong id="btcRecordPrayers">0</strong><small>Prayers Opened</small></div>
-                <div><span>↗</span><strong id="btcRecordShares">0</strong><small>Prayers Shared</small></div>
-                <div><span>🎯</span><strong id="btcRecordGoals">0</strong><small>Goals Completed</small></div>
-            </div>
-        </section>
-
-        <section class="prayer-week-card">
-            <div class="eyebrow">Prayer Worth Carrying Forward</div>
-            <h3 id="btcPrayerWeekTitle">Your prayer of the week</h3>
-            <p id="btcPrayerWeekText">Open and save prayers this week and one will surface here.</p>
-        </section>
-
->
+</html>

@@ -1,0 +1,7 @@
+Before the Close v1.1.4 — Structural Mobile Scroll Fix
+
+- Fixed Journey recap/records/prayer-of-week markup being outside the Journey screen container.
+- Those cards now render only inside Journey and participate in normal document height.
+- Added a real bottom spacer above fixed navigation for iOS and Android.
+- Added safe-area-aware bottom padding and scroll padding.
+- Bumped service worker cache to before-the-close-v114.
