@@ -2558,24 +2558,79 @@ function clearPrayerHistory() {
     renderPrayerHistory();
 }
 
+const BTC_SHARE_APP_URL = "https://aguess2018.github.io/before-the-close/?ref=share";
+let btcShareDraft = { title:"", text:"" };
+
+function btcShareWrapLines(ctx, text, maxWidth) {
+    const words=String(text||"").trim().split(/\s+/); const lines=[]; let line="";
+    words.forEach(word=>{ const test=line ? line+" "+word : word; if(ctx.measureText(test).width>maxWidth && line){lines.push(line);line=word;}else line=test; });
+    if(line) lines.push(line); return lines;
+}
+
+function btcShareIndustryLabel(){
+    const raw=(localStorage.getItem("industry")||localStorage.getItem("selectedIndustry")||localStorage.getItem("userIndustry")||"").trim();
+    const map={general:"General Sales",solar:"Solar",cars:"Automotive",realestate:"Real Estate",insurance:"Insurance",cellular:"Cellular",d2d:"Door-to-Door",b2b:"B2B"};
+    return map[raw]||raw||"Sales";
+}
+function btcShareStyleLabel(){
+    const raw=(localStorage.getItem("salesStyle")||localStorage.getItem("sales_style")||"").trim();
+    const map={d2d:"Door-to-Door",appointments:"Appointments",phone:"Phone",coldcall:"Cold Calling",retail:"Retail",showroom:"Showroom",internet:"Internet Leads",field:"Field Prospecting",inperson:"In-Person",outbound:"Outbound"};
+    return map[raw]||raw;
+}
+function btcDrawShareCard(canvas,title,text,format){
+    const story=format!=="post"; canvas.width=story?1080:1080; canvas.height=story?1920:1080;
+    const ctx=canvas.getContext("2d"), W=canvas.width,H=canvas.height;
+    const bg=ctx.createLinearGradient(0,0,W,H); bg.addColorStop(0,"#181713"); bg.addColorStop(.55,"#090909"); bg.addColorStop(1,"#000"); ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+    const glow=ctx.createRadialGradient(W*.5,H*.2,0,W*.5,H*.2,W*.75); glow.addColorStop(0,"rgba(212,175,55,.16)"); glow.addColorStop(1,"rgba(212,175,55,0)"); ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);
+    const pad=story?92:80, max=W-pad*2;
+    ctx.textAlign="center"; ctx.fillStyle="#d4af37"; ctx.font="700 34px Arial"; ctx.fillText("✝",W/2,story?160:105);
+    ctx.fillStyle="#f6f3ec";ctx.font="700 34px Arial";ctx.letterSpacing="8px";ctx.fillText("BEFORE THE CLOSE",W/2,story?225:160);ctx.letterSpacing="0px";
+    ctx.fillStyle="rgba(255,255,255,.55)";ctx.font="600 22px Arial";ctx.fillText("FAITH • FOCUS • PURPOSE",W/2,story?270:198);
+    let y=story?520:340; ctx.fillStyle="#fff";ctx.font="700 58px Arial";
+    const titleLines=btcShareWrapLines(ctx,title,max); titleLines.slice(0,3).forEach(l=>{ctx.fillText(l,W/2,y);y+=70;});
+    y+=story?55:35;ctx.fillStyle="rgba(255,255,255,.82)";ctx.font=story?"400 38px Arial":"400 34px Arial";
+    const prayerLines=btcShareWrapLines(ctx,text,max); const maxLines=story?16:10;
+    prayerLines.slice(0,maxLines).forEach((l,i)=>{if(i===maxLines-1 && prayerLines.length>maxLines) l=l.replace(/[.,;:]?$/,"")+"…";ctx.fillText(l,W/2,y);y+=story?55:48;});
+    const industry=btcShareIndustryLabel(), style=btcShareStyleLabel();
+    ctx.fillStyle="#d4af37";ctx.font="700 24px Arial";ctx.fillText(industry+(style?" • "+style:""),W/2,H-(story?260:175));
+    ctx.fillStyle="rgba(255,255,255,.7)";ctx.font="600 23px Arial";ctx.fillText("Take a moment Before the Close.",W/2,H-(story?205:125));
+    ctx.fillStyle="rgba(255,255,255,.45)";ctx.font="500 20px Arial";ctx.fillText("aguess2018.github.io/before-the-close",W/2,H-(story?160:85));
+}
+function btcEnsureShareStudio(){
+    let modal=document.getElementById("btcShareStudio"); if(modal) return modal;
+    modal=document.createElement("div");modal.id="btcShareStudio";modal.className="btc-share-studio";modal.hidden=true;
+    modal.innerHTML='<div class="btc-share-sheet" role="dialog" aria-modal="true" aria-label="Share prayer"><div class="btc-share-sheet-head"><div><h3>Share Before the Close</h3><p>Turn this prayer into a branded social card.</p></div><button class="btc-share-close" type="button" aria-label="Close">×</button></div><div class="btc-share-preview"><canvas id="btcSharePreview"></canvas></div><div class="btc-share-format-grid"><button type="button" data-share-format="story">Story<small>9:16 • Instagram, Facebook, Snapchat</small></button><button type="button" data-share-format="post">Post<small>1:1 • Feed-ready</small></button></div><button class="btc-share-link-btn" type="button" data-share-format="link">↗ Share Prayer + App Link</button><p class="btc-share-note">Your phone decides which installed social apps appear in the share sheet. The app link is included when the receiving app supports shared text/links.</p></div>';
+    document.body.appendChild(modal);
+    modal.querySelector(".btc-share-close").onclick=()=>modal.hidden=true;
+    modal.addEventListener("click",e=>{if(e.target===modal)modal.hidden=true;});
+    modal.querySelectorAll("[data-share-format]").forEach(b=>b.onclick=()=>btcExecuteSocialShare(b.dataset.shareFormat));
+    return modal;
+}
+async function btcCanvasBlob(canvas){return await new Promise(resolve=>canvas.toBlob(resolve,"image/png",.95));}
+async function btcExecuteSocialShare(format){
+    const title=btcShareDraft.title,text=btcShareDraft.text; if(!title||!text)return;
+    const shareText='"'+title+'" — Before the Close\n\n'+BTC_SHARE_APP_URL;
+    if(format==="link"){
+        try{if(navigator.share){await navigator.share({title:"Before the Close — "+title,text:shareText,url:BTC_SHARE_APP_URL});btcIncrementMilestone("shares");return;}}catch(e){if(e&&e.name==="AbortError")return;}
+        try{await navigator.clipboard.writeText(shareText);alert("Prayer + app link copied.");btcIncrementMilestone("shares");return;}catch(_){}
+        window.prompt("Copy this:",shareText);return;
+    }
+    const canvas=document.createElement("canvas");btcDrawShareCard(canvas,title,text,format);const blob=await btcCanvasBlob(canvas);
+    const file=new File([blob],"before-the-close-"+format+".png",{type:"image/png"});
+    try{
+        if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+            await navigator.share({title:"Before the Close — "+title,text:"A prayer from Before the Close\n"+BTC_SHARE_APP_URL,url:BTC_SHARE_APP_URL,files:[file]});
+            btcIncrementMilestone("shares");return;
+        }
+    }catch(e){if(e&&e.name==="AbortError")return;}
+    const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=file.name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+    try{await navigator.clipboard.writeText(BTC_SHARE_APP_URL);}catch(_){}
+    alert("Share card saved. The Before the Close link was also copied so you can add it to your post/story.");btcIncrementMilestone("shares");
+}
 async function btcSharePrayer(title,text) {
     if(!title || !text) return;
-    btcIncrementMilestone("shares");
-    const shareText="BEFORE THE CLOSE\nFaith • Focus • Purpose\n\n"+title+"\n\n"+text+"\n\nBefore the Close · Built for people who sell with purpose";
-    try {
-        if(navigator.share) {
-            await navigator.share({title:"Before the Close — "+title,text:shareText});
-            return;
-        }
-        if(navigator.clipboard && navigator.clipboard.writeText) {
-            await navigator.clipboard.writeText(shareText);
-            alert("Prayer copied to your clipboard.");
-            return;
-        }
-    } catch(err) {
-        if(err && err.name==="AbortError") return;
-    }
-    window.prompt("Copy this prayer:",shareText);
+    btcShareDraft={title,text};
+    const modal=btcEnsureShareStudio(); const preview=modal.querySelector("#btcSharePreview");btcDrawShareCard(preview,title,text,"story");modal.hidden=false;
 }
 
 function btcEnsureShareButton(container,titleGetter,textGetter) {

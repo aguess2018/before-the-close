@@ -1,4 +1,4 @@
-const CACHE_NAME = "before-the-close-v141";
+const CACHE_NAME = "before-the-close-v150";
 const APP_FILES = ["./","./index.html","./style.css","./prayers.js","./app.js","./cloud.js","./manifest.json","./icons/icon-192.png","./icons/icon-512.png"];
 
 self.addEventListener("install", event => {

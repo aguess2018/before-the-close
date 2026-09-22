@@ -1820,3 +1820,44 @@ html, body {
 #prayScreen {
     padding-bottom: calc(150px + env(safe-area-inset-bottom));
 }
+
+
+/* ========================================
+   v1.5 — SOCIAL SHARE STUDIO + MOBILE CLEANUP
+========================================= */
+.reminder-time-wrap,
+.reminder-time-wrap * { box-sizing: border-box; min-width: 0; }
+.reminder-time-wrap { width: 100%; max-width: 100%; overflow: hidden; }
+.reminder-time-wrap input[type="time"] {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    -webkit-appearance: none;
+    appearance: none;
+}
+.btc-share-studio {
+    position: fixed; inset: 0; z-index: 12000;
+    display: flex; align-items: flex-end; justify-content: center;
+    padding: 18px 14px calc(18px + env(safe-area-inset-bottom));
+    background: rgba(0,0,0,.78); backdrop-filter: blur(12px);
+}
+.btc-share-studio[hidden] { display:none !important; }
+.btc-share-sheet {
+    width: min(100%, 520px); max-height: min(88vh, 760px); overflow:auto;
+    border:1px solid rgba(212,175,55,.35); border-radius:24px;
+    background:linear-gradient(160deg,#191816,#0b0b0b 65%);
+    box-shadow:0 28px 80px rgba(0,0,0,.58); padding:20px;
+}
+.btc-share-sheet-head { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; }
+.btc-share-sheet-head h3 { margin:4px 0 4px; font-size:1.35rem; }
+.btc-share-sheet-head p { margin:0; color:rgba(255,255,255,.58); font-size:.82rem; line-height:1.4; }
+.btc-share-close { width:38px; height:38px; flex:0 0 38px; border-radius:50%; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); color:#fff; font-size:20px; }
+.btc-share-preview { margin:18px auto; width:min(72%,280px); aspect-ratio:9/16; border-radius:18px; overflow:hidden; border:1px solid rgba(212,175,55,.28); background:#0b0b0b; box-shadow:0 18px 40px rgba(0,0,0,.35); }
+.btc-share-preview canvas { display:block; width:100%; height:100%; }
+.btc-share-format-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.btc-share-format-grid button,.btc-share-link-btn { min-height:58px; border-radius:15px; border:1px solid rgba(212,175,55,.3); background:rgba(212,175,55,.08); color:#fff; font-weight:800; padding:10px; }
+.btc-share-format-grid button small { display:block; margin-top:3px; font-weight:500; opacity:.55; }
+.btc-share-link-btn { width:100%; margin-top:10px; border-color:rgba(255,255,255,.12); background:rgba(255,255,255,.04); }
+.btc-share-note { margin:12px 2px 0; font-size:.7rem; line-height:1.45; color:rgba(255,255,255,.45); text-align:center; }
+@media(min-width:700px){.btc-share-studio{align-items:center}.btc-share-preview{width:220px}}

@@ -1,0 +1,14 @@
+Before the Close v1.5 — Social Share Studio
+
+- Added branded prayer share cards.
+- Story format (9:16) for social stories.
+- Post format (1:1) for social feeds.
+- Native mobile share sheet supports installed apps when the browser/OS allows file sharing.
+- Shared content includes a Before the Close app link when supported.
+- Added Share Prayer + App Link fallback.
+- Preserved existing share achievements/counters.
+- Removed the accidentally visible v1.4 HTML comment.
+- Hardened reminder-time sizing for iPhone/small screens.
+- Bumped PWA cache to v1.5.
+
+Note: PWAs cannot force a specific third-party app directly into its Story composer on every platform; the phone/app controls available share destinations.
