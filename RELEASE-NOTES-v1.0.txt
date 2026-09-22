@@ -1,0 +1,22 @@
+BEFORE THE CLOSE — v1.0.0
+
+First public-ready release.
+
+Includes:
+- 240 daily industry-specific prayers
+- 320 situational Prayer Mode prayers
+- 8 sales industries
+- Daily Check-In
+- Journey stats and achievements
+- Weekly challenge and 7-day activity
+- Favorites and prayer history
+- Prayer sharing, including saved Favorites
+- Weekly sales goals and intentions
+- First-launch onboarding
+- Daily reminder settings and test notifications
+- Offline-capable PWA
+- Feedback system
+
+Reminder note:
+Scheduled notifications in this static PWA are best-effort while the app is active/backgrounded
+and can catch up when reopened. Reliable closed-app scheduled push requires future push/backend infrastructure.

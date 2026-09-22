@@ -1,0 +1,17 @@
+BEFORE THE CLOSE — v1.0 RC2
+
+Progression + visual polish release candidate.
+
+New:
+- 22 total achievements across Faith, Consistency, Growth, and Action
+- Achievement filters, overall completion meter, and per-achievement progress
+- Achievement unlock toast/celebration
+- Personal Best Streak stat
+- Share milestones
+- Weekly goal completion milestones
+- Premium visual polish across cards, Journey, navigation, and buttons
+- Preserves all v0.9 functionality and the 560-prayer library
+
+Note:
+Share and completed-goal counters begin tracking after this build is installed.
+Existing prayer/check-in/favorite/streak data continues to use local device storage.

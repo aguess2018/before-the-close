@@ -2311,7 +2311,7 @@ function incrementJourneyPrayerCount() {
     saveJourneyStats(stats);
 }
 
-function renderJourney() {
+function renderJourneyLegacy() {
     const checkins=getDailyCheckins();
     const stats=getJourneyStats();
     const streak=getDisplayedStreak();
@@ -2440,7 +2440,7 @@ function renderRecentActivity() {
 }
 
 /* Extend Journey rendering without replacing the stable v0.4 function. */
-const btcV04RenderJourney = renderJourney;
+const btcV04RenderJourney = renderJourneyLegacy;
 renderJourney = function() {
     btcV04RenderJourney();
     renderWeeklyChallenge();
@@ -2506,6 +2506,7 @@ function clearPrayerHistory() {
 
 async function btcSharePrayer(title,text) {
     if(!title || !text) return;
+    btcIncrementMilestone("shares");
     const shareText="BEFORE THE CLOSE\nFaith • Focus • Purpose\n\n"+title+"\n\n"+text+"\n\nBefore the Close · Built for people who sell with purpose";
     try {
         if(navigator.share) {
@@ -2979,4 +2980,382 @@ document.addEventListener("visibilitychange",function(){
 document.addEventListener("DOMContentLoaded",function(){
     renderReminderSettings();
     scheduleLocalReminderCheck();
+});
+
+
+/* ========================================
+   v1.0 RC2 — PROGRESSION SYSTEM
+======================================== */
+const BTC_MILESTONES_KEY="btcMilestones";
+const BTC_UNLOCKS_KEY="btcAchievementUnlocks";
+let btcAchievementFilter="all";
+
+function btcGetMilestones() {
+    try {
+        return Object.assign({shares:0,goalsCompleted:0,bestStreak:0},JSON.parse(localStorage.getItem(BTC_MILESTONES_KEY))||{});
+    } catch(_) { return {shares:0,goalsCompleted:0,bestStreak:0}; }
+}
+function btcSaveMilestones(data) {
+    localStorage.setItem(BTC_MILESTONES_KEY,JSON.stringify(data));
+}
+function btcIncrementMilestone(key) {
+    const data=btcGetMilestones();
+    data[key]=(data[key]||0)+1;
+    btcSaveMilestones(data);
+}
+function btcGetUnlocks() {
+    try { return JSON.parse(localStorage.getItem(BTC_UNLOCKS_KEY))||[]; }
+    catch(_) { return []; }
+}
+function btcSaveUnlocks(items) {
+    localStorage.setItem(BTC_UNLOCKS_KEY,JSON.stringify(items));
+}
+function btcCheckBestStreak() {
+    const data=btcGetMilestones();
+    const streak=getDisplayedStreak();
+    if(streak>(data.bestStreak||0)) {
+        data.bestStreak=streak;
+        btcSaveMilestones(data);
+    }
+    return Math.max(streak,data.bestStreak||0);
+}
+function btcCheckGoalCompletion() {
+    const focus=getWeeklyFocus();
+    if(!focus || !focus.target || (focus.progress||0)<focus.target) return;
+    const key="btcGoalComplete:"+focus.weekKey+":"+focus.type+":"+focus.target;
+    if(localStorage.getItem(key)!=="true") {
+        localStorage.setItem(key,"true");
+        btcIncrementMilestone("goalsCompleted");
+        btcShowAchievementToast("🎯","Weekly Goal Crushed","You hit "+focus.target+" "+focus.type+".");
+    }
+}
+function btcAchievementData() {
+    const checkins=getDailyCheckins();
+    const checkinCount=Object.keys(checkins).length;
+    const stats=getJourneyStats();
+    const prayers=stats.prayersOpened||0;
+    const favorites=getFavoriteCountForJourney();
+    const streak=getDisplayedStreak();
+    const best=btcCheckBestStreak();
+    const milestones=btcGetMilestones();
+    const shares=milestones.shares||0;
+    const goals=milestones.goalsCompleted||0;
+    const weekly=btcWeekDates().filter(d=>checkins[btcLocalDateKey(d)]).length;
+    const history=typeof btcGetHistory==="function" ? btcGetHistory().length : 0;
+
+    const make=(id,icon,title,desc,cat,current,target)=>({
+        id,icon,title,desc,cat,current,target,unlocked:current>=target
+    });
+
+    return [
+        make("first-checkin","🌱","First Step","Complete your first daily check-in.","faith",checkinCount,1),
+        make("five-checkins","🕊️","Finding Rhythm","Complete 5 daily check-ins.","consistency",checkinCount,5),
+        make("twenty-checkins","🌅","Showing Up","Complete 20 daily check-ins.","consistency",checkinCount,20),
+        make("fifty-checkins","🛡️","Built Different","Complete 50 daily check-ins.","consistency",checkinCount,50),
+
+        make("streak-3","🔥","Three Strong","Reach a 3-day streak.","consistency",best,3),
+        make("streak-7","⚡","Seven Days Showing Up","Reach a 7-day streak.","consistency",best,7),
+        make("streak-14","🏔️","Two Weeks Steady","Reach a 14-day streak.","consistency",best,14),
+        make("streak-30","👑","Thirty Days Grounded","Reach a 30-day streak.","consistency",best,30),
+
+        make("prayers-10","🙏","Ten Moments","Open 10 situational prayers.","faith",prayers,10),
+        make("prayers-30","📖","Thirty Prayers Read","Open 30 situational prayers.","faith",prayers,30),
+        make("prayers-100","🏆","Century of Purpose","Open 100 situational prayers.","faith",prayers,100),
+        make("prayers-250","💯","Deep in the Work","Open 250 situational prayers.","faith",prayers,250),
+
+        make("favorite-1","⭐","Worth Keeping","Save your first favorite prayer.","growth",favorites,1),
+        make("favorite-5","💛","Saved for Later","Favorite 5 prayers.","growth",favorites,5),
+        make("favorite-15","✨","Personal Collection","Favorite 15 prayers.","growth",favorites,15),
+
+        make("history-10","🧭","Exploring the Library","Build a history of 10 recent prayers.","growth",history,10),
+        make("share-1","↗️","Pass It On","Share your first prayer.","action",shares,1),
+        make("share-5","📣","Spread the Word","Share 5 prayers.","action",shares,5),
+        make("share-20","🤝","Lift the Room","Share 20 prayers.","action",shares,20),
+
+        make("week-5","📅","Five-Day Week","Check in on 5 days this week.","consistency",weekly,5),
+        make("goal-1","🎯","Faith in Action","Complete your first weekly sales goal.","action",goals,1),
+        make("goal-5","🚀","Goal Getter","Complete 5 weekly sales goals.","action",goals,5)
+    ];
+}
+function setAchievementFilter(filter) {
+    btcAchievementFilter=filter;
+    document.querySelectorAll("[data-achievement-filter]").forEach(btn=>{
+        btn.classList.toggle("active",btn.dataset.achievementFilter===filter);
+    });
+    btcRenderAchievements();
+}
+function btcRenderAchievements() {
+    const all=btcAchievementData();
+    const unlocked=all.filter(a=>a.unlocked).length;
+    const count=document.getElementById("achievementUnlockedCount");
+    const fill=document.getElementById("achievementOverallFill");
+    if(count) count.textContent=unlocked+" / "+all.length;
+    if(fill) fill.style.width=((unlocked/all.length)*100)+"%";
+
+    const list=document.getElementById("achievementList");
+    if(!list) return;
+    const shown=btcAchievementFilter==="all" ? all : all.filter(a=>a.cat===btcAchievementFilter);
+    list.innerHTML=shown.map(a=>{
+        const pct=Math.min(100,(a.current/a.target)*100);
+        const progress=a.unlocked ? "Unlocked" : Math.min(a.current,a.target)+" / "+a.target;
+        return '<div class="achievement '+(a.unlocked?'unlocked':'')+'">'+
+            '<div class="achievement-icon">'+a.icon+'</div>'+
+            '<div class="achievement-copy"><strong>'+a.title+'</strong>'+
+            '<span>'+a.desc+' • '+progress+'</span>'+
+            '<div class="achievement-progress"><span style="width:'+pct+'%"></span></div>'+
+            '<div class="achievement-category">'+a.cat+'</div></div></div>';
+    }).join("");
+
+    btcDetectNewUnlocks(all);
+}
+function btcDetectNewUnlocks(all) {
+    const previous=btcGetUnlocks();
+    const current=all.filter(a=>a.unlocked).map(a=>a.id);
+    const fresh=current.filter(id=>!previous.includes(id));
+    btcSaveUnlocks(current);
+    if(previous.length && fresh.length) {
+        const a=all.find(x=>x.id===fresh[0]);
+        if(a) btcShowAchievementToast(a.icon,a.title,"Achievement unlocked");
+    }
+}
+function btcShowAchievementToast(icon,title,copy) {
+    let toast=document.getElementById("btcAchievementToast");
+    if(!toast) {
+        toast=document.createElement("div");
+        toast.id="btcAchievementToast";
+        toast.className="btc-achievement-toast";
+        document.body.appendChild(toast);
+    }
+    toast.innerHTML='<div class="toast-top">Achievement Unlocked</div><strong>'+icon+' '+title+'</strong><div style="opacity:.62;font-size:.75rem;margin-top:3px">'+copy+'</div>';
+    requestAnimationFrame(()=>toast.classList.add("show"));
+    clearTimeout(window.btcToastTimer);
+    window.btcToastTimer=setTimeout(()=>toast.classList.remove("show"),3200);
+}
+
+/* Final v1.0 RC2 Journey renderer: keep every stable v0.9 Journey feature, then upgrade progression. */
+const btcRC2PreviousRenderJourney = renderJourney;
+renderJourney = function() {
+    btcRC2PreviousRenderJourney();
+    btcCheckGoalCompletion();
+    const best=btcCheckBestStreak();
+    const bestEl=document.getElementById("journeyBestStreak");
+    if(bestEl) bestEl.textContent=best;
+    btcRenderAchievements();
+};
+
+/* Re-check goal completion immediately when +/- progress changes. */
+const btcRC2ChangeGoalProgress=changeGoalProgress;
+changeGoalProgress=function(amount) {
+    btcRC2ChangeGoalProgress(amount);
+    btcCheckGoalCompletion();
+    if(document.getElementById("journeyScreen")?.style.display!=="none") renderJourney();
+};
+
+document.addEventListener("DOMContentLoaded",function(){
+    btcCheckBestStreak();
+});
+
+
+/* ========================================
+   v1.0 RC3 — CINEMATIC NAVIGATION
+   Keeps existing screen logic; adds directional entrance motion.
+======================================== */
+const BTC_NAV_ORDER=["today","journey","favorites","settings"];
+let btcLastNavIndex=0;
+
+function btcAnimateScreen(screenId,direction) {
+    const el=document.getElementById(screenId);
+    if(!el) return;
+    el.classList.remove("btc-screen-enter-right","btc-screen-enter-left");
+    void el.offsetWidth;
+    el.classList.add(direction==="left" ? "btc-screen-enter-left" : "btc-screen-enter-right");
+    window.setTimeout(()=>{
+        el.classList.remove("btc-screen-enter-right","btc-screen-enter-left");
+    },320);
+}
+function btcNavMotion(name,screenId) {
+    const next=BTC_NAV_ORDER.indexOf(name);
+    if(next<0) return;
+    const direction=next<btcLastNavIndex ? "left" : "right";
+    btcLastNavIndex=next;
+    requestAnimationFrame(()=>btcAnimateScreen(screenId,direction));
+}
+
+/* Wrap stable navigation functions rather than changing their behavior. */
+const btcRC3ShowToday=showToday;
+showToday=function() {
+    btcRC3ShowToday();
+    btcNavMotion("today","todayScreen");
+};
+const btcRC3ShowJourney=showJourney;
+showJourney=function() {
+    btcRC3ShowJourney();
+    btcNavMotion("journey","journeyScreen");
+};
+const btcRC3ShowFavorites=showFavorites;
+showFavorites=function() {
+    btcRC3ShowFavorites();
+    btcNavMotion("favorites","favoritesScreen");
+};
+const btcRC3ShowSettings=showSettings;
+showSettings=function() {
+    btcRC3ShowSettings();
+    btcNavMotion("settings","settingsScreen");
+};
+
+
+/* ========================================
+   v1.0 RC4 — DELIGHT + PERSONAL JOURNEY
+======================================== */
+const BTC_REFLECTION_KEY="btcReflections";
+let btcReflectionMood=null;
+
+function btcGetReflections(){
+    try{return JSON.parse(localStorage.getItem(BTC_REFLECTION_KEY))||{};}catch(_){return{};}
+}
+function btcSaveReflection(mood){
+    btcReflectionMood=mood;
+    document.querySelectorAll(".reflection-moods button").forEach(b=>b.classList.remove("selected"));
+    const moods=["great","solid","tough","brutal"];
+    const i=moods.indexOf(mood);
+    const buttons=document.querySelectorAll(".reflection-moods button");
+    if(buttons[i]) buttons[i].classList.add("selected");
+    btcSaveReflectionNote(true);
+}
+function btcSaveReflectionNote(silent){
+    const all=btcGetReflections(), key=btcTodayKey();
+    const note=document.getElementById("btcReflectionNote")?.value.trim()||"";
+    const existing=all[key]||{};
+    all[key]={mood:btcReflectionMood||existing.mood||"",note};
+    localStorage.setItem(BTC_REFLECTION_KEY,JSON.stringify(all));
+    const msg=document.getElementById("btcReflectionSaved");
+    if(msg && !silent) msg.textContent="Saved. Carry the lesson forward.";
+}
+function btcRenderReflection(){
+    const item=btcGetReflections()[btcTodayKey()];
+    if(!item)return;
+    btcReflectionMood=item.mood;
+    const note=document.getElementById("btcReflectionNote"); if(note)note.value=item.note||"";
+    const moods=["great","solid","tough","brutal"], i=moods.indexOf(item.mood);
+    const buttons=document.querySelectorAll(".reflection-moods button");
+    if(buttons[i])buttons[i].classList.add("selected");
+}
+
+function btcQuickReset(){
+    const modes=["approach","rejection","close","roughDay"];
+    const check=getDailyCheckins()[btcTodayKey()];
+    let mode="approach";
+    if(check==="struggling")mode="roughDay";
+    else if(check==="here")mode="rejection";
+    else mode=modes[Math.floor(Math.random()*modes.length)];
+    openPrayerMode(mode);
+}
+
+const BTC_VERSES=[
+    {t:"Commit thy works unto the LORD, and thy thoughts shall be established.",r:"Proverbs 16:3"},
+    {t:"Whatsoever ye do, do it heartily, as to the Lord, and not unto men.",r:"Colossians 3:23"},
+    {t:"Let all your things be done with charity.",r:"1 Corinthians 16:14"},
+    {t:"Be strong and of a good courage; be not afraid.",r:"Joshua 1:9"},
+    {t:"And let us not be weary in well doing.",r:"Galatians 6:9"},
+    {t:"A soft answer turneth away wrath.",r:"Proverbs 15:1"},
+    {t:"The thoughts of the diligent tend only to plenteousness.",r:"Proverbs 21:5"}
+];
+function btcDailyVerse(){
+    const d=new Date(), seed=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
+    return BTC_VERSES[seed%BTC_VERSES.length];
+}
+function btcInstallDailyVerse(){
+    if(document.getElementById("btcScriptureCard"))return;
+    const prayer=document.querySelector("#todayScreen .prayer-card");
+    if(!prayer)return;
+    const v=btcDailyVerse(), card=document.createElement("section");
+    card.id="btcScriptureCard"; card.className="btc-scripture-card";
+    card.innerHTML='<div class="eyebrow">Scripture for Today</div><blockquote>“'+v.t+'”</blockquote><cite>'+v.r+' · KJV</cite>';
+    prayer.insertAdjacentElement("afterend",card);
+}
+
+function btcInstallGoalPrayer(){
+    if(document.getElementById("btcGoalPrayerCard"))return;
+    const target=document.querySelector(".journey-goal-card")||document.querySelector("#journeyScreen .focus-card");
+    if(!target)return;
+    const card=document.createElement("section");
+    card.id="btcGoalPrayerCard";card.className="btc-goal-prayer-card";
+    card.innerHTML='<div class="eyebrow">Faith in Action</div><h3>Pray Over My Goal</h3><p>Ask for discipline, patience, courage, and the wisdom to serve people well while you work toward the goal.</p><button class="btc-goal-prayer-btn" type="button" onclick="btcPrayOverGoal()">Pray Over My Goal →</button>';
+    target.insertAdjacentElement("afterend",card);
+}
+function btcPrayOverGoal(){
+    const focus=getWeeklyFocus();
+    const prayers=[
+        ["Work With Purpose","God, keep me disciplined in the work in front of me. Help me pursue this goal without letting the number become more important than the people I serve. Give me patience, courage, and consistency. Let my effort reflect integrity, and help me trust You with the outcome. Amen."],
+        ["Steady Hands","Lord, give me steady hands and a clear mind as I work toward the goal I set. Help me focus on the next right action, listen well, speak honestly, and keep moving when the answer is no. Let me work with excellence and leave the results in Your hands. Amen."],
+        ["The Work Before Me","God, thank You for the opportunity to work, grow, and provide. Keep me humble when things go well and resilient when they do not. Help me serve first, work faithfully, and finish what I started. Amen."]
+    ];
+    const p=prayers[Math.floor(Math.random()*prayers.length)];
+    btcShowAchievementToast("🙏",p[0],focus&&focus.target?"Goal: "+focus.target+" "+focus.type:"Keep working with purpose.");
+    setTimeout(()=>{ alert(p[0]+"\n\n"+p[1]); },250);
+}
+
+function btcRenderWeeklyRecap(){
+    const checkins=getDailyCheckins();
+    const week=btcWeekDates();
+    const count=week.filter(d=>checkins[btcLocalDateKey(d)]).length;
+    const stats=getJourneyStats(), m=btcGetMilestones(), best=btcCheckBestStreak();
+    const vals={btcRecapCheckins:count,btcRecapPrayers:stats.prayersOpened||0,btcRecapBest:best,btcRecapGoals:m.goalsCompleted||0,
+                btcRecordStreak:best,btcRecordPrayers:stats.prayersOpened||0,btcRecordShares:m.shares||0,btcRecordGoals:m.goalsCompleted||0};
+    Object.entries(vals).forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.textContent=v;});
+    const head=document.getElementById("btcRecapHeadline"), msg=document.getElementById("btcRecapMessage");
+    if(head)head.textContent=count>=5?"You showed up this week.":"Keep building the week.";
+    if(msg)msg.textContent=count>=5?"Consistency is becoming part of the way you work. Carry it into the next conversation.":count>=2?"Momentum is building. Keep stacking useful days.":"One intentional day can change the direction of a week.";
+}
+function btcRenderPrayerOfWeek(){
+    if(typeof btcGetHistory!=="function")return;
+    const hist=btcGetHistory();
+    if(!hist.length)return;
+    const item=hist[0];
+    const t=document.getElementById("btcPrayerWeekTitle"),p=document.getElementById("btcPrayerWeekText");
+    if(t)t.textContent=item.title||"Prayer Worth Carrying Forward";
+    if(p)p.textContent=item.text||"";
+}
+
+function btcApplyAchievementTiers(){
+    document.querySelectorAll("#achievementList .achievement").forEach((card,i)=>{
+        const copy=card.querySelector(".achievement-copy strong");
+        if(!copy||copy.querySelector(".btc-tier"))return;
+        const tier=i>=18?"Diamond":i>=10?"Gold":i>=4?"Silver":"Bronze";
+        const span=document.createElement("span");span.className="btc-tier "+tier.toLowerCase();span.textContent=tier;copy.appendChild(span);
+    });
+}
+function btcEvolveStreak(){
+    const n=btcCheckBestStreak();
+    const el=document.getElementById("streakNumber");
+    if(!el)return;
+    const parent=el.parentElement;
+    if(n>=7)parent?.classList.add("btc-streak-evolved");
+}
+
+function btcMicroAnimateClick(e){
+    const target=e.target.closest("button");
+    if(!target)return;
+    target.classList.remove("btc-micro-pop");void target.offsetWidth;target.classList.add("btc-micro-pop");
+    setTimeout(()=>target.classList.remove("btc-micro-pop"),350);
+}
+document.addEventListener("click",btcMicroAnimateClick);
+
+const btcRC4RenderJourney=renderJourney;
+renderJourney=function(){
+    btcRC4RenderJourney();
+    btcRenderWeeklyRecap();
+    btcRenderPrayerOfWeek();
+    btcInstallGoalPrayer();
+    btcApplyAchievementTiers();
+    btcEvolveStreak();
+};
+
+document.addEventListener("DOMContentLoaded",()=>{
+    btcRenderReflection();
+    btcInstallDailyVerse();
+    btcEvolveStreak();
+    const splash=document.getElementById("btcLaunchSplash");
+    setTimeout(()=>splash?.classList.add("hide"),720);
+    setTimeout(()=>splash?.remove(),1100);
 });

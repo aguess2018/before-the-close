@@ -1,0 +1,46 @@
+BEFORE THE CLOSE — v1.0.0
+Faith • Focus • Purpose
+
+FIRST PUBLIC RELEASE
+
+Core:
+- 560-prayer library
+- 240 daily industry-specific prayers
+- 320 situational Prayer Mode prayers
+- 8 sales industries
+- No-repeat situational prayer rotation
+- Favorites and prayer sharing
+- Daily reminders and test notifications
+- Offline-capable installable PWA
+
+Journey & Progression:
+- Daily Check-In
+- End-of-Day Reflection
+- Journey statistics
+- 22 achievements
+- Bronze / Silver / Gold / Diamond achievement tiers
+- Achievement progress and unlock celebrations
+- Weekly challenge and recent activity
+- Weekly sales goals and intentions
+- Weekly recap
+- Personal records
+- Prayer history
+- Prayer Worth Carrying Forward
+- Personal-best streak tracking
+
+Experience:
+- Cinematic directional navigation
+- Micro-interactions
+- Branded launch animation
+- Daily KJV scripture
+- I Need Something Right Now quick reset
+- Pray Over My Goal
+- First-launch onboarding
+- Feedback system
+- Mobile safe-area polish
+
+Reminder limitation:
+Scheduled notifications in this static PWA are best-effort while the app is active/backgrounded
+and can catch up when reopened. Reliable closed-app scheduled push requires future backend/web-push infrastructure.
+
+Version: 1.0.0

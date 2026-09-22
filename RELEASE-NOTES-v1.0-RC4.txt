@@ -1,0 +1,21 @@
+BEFORE THE CLOSE — v1.0 RC4
+
+Adds the complete delight/personal-journey pass:
+- Achievement tiers: Bronze, Silver, Gold, Diamond
+- Micro animations on button interactions
+- Dynamic/premium ambient visual treatment (retains professional black/gold identity)
+- Weekly Recap
+- Goal completion celebrations (from RC2 progression engine)
+- Evolved streak treatment
+- Prayer Worth Carrying Forward
+- End-of-Day Reflection with optional note
+- Personal Records
+- Pray Over My Goal
+- I Need Something Right Now quick reset
+- Daily KJV scripture card
+- 0.7-second branded launch animation
+- Existing cinematic screen navigation retained
+
+Future/back-end phase:
+- Deeper AI-personalized Journey messaging remains best suited to accounts/backend so personalization can
+  persist across devices and safely grow beyond local-only heuristics.

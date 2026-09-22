@@ -1,0 +1,9 @@
+BEFORE THE CLOSE — v1.0 RC3
+
+Adds cinematic primary navigation:
+- Today -> Journey -> Favorites -> Settings moves subtly left-to-right
+- Moving backward moves subtly right-to-left
+- 260ms slide + fade + tiny depth/blur effect
+- Active nav item gets a small lift
+- Honors reduced-motion accessibility preferences
+- Existing screen/navigation logic is preserved

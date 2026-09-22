@@ -49,13 +49,18 @@
 
     <link
         rel="stylesheet"
-        href="style.css?v=13"
+        href="style.css?v=110"
     >
 
 </head>
 
 
 <body>
+    <div id="btcLaunchSplash" class="btc-launch-splash" aria-hidden="true">
+        <div class="btc-launch-mark">✝</div>
+        <div class="btc-launch-name">BEFORE THE CLOSE</div>
+        <div class="btc-launch-tag">FAITH • FOCUS • PURPOSE</div>
+    </div>
 
 <!-- ========================================
      BETA v0.8 — FIRST-LAUNCH ONBOARDING
@@ -172,7 +177,17 @@
     >
 
 
-    <div class="prayer-card">
+    
+        <section class="quick-reset-card">
+            <div>
+                <span class="eyebrow">Need a reset?</span>
+                <strong>I Need Something Right Now</strong>
+                <p>One tap. One prayer. Back to the next conversation.</p>
+            </div>
+            <button type="button" onclick="btcQuickReset()">Reset Me →</button>
+        </section>
+
+<div class="prayer-card">
 
         <div class="prayer-icon">
             🙏
@@ -535,7 +550,24 @@
         
     <!-- Beta v0.9: Daily Reminder -->
     <section class="reminder-settings-card">
-        <div class="eyebrow">Daily Reminder</div>
+        <div class="eyebrow">Daily Reminder
+    <!-- v1.0: About -->
+    <section class="about-card">
+        <div class="eyebrow">About</div>
+        <h2>Before the Close</h2>
+        <p>Faith, focus, and purpose for people who sell.</p>
+        <div class="about-meta">
+            <span>Version</span><strong>1.0.0</strong>
+        </div>
+        <div class="about-meta">
+            <span>Prayer Library</span><strong>560 prayers</strong>
+        </div>
+        <div class="about-meta">
+            <span>Release</span><strong>Public Release</strong>
+        </div>
+    </section>
+
+</div>
         <h2>Start with purpose.</h2>
         <p>Choose when you want Before the Close to remind you to check in and read your prayer.</p>
 
@@ -681,6 +713,21 @@
     </button>
 
 </div>
+
+        <section class="reflection-card">
+            <div class="eyebrow">End of Day</div>
+            <h3>How did today go?</h3>
+            <div class="reflection-moods">
+                <button type="button" onclick="btcSaveReflection('great')">🙌<span>Great</span></button>
+                <button type="button" onclick="btcSaveReflection('solid')">👍<span>Solid</span></button>
+                <button type="button" onclick="btcSaveReflection('tough')">😐<span>Tough</span></button>
+                <button type="button" onclick="btcSaveReflection('brutal')">🥴<span>Brutal</span></button>
+            </div>
+            <textarea id="btcReflectionNote" maxlength="180" placeholder="What are you taking into tomorrow? (optional)"></textarea>
+            <button class="reflection-save" type="button" onclick="btcSaveReflectionNote()">Save Reflection</button>
+            <div id="btcReflectionSaved" class="reflection-saved"></div>
+        </section>
+
 </div>
 
 
@@ -706,6 +753,7 @@
             <div class="journey-stat"><strong id="journeyCheckins">0</strong><span>Check-Ins</span></div>
             <div class="journey-stat"><strong id="journeyPrayers">0</strong><span>Prayers Opened</span></div>
             <div class="journey-stat"><strong id="journeyFavorites">0</strong><span>Favorites</span></div>
+            <div class="journey-stat journey-stat-wide"><strong id="journeyBestStreak">0</strong><span>Personal Best Streak</span></div>
         </div>
         <div class="journey-goal-card" id="journeyGoalCard">
             <div class="eyebrow">Weekly Sales Goal</div>
@@ -762,6 +810,23 @@
 
         <div class="achievements-wrap">
             <div class="eyebrow">Achievements</div>
+            
+            <div class="achievement-summary">
+                <div>
+                    <strong id="achievementUnlockedCount">0 / 22</strong>
+                    <span>Unlocked</span>
+                </div>
+                <div class="achievement-overall-track">
+                    <div id="achievementOverallFill" class="achievement-overall-fill"></div>
+                </div>
+            </div>
+            <div class="achievement-filters" id="achievementFilters">
+                <button class="active" type="button" data-achievement-filter="all" onclick="setAchievementFilter('all')">All</button>
+                <button type="button" data-achievement-filter="faith" onclick="setAchievementFilter('faith')">Faith</button>
+                <button type="button" data-achievement-filter="consistency" onclick="setAchievementFilter('consistency')">Consistency</button>
+                <button type="button" data-achievement-filter="growth" onclick="setAchievementFilter('growth')">Growth</button>
+                <button type="button" data-achievement-filter="action" onclick="setAchievementFilter('action')">Action</button>
+            </div>
             <div class="achievement-list" id="achievementList"></div>
         </div>
     </section>
@@ -881,9 +946,9 @@
      JAVASCRIPT
 ========================================= -->
 
-<script src="prayers.js?v=13"></script>
+<script src="prayers.js?v=110"></script>
 
-<script src="app.js?v=13"></script>
+<script src="app.js?v=110"></script>
 
 
 <!-- ========================================
@@ -1110,4 +1175,33 @@
 
 </div></body>
 
-</html>
+</html
+        <section class="weekly-recap-card">
+            <div class="eyebrow">Your Week Before the Close</div>
+            <h3 id="btcRecapHeadline">Keep showing up.</h3>
+            <div class="recap-grid">
+                <div><strong id="btcRecapCheckins">0</strong><span>Check-ins</span></div>
+                <div><strong id="btcRecapPrayers">0</strong><span>Prayers</span></div>
+                <div><strong id="btcRecapBest">0</strong><span>Best Streak</span></div>
+                <div><strong id="btcRecapGoals">0</strong><span>Goals Hit</span></div>
+            </div>
+            <p id="btcRecapMessage"></p>
+        </section>
+
+        <section class="records-card">
+            <div class="eyebrow">Personal Records</div>
+            <div class="records-grid">
+                <div><span>🔥</span><strong id="btcRecordStreak">0</strong><small>Best Streak</small></div>
+                <div><span>🙏</span><strong id="btcRecordPrayers">0</strong><small>Prayers Opened</small></div>
+                <div><span>↗</span><strong id="btcRecordShares">0</strong><small>Prayers Shared</small></div>
+                <div><span>🎯</span><strong id="btcRecordGoals">0</strong><small>Goals Completed</small></div>
+            </div>
+        </section>
+
+        <section class="prayer-week-card">
+            <div class="eyebrow">Prayer Worth Carrying Forward</div>
+            <h3 id="btcPrayerWeekTitle">Your prayer of the week</h3>
+            <p id="btcPrayerWeekText">Open and save prayers this week and one will surface here.</p>
+        </section>
+
+>
