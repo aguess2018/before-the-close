@@ -71,9 +71,14 @@
       title.textContent="Choose a new password"; sub.textContent="Enter a new password for your account."; submit.textContent="Update Password";
       nameWrap.hidden=true; passWrap.hidden=true; newWrap.hidden=false; forgot.hidden=true; sw.hidden=true;
     }
-    modal.hidden=false; document.body.style.overflow="hidden";
+    modal.hidden=false; modal.style.display=""; modal.removeAttribute("aria-hidden"); document.body.style.overflow="hidden";
   };
-  window.btcCloseAuth = function(){ const m=el("btcAuthModal"); if(m)m.hidden=true; document.body.style.overflow=""; authMessage(""); };
+  window.btcCloseAuth = function(){
+    const m=el("btcAuthModal");
+    if(m){ m.hidden=true; m.style.display="none"; m.setAttribute("aria-hidden","true"); }
+    document.body.style.overflow="";
+    authMessage("");
+  };
 
   window.btcSubmitAuth = async function(){
     if(!client) return authMessage("Cloud connection isn't ready. Refresh and try again.","error");
@@ -160,13 +165,23 @@
     const checkins=safeJSON("btcDailyCheckins",{}); const checkRows=Object.entries(checkins).map(([d,m])=>({user_id:uid,checkin_date:d,mood:m})); if(checkRows.length){ r=await client.from("daily_checkins").upsert(checkRows,{onConflict:"user_id,checkin_date"}); if(r.error)throw r.error; }
     const refs=safeJSON("btcReflections",{}); const refRows=Object.entries(refs).filter(([,v])=>v&&v.mood).map(([d,v])=>({user_id:uid,reflection_date:d,mood:v.mood,note:(v.note||"").slice(0,180)})); if(refRows.length){ r=await client.from("reflections").upsert(refRows,{onConflict:"user_id,reflection_date"}); if(r.error)throw r.error; }
 
-    const favs=safeJSON("favorites",[]); if(Array.isArray(favs)){ const rows=favs.filter(x=>x&&x.text).map(x=>({user_id:uid,prayer_key:prayerKey(x),title:x.title||"Saved Prayer",prayer_text:x.text,prayer_type:x.mode||x.type||null,industry:x.industry||null})); r=await client.from("favorites").delete().eq("user_id",uid); if(r.error)throw r.error; if(rows.length){r=await client.from("favorites").insert(rows);if(r.error)throw r.error;} }
+    const favs=safeJSON("favorites",[]);
+    if(Array.isArray(favs)){
+      // Deduplicate locally before touching the unique (user_id, prayer_key) constraint.
+      const byKey=new Map();
+      favs.filter(x=>x&&x.text).forEach(x=>{
+        const row={user_id:uid,prayer_key:prayerKey(x),title:x.title||"Saved Prayer",prayer_text:x.text,prayer_type:x.mode||x.type||null,industry:x.industry||null};
+        byKey.set(row.prayer_key,row);
+      });
+      const rows=[...byKey.values()];
+      if(rows.length){ r=await client.from("favorites").upsert(rows,{onConflict:"user_id,prayer_key"}); if(r.error)throw r.error; }
+    }
 
     const focus=safeJSON("btcWeeklyFocus",null); if(focus&&focus.weekKey){ const standard=["Appointments","Closes","Doors Knocked","Calls","Follow-Ups","Demos","Quotes"]; const completed=(focus.progress||0)>=(focus.target||1); r=await client.from("weekly_goals").upsert({user_id:uid,week_start:focus.weekKey,goal_type:standard.includes(focus.type)?focus.type:"Custom",custom_goal_name:standard.includes(focus.type)?null:focus.type,target:focus.target,progress:focus.progress||0,intention:focus.intention||null,completed,completed_at:completed?new Date().toISOString():null},{onConflict:"user_id,week_start"}); if(r.error)throw r.error; }
 
     const hist=safeJSON("btcPrayerHistory",[]); r=await client.from("prayer_history").delete().eq("user_id",uid); if(r.error)throw r.error; if(Array.isArray(hist)&&hist.length){ const rows=hist.slice(0,20).filter(x=>x&&x.text).map((x,i)=>({user_id:uid,prayer_key:prayerKey(x),title:x.title||"Prayer",prayer_text:x.text,prayer_type:x.type||null,industry:x.industry||null,opened_at:x.time||x.openedAt||new Date(Date.now()-i*1000).toISOString()})); if(rows.length){r=await client.from("prayer_history").insert(rows);if(r.error)throw r.error;} }
 
-    const unlocks=safeJSON("btcAchievementUnlocks",[]); if(Array.isArray(unlocks)&&unlocks.length){ const rows=unlocks.map(k=>({user_id:uid,achievement_key:k})); r=await client.from("user_achievements").upsert(rows,{onConflict:"user_id,achievement_key"}); if(r.error)throw r.error; }
+    const unlocks=safeJSON("btcAchievementUnlocks",[]); if(Array.isArray(unlocks)&&unlocks.length){ const rows=[...new Set(unlocks)].map(k=>({user_id:uid,achievement_key:k})); r=await client.from("user_achievements").upsert(rows,{onConflict:"user_id,achievement_key"}); if(r.error)throw r.error; }
     const js=safeJSON("btcJourneyStats",{prayersOpened:0}), ms=safeJSON("btcMilestones",{shares:0,goalsCompleted:0,bestStreak:0});
     r=await client.from("user_stats").upsert({user_id:uid,prayers_opened:js.prayersOpened||0,prayers_shared:ms.shares||0,goals_completed:ms.goalsCompleted||0,current_streak:parseInt(localStorage.getItem("streak")||"0",10)||0,best_streak:ms.bestStreak||0},{onConflict:"user_id"}); if(r.error)throw r.error;
     const rem=safeJSON("btcDailyReminder",{enabled:false,time:"08:00"}); r=await client.from("notification_preferences").upsert({user_id:uid,daily_reminder_enabled:!!rem.enabled,reminder_time:(rem.time||"08:00")+":00",timezone:Intl.DateTimeFormat().resolvedOptions().timeZone||null},{onConflict:"user_id"}); if(r.error)throw r.error;

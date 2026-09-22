@@ -16,3 +16,11 @@ IMPORTANT
 - Never place a secret/service-role key in this app.
 - Existing localStorage data is retained after migration as the offline copy.
 - Test this build before replacing the current public build.
+
+
+v1.1.2 Auth/Sync Fix:
+- Deduplicates favorites before cloud sync.
+- Uses upsert for favorites instead of delete + insert.
+- Deduplicates achievements before upsert.
+- Auth modal now force-hides immediately after successful authentication, independent of background sync.
+- Cloud migration remains retry-safe; local data is never cleared.
