@@ -92,8 +92,12 @@
         else authMessage("Account created. Check your email to confirm it, then come back and sign in.","success");
       } else if(authMode==="signin"){
         if(!email) throw new Error("Enter your email address.");
-        const {error}=await client.auth.signInWithPassword({email,password}); if(error) throw error;
-        authMessage("Signed in. Bringing your Journey with you…","success"); setTimeout(()=>btcCloseAuth(),650);
+        const {data,error}=await client.auth.signInWithPassword({email,password}); if(error) throw error;
+        currentUser=data?.user||data?.session?.user||currentUser;
+        renderAccount();
+        authMessage("Signed in. Bringing your Journey with you…","success");
+        btcCloseAuth();
+        if(currentUser) setTimeout(()=>syncAll(false),0);
       } else if(authMode==="recovery"){
         if(!email) throw new Error("Enter your email address.");
         const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname}); if(error) throw error;
@@ -193,7 +197,10 @@
     client.auth.onAuthStateChange((event,session)=>{
       currentUser=session?.user||null; renderAccount();
       if(event==="PASSWORD_RECOVERY") setTimeout(()=>btcOpenAuth("newpassword"),0);
-      if(currentUser && ["SIGNED_IN","INITIAL_SESSION","TOKEN_REFRESHED"].includes(event)) setTimeout(()=>syncAll(false),0);
+      if(currentUser && ["SIGNED_IN","INITIAL_SESSION","TOKEN_REFRESHED"].includes(event)){
+        btcCloseAuth();
+        setTimeout(()=>syncAll(false),0);
+      }
     });
     if(currentUser) syncAll(false); else status("Sign in to enable cloud backup.");
   }
