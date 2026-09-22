@@ -1,4 +1,4 @@
-const CACHE_NAME = "before-the-close-v10";
+const CACHE_NAME = "before-the-close-v13";
 const APP_FILES = ["./","./index.html","./style.css","./prayers.js","./app.js","./manifest.json","./icons/icon-192.png","./icons/icon-512.png"];
 
 self.addEventListener("install", event => {
@@ -22,4 +22,17 @@ self.addEventListener("fetch", event => {
       return response;
     }).catch(() => caches.match(event.request).then(cached => cached || (event.request.mode === "navigate" ? caches.match("./index.html") : undefined)))
   );
+});
+
+
+self.addEventListener("notificationclick", event => {
+    event.notification.close();
+    event.waitUntil(
+        clients.matchAll({type:"window", includeUncontrolled:true}).then(windowClients => {
+            for (const client of windowClients) {
+                if ("focus" in client) return client.focus();
+            }
+            if (clients.openWindow) return clients.openWindow("./");
+        })
+    );
 });

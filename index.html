@@ -49,13 +49,79 @@
 
     <link
         rel="stylesheet"
-        href="style.css?v=10"
+        href="style.css?v=13"
     >
 
 </head>
 
 
 <body>
+
+<!-- ========================================
+     BETA v0.8 — FIRST-LAUNCH ONBOARDING
+========================================= -->
+<div class="onboarding" id="onboarding" hidden>
+    <div class="onboarding-card">
+        <div class="onboarding-progress" aria-hidden="true">
+            <span id="onboardingDot1" class="active"></span>
+            <span id="onboardingDot2"></span>
+            <span id="onboardingDot3"></span>
+        </div>
+
+        <div class="onboarding-step" id="onboardingStep1">
+            <div class="onboarding-mark">✝</div>
+            <div class="eyebrow">Welcome to</div>
+            <h1>Before the Close</h1>
+            <p>Faith, focus, and purpose for the moments that test you in sales.</p>
+            <div class="onboarding-feature-list">
+                <div><span>🙏</span><strong>Daily Prayer</strong><small>Start the day grounded.</small></div>
+                <div><span>⚡</span><strong>Prayer Modes</strong><small>Get perspective when the moment gets real.</small></div>
+                <div><span>🏆</span><strong>Your Journey</strong><small>Build consistency and track your progress.</small></div>
+            </div>
+            <button class="onboarding-primary" type="button" onclick="goToOnboardingStep(2)">Get Started</button>
+        </div>
+
+        <div class="onboarding-step" id="onboardingStep2" hidden>
+            <div class="eyebrow">Make it yours</div>
+            <h2>Who are we talking to?</h2>
+            <p class="onboarding-copy">This personalizes your greeting and the prayers you see.</p>
+            <label class="onboarding-label" for="onboardingName">First name</label>
+            <input id="onboardingName" class="onboarding-input" type="text" maxlength="24" placeholder="Your first name" autocomplete="given-name">
+
+            <label class="onboarding-label" for="onboardingIndustry">Sales industry</label>
+            <select id="onboardingIndustry" class="onboarding-input">
+                <option value="general">General Sales</option>
+                <option value="solar">Solar</option>
+                <option value="cars">Automotive</option>
+                <option value="realestate">Real Estate</option>
+                <option value="insurance">Insurance</option>
+                <option value="cellular">Cellular</option>
+                <option value="d2d">Door-to-Door</option>
+                <option value="b2b">B2B</option>
+            </select>
+            <div class="onboarding-actions">
+                <button class="onboarding-secondary" type="button" onclick="goToOnboardingStep(1)">Back</button>
+                <button class="onboarding-primary" type="button" onclick="saveOnboardingProfile()">Continue</button>
+            </div>
+        </div>
+
+        <div class="onboarding-step" id="onboardingStep3" hidden>
+            <div class="onboarding-mark">⚡</div>
+            <div class="eyebrow">Built for the moment</div>
+            <h2>Use Prayer Modes anytime.</h2>
+            <p class="onboarding-copy">Your daily prayer starts the day. Prayer Modes are there whenever you need to reset.</p>
+            <div class="onboarding-mode-grid">
+                <div>🚶<strong>Before the Approach</strong></div>
+                <div>💪<strong>After Rejection</strong></div>
+                <div>🤝<strong>Before the Close</strong></div>
+                <div>🌧️<strong>Rough Day</strong></div>
+            </div>
+            <p class="onboarding-footnote">You can change your name or industry anytime in Settings.</p>
+            <button class="onboarding-primary" type="button" onclick="finishOnboarding()">Take Me to Today</button>
+        </div>
+    </div>
+</div>
+
 
 
 <!-- ========================================
@@ -466,7 +532,33 @@
 
         <div class="brand">
             BEFORE THE CLOSE
+        
+    <!-- Beta v0.9: Daily Reminder -->
+    <section class="reminder-settings-card">
+        <div class="eyebrow">Daily Reminder</div>
+        <h2>Start with purpose.</h2>
+        <p>Choose when you want Before the Close to remind you to check in and read your prayer.</p>
+
+        <div class="reminder-row">
+            <div>
+                <strong>Daily reminder</strong>
+                <small id="reminderStatusText">Off</small>
+            </div>
+            <label class="reminder-switch">
+                <input id="reminderEnabled" type="checkbox" onchange="toggleDailyReminder(this.checked)">
+                <span></span>
+            </label>
         </div>
+
+        <div id="reminderTimeWrap" class="reminder-time-wrap" hidden>
+            <label for="reminderTime">Reminder time</label>
+            <input id="reminderTime" type="time" value="08:00" onchange="saveReminderTime(this.value)">
+            <p id="reminderSupportNote"></p>
+            <button type="button" class="reminder-test-btn" onclick="testReminder()">Test Reminder</button>
+        </div>
+    </section>
+
+</div>
 
     </div>
 
@@ -789,9 +881,9 @@
      JAVASCRIPT
 ========================================= -->
 
-<script src="prayers.js?v=10"></script>
+<script src="prayers.js?v=13"></script>
 
-<script src="app.js?v=10"></script>
+<script src="app.js?v=13"></script>
 
 
 <!-- ========================================

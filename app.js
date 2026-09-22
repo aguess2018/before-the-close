@@ -558,8 +558,44 @@ function displayFavorites() {
                 text
             );
 
-            card.appendChild(
+            const shareButton =
+                document.createElement(
+                    "button"
+                );
+
+            shareButton.className =
+                "share-favorite";
+
+            shareButton.innerText =
+                "↗ Share Prayer";
+
+            shareButton.onclick =
+                function() {
+                    btcSharePrayer(
+                        item.title,
+                        item.text
+                    );
+                };
+
+
+            const favoriteActions =
+                document.createElement(
+                    "div"
+                );
+
+            favoriteActions.className =
+                "favorite-actions";
+
+            favoriteActions.appendChild(
+                shareButton
+            );
+
+            favoriteActions.appendChild(
                 removeButton
+            );
+
+            card.appendChild(
+                favoriteActions
             );
 
 
@@ -2682,3 +2718,265 @@ renderJourney = function() {
     btcV06RenderJourney();
     renderJourneyGoal();
 };
+
+
+/* ========================================
+   BETA v0.8 — FIRST-LAUNCH ONBOARDING
+======================================== */
+const BTC_ONBOARDING_KEY="btcOnboardingComplete";
+
+function btcSetOnboardingStep(step) {
+    [1,2,3].forEach(function(n){
+        const panel=document.getElementById("onboardingStep"+n);
+        const dot=document.getElementById("onboardingDot"+n);
+        if(panel) panel.hidden=n!==step;
+        if(dot) dot.classList.toggle("active",n===step);
+    });
+}
+
+function goToOnboardingStep(step) {
+    btcSetOnboardingStep(step);
+}
+
+function btcFindProfileKeys() {
+    /* Stable app has historically persisted profile data in localStorage.
+       These common keys preserve compatibility without changing existing settings logic. */
+    return {
+        nameKeys:["firstName","userName","name"],
+        industryKeys:["industry","selectedIndustry","userIndustry"]
+    };
+}
+
+function btcReadFirstStored(keys) {
+    for(const key of keys) {
+        const value=localStorage.getItem(key);
+        if(value) return value;
+    }
+    return "";
+}
+
+function btcWriteExistingOrPrimary(keys,value) {
+    let wrote=false;
+    keys.forEach(function(key){
+        if(localStorage.getItem(key)!==null) {
+            localStorage.setItem(key,value);
+            wrote=true;
+        }
+    });
+    if(!wrote) localStorage.setItem(keys[0],value);
+}
+
+function btcPrefillOnboarding() {
+    const keys=btcFindProfileKeys();
+    const name=document.getElementById("onboardingName");
+    const industry=document.getElementById("onboardingIndustry");
+    const savedName=btcReadFirstStored(keys.nameKeys);
+    const savedIndustry=btcReadFirstStored(keys.industryKeys);
+    if(name && savedName) name.value=savedName;
+    if(industry && savedIndustry && Array.from(industry.options).some(o=>o.value===savedIndustry)) {
+        industry.value=savedIndustry;
+    }
+}
+
+function saveOnboardingProfile() {
+    const name=document.getElementById("onboardingName").value.trim();
+    const industry=document.getElementById("onboardingIndustry").value;
+    const keys=btcFindProfileKeys();
+    if(name) btcWriteExistingOrPrimary(keys.nameKeys,name);
+    btcWriteExistingOrPrimary(keys.industryKeys,industry);
+    goToOnboardingStep(3);
+}
+
+function finishOnboarding() {
+    localStorage.setItem(BTC_ONBOARDING_KEY,"true");
+    const onboarding=document.getElementById("onboarding");
+    if(onboarding) onboarding.hidden=true;
+    document.body.style.overflow="";
+    /* Reload once so the stable greeting/daily-prayer logic consumes the chosen profile. */
+    window.location.reload();
+}
+
+function replayOnboarding() {
+    const onboarding=document.getElementById("onboarding");
+    if(!onboarding) return;
+    btcPrefillOnboarding();
+    btcSetOnboardingStep(1);
+    onboarding.hidden=false;
+    document.body.style.overflow="hidden";
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+    if(localStorage.getItem(BTC_ONBOARDING_KEY)!=="true") {
+        btcPrefillOnboarding();
+        btcSetOnboardingStep(1);
+        const onboarding=document.getElementById("onboarding");
+        if(onboarding) onboarding.hidden=false;
+        document.body.style.overflow="hidden";
+    }
+});
+
+
+/* ========================================
+   BETA v0.9 — DAILY REMINDER / HABIT SYSTEM
+======================================== */
+const BTC_REMINDER_KEY="btcDailyReminder";
+let btcReminderTimer=null;
+
+function getReminderSettings() {
+    try {
+        return JSON.parse(localStorage.getItem(BTC_REMINDER_KEY)) || {enabled:false,time:"08:00",lastSent:""};
+    } catch(_) {
+        return {enabled:false,time:"08:00",lastSent:""};
+    }
+}
+
+function saveReminderSettings(settings) {
+    localStorage.setItem(BTC_REMINDER_KEY,JSON.stringify(settings));
+}
+
+function btcNotificationSupported() {
+    return "Notification" in window;
+}
+
+function btcReminderTodayKey() {
+    return btcTodayKey();
+}
+
+async function toggleDailyReminder(enabled) {
+    const settings=getReminderSettings();
+
+    if(enabled && btcNotificationSupported()) {
+        if(Notification.permission==="default") {
+            const permission=await Notification.requestPermission();
+            if(permission!=="granted") {
+                document.getElementById("reminderEnabled").checked=false;
+                settings.enabled=false;
+                saveReminderSettings(settings);
+                renderReminderSettings();
+                return;
+            }
+        } else if(Notification.permission!=="granted") {
+            document.getElementById("reminderEnabled").checked=false;
+            settings.enabled=false;
+            saveReminderSettings(settings);
+            renderReminderSettings();
+            return;
+        }
+    }
+
+    settings.enabled=enabled;
+    saveReminderSettings(settings);
+    renderReminderSettings();
+    scheduleLocalReminderCheck();
+}
+
+function saveReminderTime(value) {
+    const settings=getReminderSettings();
+    settings.time=value || "08:00";
+    saveReminderSettings(settings);
+    renderReminderSettings();
+    scheduleLocalReminderCheck();
+}
+
+function renderReminderSettings() {
+    const settings=getReminderSettings();
+    const enabled=document.getElementById("reminderEnabled");
+    const time=document.getElementById("reminderTime");
+    const wrap=document.getElementById("reminderTimeWrap");
+    const status=document.getElementById("reminderStatusText");
+    const note=document.getElementById("reminderSupportNote");
+    if(!enabled) return;
+
+    enabled.checked=!!settings.enabled;
+    if(time) time.value=settings.time || "08:00";
+    if(wrap) wrap.hidden=!settings.enabled;
+
+    if(status) {
+        status.textContent=settings.enabled ? "On • "+btcFormatReminderTime(settings.time) : "Off";
+    }
+
+    if(note) {
+        if(!btcNotificationSupported()) {
+            note.textContent="This browser does not support web notifications. Your reminder preference will still be saved.";
+        } else if(Notification.permission==="denied") {
+            note.textContent="Notifications are blocked for this site. Enable them in your browser/site settings to receive alerts.";
+        } else {
+            note.textContent="Beta reminder: notifications work while Before the Close is active and can catch up when you reopen it. Full closed-app push reminders will come with the backend notification system.";
+        }
+    }
+}
+
+function btcFormatReminderTime(value) {
+    const parts=(value||"08:00").split(":");
+    const d=new Date();
+    d.setHours(Number(parts[0]),Number(parts[1]),0,0);
+    return d.toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});
+}
+
+function btcReminderMessage() {
+    const focus=(typeof getWeeklyFocus==="function") ? getWeeklyFocus() : null;
+    if(focus && focus.intention) return "Your intention: "+focus.intention;
+    return "Take a minute for faith, focus, and purpose before the next move.";
+}
+
+function sendBTCNotification(title,body) {
+    if(!btcNotificationSupported() || Notification.permission!=="granted") return false;
+    try {
+        if(navigator.serviceWorker && navigator.serviceWorker.controller) {
+            navigator.serviceWorker.ready.then(reg => reg.showNotification(title,{
+                body:body,
+                icon:"./icons/icon-192.png",
+                badge:"./icons/icon-192.png",
+                tag:"before-the-close-daily"
+            }));
+        } else {
+            new Notification(title,{body:body,icon:"./icons/icon-192.png"});
+        }
+        return true;
+    } catch(_) { return false; }
+}
+
+function checkDailyReminder() {
+    const settings=getReminderSettings();
+    if(!settings.enabled) return;
+
+    const now=new Date();
+    const parts=(settings.time||"08:00").split(":");
+    const scheduled=new Date(now.getFullYear(),now.getMonth(),now.getDate(),Number(parts[0]),Number(parts[1]),0,0);
+    const today=btcReminderTodayKey();
+
+    if(now>=scheduled && settings.lastSent!==today) {
+        if(sendBTCNotification("Before the Close",btcReminderMessage())) {
+            settings.lastSent=today;
+            saveReminderSettings(settings);
+        }
+    }
+}
+
+function scheduleLocalReminderCheck() {
+    if(btcReminderTimer) clearInterval(btcReminderTimer);
+    checkDailyReminder();
+    btcReminderTimer=setInterval(checkDailyReminder,60000);
+}
+
+async function testReminder() {
+    if(!btcNotificationSupported()) {
+        alert("Notifications are not supported in this browser.");
+        return;
+    }
+    if(Notification.permission==="default") await Notification.requestPermission();
+    if(Notification.permission!=="granted") {
+        alert("Notifications are currently blocked for Before the Close.");
+        return;
+    }
+    sendBTCNotification("Before the Close","Test successful. You’re ready to start with purpose.");
+}
+
+document.addEventListener("visibilitychange",function(){
+    if(document.visibilityState==="visible") checkDailyReminder();
+});
+
+document.addEventListener("DOMContentLoaded",function(){
+    renderReminderSettings();
+    scheduleLocalReminderCheck();
+});
