@@ -190,7 +190,16 @@
         byKey.set(row.prayer_key,row);
       });
       const rows=[...byKey.values()];
-      if(rows.length){ r=await client.from("favorites").upsert(rows,{onConflict:"user_id,prayer_key"}); if(r.error)throw r.error; }
+      // v1.6.4: favorites are an exact synced collection, not append-only.
+      // Remove cloud rows that no longer exist locally BEFORE the following pull,
+      // otherwise a deleted favorite can be downloaded and resurrected.
+      if(rows.length){
+        r=await client.from("favorites").delete().eq("user_id",uid).not("prayer_key","in",`(${rows.map(x=>'"'+x.prayer_key.replace(/"/g,'\\"')+'"').join(',')})`);
+        if(r.error)throw r.error;
+        r=await client.from("favorites").upsert(rows,{onConflict:"user_id,prayer_key"}); if(r.error)throw r.error;
+      } else {
+        r=await client.from("favorites").delete().eq("user_id",uid); if(r.error)throw r.error;
+      }
     }
 
     const focus=safeJSON("btcWeeklyFocus",null); if(focus&&focus.weekKey){ const standard=["Appointments","Closes","Doors Knocked","Calls","Follow-Ups","Demos","Quotes"]; const completed=(focus.progress||0)>=(focus.target||1); r=await client.from("weekly_goals").upsert({user_id:uid,week_start:focus.weekKey,goal_type:standard.includes(focus.type)?focus.type:"Custom",custom_goal_name:standard.includes(focus.type)?null:focus.type,target:focus.target,progress:focus.progress||0,intention:focus.intention||null,completed,completed_at:completed?new Date().toISOString():null},{onConflict:"user_id,week_start"}); if(r.error)throw r.error; }
