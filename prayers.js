@@ -1293,7 +1293,7 @@ const modePrayers = {
             },
             {
                 title: "Protect the Promise",
-                text: "Lord, guide me through this expectations. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this homeowner can make an informed decision. Amen."
+                text: "Lord, guide me through these expectations. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this homeowner can make an informed decision. Amen."
             },
             {
                 title: "Close With Service",
@@ -2143,7 +2143,7 @@ const modePrayers = {
             },
             {
                 title: "Protect the Promise",
-                text: "Lord, guide me through this expectations. Keep me from overselling out of nervousness. Help me communicate the value and expectations plainly so this homeowner can make an informed decision. Amen."
+                text: "Lord, guide me through these expectations at the door. Keep me from overselling out of nervousness. Help me communicate the value and next steps plainly so this homeowner can make an informed decision. Amen."
             },
             {
                 title: "Leave With Integrity",

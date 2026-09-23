@@ -1,0 +1,35 @@
+Before the Close v1.0.0 RC1 — Automated QA Summary
+
+PASS
+- app.js, cloud.js, and service-worker.js syntax checks
+- No duplicate HTML IDs
+- All 8 industries contain 30 daily prayers (240 total)
+- All 8 industries contain 10 prayers in each of 4 Prayer Modes (320 total)
+- Core prayer library total: 560
+- Sales Style personalization definitions present for every supported industry/style option
+- Manifest and service-worker core assets are present in the RC package
+- 192px and 512px production icons included
+- No SQL migrations or historical release-note clutter included in the RC deployment package
+- No service-role key found in the frontend bundle
+- v1.9 account-isolation/security work preserved
+- v1.8.1 legal-page navigation fix preserved
+- v1.7.1 secure sign-out/account management preserved
+- v1.6.6 Favorites removal fix preserved
+
+CONTENT QA FIXES
+- Corrected “this expectations” to “these expectations”
+- Removed one exact duplicate core prayer by making the Door-to-Door version context-specific
+
+MANUAL RC TESTS STILL REQUIRED
+- Fresh install/onboarding
+- Existing-account sign in/cloud restore
+- All five navigation tabs + legal/support pages
+- Favorites add/remove/reopen
+- Prayer modes and Sales Style personalization
+- Journey/check-in/reflection/goals/milestones
+- Share Studio on iPhone/Android
+- Reminder behavior
+- Offline launch/use/reconnect
+- Password change/recovery/sign-out
+- Disposable-account deletion
+- PWA install/update on iPhone and Android
