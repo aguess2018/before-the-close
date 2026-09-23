@@ -3557,3 +3557,82 @@ function btcShowCalendarDay(key){
 const btcV13RenderJourney=renderJourney;
 renderJourney=function(){btcV13RenderJourney();btcRenderJourneyCalendar();btcRenderMilestoneMoments();};
 document.addEventListener("DOMContentLoaded",()=>{btcRenderJourneyCalendar();btcRenderMilestoneMoments();});
+
+/* ========================================
+   v1.8 — PRIVACY, TERMS & SUPPORT
+======================================== */
+const BTC_LEGAL_CONTENT = {
+  privacy: {
+    eyebrow: "Your Data",
+    title: "Privacy Policy",
+    html: `<p><strong>Effective September 23, 2026</strong></p>
+      <p>Before the Close is a faith-driven sales companion. This policy explains the information used to provide your account, cloud backup, Journey features, reminders, and support.</p>
+      <h2>Information you provide</h2>
+      <ul><li>Your email address and account credentials used for authentication.</li><li>Your first name, sales industry, and sales style.</li><li>Journey information you choose to save, such as check-ins, reflections, favorites, weekly goals, milestones, achievements, prayer history, and app preferences.</li><li>Information you voluntarily include when contacting support or sending feedback.</li></ul>
+      <h2>How information is used</h2>
+      <p>Information is used to operate Before the Close, personalize prayers, sync your Journey across devices, maintain your account, troubleshoot problems, and respond to support requests.</p>
+      <h2>Local and cloud storage</h2>
+      <p>Before the Close keeps app data on your device so the app can work reliably and retain an offline copy. When you use an account, supported Journey data is also stored in the app's cloud backend so it can be restored on another device.</p>
+      <h2>Service providers</h2>
+      <p>Before the Close currently uses Supabase for account authentication and cloud data storage and GitHub Pages to host the web app. These providers may process technical information necessary to deliver their services.</p>
+      <h2>Notifications</h2>
+      <p>If you enable reminders, reminder preferences may be stored with your account. Notification permission itself is controlled by your device or browser and does not automatically transfer to another device.</p>
+      <h2>Selling data and advertising</h2>
+      <p>Before the Close does not currently sell your personal information and does not currently run third-party advertising or behavioral advertising in the app.</p>
+      <h2>Account deletion</h2>
+      <p>You can permanently delete your Before the Close account and associated cloud Journey data from Settings → Account & Cloud → Delete Account & Cloud Data. Local app data may remain on a device until that device's site/app storage is cleared.</p>
+      <h2>Security</h2>
+      <p>Reasonable technical safeguards are used, including authenticated access and database access rules. No internet service can guarantee absolute security.</p>
+      <h2>Children</h2>
+      <p>Before the Close is intended for people using sales and work-focused features and is not directed to children under 13.</p>
+      <h2>Changes</h2>
+      <p>This policy may be updated as Before the Close changes. The effective date above will be updated when material changes are made.</p>
+      <h2>Contact</h2><p>Privacy or support questions: <a href="mailto:beforetheclose@gmail.com">beforetheclose@gmail.com</a></p>`
+  },
+  terms: {
+    eyebrow: "Using the App",
+    title: "Terms of Use",
+    html: `<p><strong>Effective September 23, 2026</strong></p>
+      <p>By using Before the Close, you agree to these Terms of Use. If you do not agree, do not use the app.</p>
+      <h2>Purpose</h2><p>Before the Close provides faith-based encouragement, prayer content, personal reflection tools, and sales-focused organization features. It does not guarantee sales, income, business results, spiritual outcomes, or any particular result.</p>
+      <h2>Your account</h2><p>You are responsible for maintaining the confidentiality of your sign-in information and for activity performed through your account. Provide accurate information and do not attempt to access another user's account or data.</p>
+      <h2>Your content</h2><p>You retain responsibility for notes, reflections, goals, milestones, and other information you enter. You give Before the Close permission to process and store that information only as needed to provide the app's features.</p>
+      <h2>Acceptable use</h2><p>Do not misuse the service, interfere with its operation, attempt unauthorized access, abuse account systems, or use the app in violation of applicable law.</p>
+      <h2>Availability and changes</h2><p>Before the Close is under active development. Features may change, be interrupted, or be discontinued. Back up information that is important to you.</p>
+      <h2>Third-party services</h2><p>The app relies on third-party infrastructure such as Supabase and GitHub Pages. Their services and terms may affect availability.</p>
+      <h2>Disclaimer</h2><p>The app and its content are provided on an "as available" basis. Prayer, scripture, motivational, sales, and productivity content is for general informational and inspirational use and is not professional legal, financial, medical, or mental-health advice.</p>
+      <h2>Account termination</h2><p>You may stop using the app at any time and may delete your account through Settings. Access may also be limited when necessary to protect the service, users, or comply with law.</p>
+      <h2>Contact</h2><p>Questions about these terms: <a href="mailto:beforetheclose@gmail.com">beforetheclose@gmail.com</a></p>`
+  },
+  support: {
+    eyebrow: "We're Here to Help",
+    title: "Support",
+    html: `<p>Need help with Before the Close? Send a message and include what you were trying to do, what happened, and the device/browser you were using when useful.</p>
+      <h2>Contact</h2><p><a href="mailto:beforetheclose@gmail.com?subject=Before%20the%20Close%20Support">beforetheclose@gmail.com</a></p>
+      <h2>Account help</h2><p>Forgot Password is available from the sign-in screen. Change Password, Sign Out, Sync Now, and Delete Account & Cloud Data are available under Settings → Account & Cloud while signed in.</p>
+      <h2>Before deleting the app</h2><p>If you use a Before the Close account, use Sync Now and wait for the app to show Synced before removing local app data or changing devices.</p>
+      <h2>Feedback</h2><p>For bugs, prayer feedback, or feature ideas, use Send Feedback in Settings or email the support address above.</p>`
+  },
+  about: {
+    eyebrow: "Faith • Focus • Purpose",
+    title: "About Before the Close",
+    html: `<p>Before the Close is a faith-driven sales companion built to give people a moment to reset before the next conversation, appointment, door, call, or close.</p>
+      <p>It combines daily and situational prayers with scripture, check-ins, goals, reflections, milestones, favorites, achievements, reminders, and a personal Journey.</p>
+      <h2>Built around the work</h2><p>Prayer language can adapt to your sales industry and selling style so the experience feels connected to the work in front of you.</p>
+      <h2>The idea</h2><p>Success is bigger than a scoreboard. Before the Close is designed around showing up with faith, serving people honestly, staying focused, and doing the next right thing with purpose.</p>
+      <p class="btc-legal-note"><strong>Before the Close</strong><br>Faith • Focus • Purpose</p>
+      <h2>Contact</h2><p><a href="mailto:beforetheclose@gmail.com">beforetheclose@gmail.com</a></p>`
+  }
+};
+function btcOpenLegal(type){
+  const content=BTC_LEGAL_CONTENT[type]||BTC_LEGAL_CONTENT.about;
+  hideAllScreens();
+  const screen=document.getElementById("legalScreen");
+  if(screen) screen.style.display="block";
+  const eyebrow=document.getElementById("btcLegalEyebrow"), title=document.getElementById("btcLegalTitle"), copy=document.getElementById("btcLegalCopy");
+  if(eyebrow) eyebrow.textContent=content.eyebrow;
+  if(title) title.textContent=content.title;
+  if(copy) copy.innerHTML=content.html;
+  window.scrollTo(0,0);
+}
+function btcCloseLegal(){showSettings();window.scrollTo(0,0);}

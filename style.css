@@ -1915,3 +1915,18 @@ button,.nav-item{-webkit-tap-highlight-color:transparent;touch-action:manipulati
 body.btc-session-locked{overflow:hidden!important;}
 body.btc-session-locked .bottom-nav{visibility:hidden!important;}
 body.btc-session-locked #btcAuthModal{z-index:9500;}
+
+/* v1.8 — Privacy, Terms & Support */
+.btc-legal-links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.btc-legal-links button,.btc-legal-back{min-height:44px;border:1px solid rgba(212,175,55,.35);border-radius:12px;background:rgba(255,255,255,.03);color:#f3df98;font:inherit;font-weight:700;cursor:pointer}
+.btc-legal-links button{padding:11px 10px}
+.btc-legal-screen{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+.btc-legal-back{display:block;margin:8px 18px 14px;padding:10px 14px}
+.btc-legal-card{margin:0 18px 28px;padding:22px 20px;border:1px solid rgba(212,175,55,.25);border-radius:18px;background:rgba(255,255,255,.025)}
+.btc-legal-card h1{margin:6px 0 18px;font-size:1.8rem}
+.btc-legal-copy h2{font-size:1.05rem;margin:22px 0 8px;color:#f3df98}
+.btc-legal-copy p,.btc-legal-copy li{line-height:1.6;color:rgba(255,255,255,.82)}
+.btc-legal-copy ul{padding-left:20px}
+.btc-legal-copy a{color:#f3df98;overflow-wrap:anywhere}
+.btc-legal-note{padding:12px 14px;border-left:3px solid #d4af37;background:rgba(212,175,55,.07);border-radius:8px}
+@media(max-width:390px){.btc-legal-links{grid-template-columns:1fr}.btc-legal-card{margin-left:14px;margin-right:14px;padding:20px 16px}}
