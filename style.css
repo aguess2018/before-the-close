@@ -1930,3 +1930,17 @@ body.btc-session-locked #btcAuthModal{z-index:9500;}
 .btc-legal-copy a{color:#f3df98;overflow-wrap:anywhere}
 .btc-legal-note{padding:12px 14px;border-left:3px solid #d4af37;background:rgba(212,175,55,.07);border-radius:8px}
 @media(max-width:390px){.btc-legal-links{grid-template-columns:1fr}.btc-legal-card{margin-left:14px;margin-right:14px;padding:20px 16px}}
+
+/* v1.8.1 — Legal/Support navigation + iPhone safe-area patch */
+#legalScreen.btc-legal-screen{
+  padding-top:max(12px, env(safe-area-inset-top, 0px));
+  padding-bottom:calc(110px + env(safe-area-inset-bottom, 0px));
+  min-height:100dvh;
+  box-sizing:border-box;
+}
+#legalScreen .header{
+  padding-top:0;
+}
+#legalScreen .btc-legal-back{
+  margin-top:12px;
+}

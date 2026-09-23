@@ -984,7 +984,9 @@ function hideAllScreens() {
 
         "journeyScreen",
 
-        "prayScreen"
+        "prayScreen",
+
+        "legalScreen"
 
     ];
 
