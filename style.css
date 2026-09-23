@@ -1893,3 +1893,13 @@ button,.nav-item{-webkit-tap-highlight-color:transparent;touch-action:manipulati
   .reflection-moods{grid-template-columns:repeat(2,1fr);}
   .reflection-moods button{min-height:72px;}
 }
+
+
+/* ========================================
+   v1.7 — ACCOUNT MANAGEMENT
+========================================= */
+.btc-danger-zone{margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.09)}
+.btc-danger-zone>span{display:block;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;opacity:.55;font-weight:800}
+.btc-danger-zone p{margin:7px 0 12px;font-size:.76rem;line-height:1.5;opacity:.62}
+.btc-delete-account{width:100%;min-height:48px;border-radius:14px;border:1px solid rgba(255,95,95,.38);background:rgba(255,70,70,.07);color:#ffaaaa;font-weight:800}
+.btc-delete-account:active{transform:scale(.99)}

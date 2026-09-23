@@ -13,7 +13,7 @@
 <title>Before the Close</title>
 <link href="manifest.json" rel="manifest"/>
 <link href="icons/icon-192.png" rel="apple-touch-icon"/>
-<link href="style.css?v=1.6.6" rel="stylesheet"/>
+<link href="style.css?v=1.7.0" rel="stylesheet"/>
 </head>
 <body>
 <div aria-hidden="true" class="btc-launch-splash" id="btcLaunchSplash">
@@ -305,7 +305,7 @@
 <section class="btc-account-card btc-settings-section" id="btcAccountCard">
 <div class="eyebrow">Account &amp; Cloud</div><h2>Your Before the Close Account</h2><p id="btcAccountCopy">Sign in to back up your Journey and carry it across devices.</p>
 <div class="btc-account-actions" id="btcSignedOutActions"><button class="btc-account-primary" onclick="btcOpenAuth('signup')" type="button">Create Account</button><button class="btc-account-secondary" onclick="btcOpenAuth('signin')" type="button">Sign In</button></div>
-<div hidden id="btcSignedInActions"><div class="btc-account-user"><span>Signed in as</span><strong id="btcAccountEmail"></strong></div><div class="btc-cloud-status" id="btcCloudStatus" aria-live="polite">Cloud sync ready.</div><div class="btc-account-actions"><button class="btc-account-secondary" onclick="btcSyncNow(true)" type="button">Sync Now</button><button class="btc-account-secondary" onclick="btcSignOut()" type="button">Sign Out</button></div></div>
+<div hidden id="btcSignedInActions"><div class="btc-account-user"><span>Signed in as</span><strong id="btcAccountEmail"></strong></div><div class="btc-cloud-status" id="btcCloudStatus" aria-live="polite">Cloud sync ready.</div><div class="btc-account-actions"><button class="btc-account-secondary" onclick="btcSyncNow(true)" type="button">Sync Now</button><button class="btc-account-secondary" onclick="btcOpenAuth('changepassword')" type="button">Change Password</button><button class="btc-account-secondary" onclick="btcSignOut()" type="button">Sign Out</button></div><div class="btc-danger-zone"><span>Account controls</span><p>Deleting your account permanently removes your cloud Journey and account. This cannot be undone.</p><button class="btc-delete-account" onclick="btcDeleteAccount()" type="button">Delete Account &amp; Cloud Data</button></div></div>
 </section>
 
 <section class="feedback-section btc-settings-section">
@@ -314,7 +314,7 @@
 
 <section class="about-card btc-settings-section">
 <div class="eyebrow">App &amp; Support</div><h2>Before the Close</h2><p>Faith, focus, and purpose for people who sell.</p>
-<div class="about-meta"><span>Build</span><strong>1.6.6 Dev</strong></div><div class="about-meta"><span>Prayer Library</span><strong>560+ prayers</strong></div><div class="about-meta"><span>Status</span><strong>Pre-release testing</strong></div>
+<div class="about-meta"><span>Build</span><strong>1.7 Dev</strong></div><div class="about-meta"><span>Prayer Library</span><strong>560+ prayers</strong></div><div class="about-meta"><span>Status</span><strong>Pre-release testing</strong></div>
 </section>
 <div aria-hidden="true" class="journey-bottom-spacer"></div>
 </div>
@@ -633,10 +633,10 @@
 <!-- ========================================
      JAVASCRIPT
 ========================================= -->
-<script src="prayers.js?v=1.6.6"></script>
-<script src="app.js?v=1.6.6"></script>
+<script src="prayers.js?v=1.7.0"></script>
+<script src="app.js?v=1.7.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="cloud.js?v=1.6.6"></script>
+<script src="cloud.js?v=1.7.0"></script>
 <script>
 // v1.4.1: robust Pray-tab binding for mobile browsers/PWA shells.
 window.addEventListener("DOMContentLoaded", function () {

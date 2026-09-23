@@ -1,0 +1,10 @@
+BEFORE THE CLOSE v1.7 — ACCOUNT MANAGEMENT
+
+- Added Change Password for signed-in users.
+- Kept Forgot Password / recovery flow.
+- Added permanent Delete Account & Cloud Data with two-step confirmation.
+- Account deletion uses an authenticated Supabase RPC that can delete only auth.uid().
+- Successful deletion clears BTC data from the current device and returns to a fresh state.
+- Bumped PWA cache to v170.
+
+DEPLOYMENT: Run SUPABASE-v1.7-ACCOUNT-DELETION.sql in Supabase first. Then upload the app files to GitHub Pages. Do not upload SQL files to the public site.

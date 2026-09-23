@@ -69,8 +69,10 @@
     } else if(mode==="recovery"){
       title.textContent="Reset your password"; sub.textContent="We'll email you a secure recovery link."; submit.textContent="Send Reset Email";
       nameWrap.hidden=true; passWrap.hidden=true; newWrap.hidden=true; forgot.hidden=true; sw.hidden=false; sw.textContent="Back to sign in"; sw.onclick=()=>btcOpenAuth("signin");
-    } else if(mode==="newpassword"){
-      title.textContent="Choose a new password"; sub.textContent="Enter a new password for your account."; submit.textContent="Update Password";
+    } else if(mode==="newpassword" || mode==="changepassword"){
+      title.textContent=mode==="changepassword" ? "Change your password" : "Choose a new password";
+      sub.textContent=mode==="changepassword" ? "Choose a new password for your Before the Close account." : "Enter a new password for your account.";
+      submit.textContent="Update Password";
       nameWrap.hidden=true; passWrap.hidden=true; newWrap.hidden=false; forgot.hidden=true; sw.hidden=true;
     }
     modal.hidden=false; modal.style.display=""; modal.removeAttribute("aria-hidden"); document.body.style.overflow="hidden";
@@ -109,16 +111,40 @@
         if(!email) throw new Error("Enter your email address.");
         const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname}); if(error) throw error;
         authMessage("Reset email sent. Open the link in that email to choose a new password.","success");
-      } else if(authMode==="newpassword"){
+      } else if(authMode==="newpassword" || authMode==="changepassword"){
         const np=el("btcAuthNewPassword")?.value||""; if(np.length<8) throw new Error("Use at least 8 characters.");
         const {error}=await client.auth.updateUser({password:np}); if(error) throw error;
-        authMessage("Password updated. You're signed in.","success"); setTimeout(()=>btcCloseAuth(),900);
+        authMessage("Password updated successfully.","success");
+        if(el("btcAuthNewPassword")) el("btcAuthNewPassword").value="";
+        setTimeout(()=>btcCloseAuth(),900);
       }
     } catch(err){ authMessage(err?.message||"Something went wrong. Try again.","error"); }
     finally { if(btn) btn.disabled=false; }
   };
 
   window.btcSignOut = async function(){ if(!client)return; await client.auth.signOut(); currentUser=null; renderAccount(); status("Signed out. Your local Journey stays on this device."); };
+
+  window.btcDeleteAccount = async function(){
+    if(!client || !currentUser) return;
+    const first=window.confirm("Delete your Before the Close account and all cloud data? This cannot be undone.");
+    if(!first) return;
+    const typed=window.prompt('Type DELETE to permanently delete your account and cloud Journey.');
+    if(typed!=="DELETE") { status("Account deletion cancelled."); return; }
+    status("Deleting account and cloud data…");
+    try {
+      const {error}=await client.rpc("delete_own_account");
+      if(error) throw error;
+      try { await client.auth.signOut({scope:"local"}); } catch(_) {}
+      currentUser=null;
+      localStorage.clear();
+      sessionStorage.clear();
+      window.alert("Your Before the Close account and cloud data were deleted.");
+      location.reload();
+    } catch(err){
+      console.error("Account deletion failed",err);
+      status("Couldn't delete the account. Nothing was removed. Try again.","error");
+    }
+  };
 
   async function pullCloud(authoritativeProfile=false){
     const uid=currentUser.id;
