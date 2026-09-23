@@ -1944,3 +1944,19 @@ body.btc-session-locked #btcAuthModal{z-index:9500;}
 #legalScreen .btc-legal-back{
   margin-top:12px;
 }
+
+
+/* RC2 — iPhone safe-area hardening.
+   All top-level screens reserve the Dynamic Island/notch area consistently.
+   Settings already behaved correctly; this normalizes the remaining screens. */
+@supports (padding-top: env(safe-area-inset-top)) {
+  #todayScreen,
+  #journeyScreen,
+  #prayScreen,
+  #favoritesScreen,
+  #prayerModeScreen,
+  #legalScreen {
+    box-sizing: border-box;
+    padding-top: max(16px, env(safe-area-inset-top));
+  }
+}

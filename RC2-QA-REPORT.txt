@@ -1,0 +1,7 @@
+Before the Close v1.0.0 RC2
+Bug fix: iPhone safe-area / Dynamic Island overlap on non-Settings screens.
+Applied safe-area top padding to Today, Journey, Pray, Favorites, Prayer Mode, and Legal screens.
+Settings behavior intentionally left unchanged.
+Service-worker cache bumped to v100rc2.
+No SQL changes.
+Syntax checks passed.
