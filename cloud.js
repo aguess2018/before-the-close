@@ -261,4 +261,12 @@
     if(currentUser) syncAll(false); else status("Sign in to enable cloud backup.");
   }
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",init); else init();
+
+  // v1.6.5: explicit same-page favorite mutations. The native storage event does not
+  // fire in the same document that called localStorage.setItem().
+  window.addEventListener("btc:favorites-changed", () => {
+    if(!currentUser || applyingCloud) return;
+    clearTimeout(syncTimer);
+    syncTimer=setTimeout(()=>syncAll(false), 250);
+  });
 })();

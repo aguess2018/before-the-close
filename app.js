@@ -558,20 +558,19 @@ function displayFavorites() {
 
             removeButton.className =
                 "remove-favorite";
-
+            removeButton.type = "button";
+            removeButton.dataset.favoriteIndex = String(index);
 
             removeButton.innerText =
                 "♡ Remove from Favorites";
 
-
-            removeButton.onclick =
-                function() {
-
-                    removeFavorite(
-                        index
-                    );
-
-                };
+            // v1.6.6: remove the exact rendered array entry. Do not reconstruct
+            // an identity from DOM data; older/cloud favorites can have mixed shapes.
+            removeButton.onclick = function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                removeFavorite(index);
+            };
 
 
             card.appendChild(
@@ -636,30 +635,30 @@ function displayFavorites() {
 }
 
 
-function removeFavorite(
-    index
-) {
+function btcFavoriteIdentity(item) {
+    return [item?.industry || "general", item?.mode || item?.type || "prayer", item?.title || "", item?.text || ""].join("||");
+}
 
-    let favorites =
-        getFavorites();
+function removeFavorite(index) {
+    const favorites = getFavorites();
+    const numericIndex = Number(index);
 
+    if (!Number.isInteger(numericIndex) || numericIndex < 0 || numericIndex >= favorites.length) {
+        console.warn("Favorite removal ignored: invalid index", index);
+        return;
+    }
 
-    favorites.splice(
-        index,
-        1
-    );
+    // Remove the exact card the user tapped. This is intentionally index-based
+    // because displayFavorites() rendered this index from the same local array.
+    favorites.splice(numericIndex, 1);
+    saveFavorites(favorites);
 
-
-    saveFavorites(
-        favorites
-    );
-
-
+    // Redraw immediately so success is visible before any network work happens.
     displayFavorites();
+    try { updateFavoriteButton(); } catch (error) { console.warn("Favorite button refresh:", error); }
+    try { updateModeFavoriteButton(); } catch (error) { console.warn("Mode favorite refresh:", error); }
 
-    updateFavoriteButton();
-
-    updateModeFavoriteButton();
+    try { window.dispatchEvent(new CustomEvent("btc:favorites-changed")); } catch (_) {}
 }
 
 
