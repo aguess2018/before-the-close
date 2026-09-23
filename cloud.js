@@ -9,6 +9,8 @@
   const SUPABASE_URL = "https://yficdwsclnukrdobmxfw.supabase.co";
   const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_FvLb2iX5rg0_IfEJVVXcOw_hbmZbIU2";
   const MIGRATION_KEY = "btcCloudMigrationV1";
+  const ACTIVE_ACCOUNT_KEY = "btcActiveAccountV1";
+  const ACCOUNT_CACHE_PREFIX = "btcAccountCacheV1:";
   const SYNC_KEYS = new Set([
     "favorites","userName","salesType","salesStyle","firstName","name","industry","selectedIndustry","userIndustry",
     "btcJourneyStats","btcDailyCheckins","btcPrayerHistory","btcWeeklyFocus","btcOnboardingComplete",
@@ -22,9 +24,39 @@
   let syncInProgress = false;
   let syncCooldownUntil = 0;
   let authMode = "signup";
+  let pendingAccountMode = null;
 
   function el(id){ return document.getElementById(id); }
   function safeJSON(key, fallback){ try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch(_) { return fallback; } }
+  function accountCacheKey(uid){ return ACCOUNT_CACHE_PREFIX + uid; }
+  function saveAccountCache(uid){
+    if(!uid) return;
+    const snapshot={};
+    SYNC_KEYS.forEach(k=>{ const v=localStorage.getItem(k); if(v!==null) snapshot[k]=v; });
+    localStorage.setItem(accountCacheKey(uid), JSON.stringify(snapshot));
+  }
+  function clearActiveJourney(){
+    applyingCloud=true;
+    try { SYNC_KEYS.forEach(k=>localStorage.removeItem(k)); localStorage.removeItem(MIGRATION_KEY); }
+    finally { applyingCloud=false; }
+  }
+  function restoreAccountCache(uid){
+    const snapshot=safeJSON(accountCacheKey(uid),{});
+    applyingCloud=true;
+    try { Object.entries(snapshot||{}).forEach(([k,v])=>{ if(SYNC_KEYS.has(k) && typeof v==="string") localStorage.setItem(k,v); }); }
+    finally { applyingCloud=false; }
+  }
+  function prepareAccount(uid, preserveUnscoped=false){
+    if(!uid) return;
+    const previous=localStorage.getItem(ACTIVE_ACCOUNT_KEY);
+    if(previous===uid) return;
+    if(previous) saveAccountCache(previous);
+    if(!preserveUnscoped) clearActiveJourney();
+    if(!preserveUnscoped) restoreAccountCache(uid);
+    localStorage.setItem(ACTIVE_ACCOUNT_KEY,uid);
+    // Always pull first after an account boundary so stale device data cannot overwrite cloud data.
+    localStorage.removeItem(MIGRATION_KEY);
+  }
   function dateKey(d=new Date()){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
   function weekStart(){ const d=new Date(); const day=d.getDay(); d.setDate(d.getDate()-(day===0?6:day-1)); return dateKey(d); }
   function hashText(s){ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } return (h>>>0).toString(36); }
@@ -95,14 +127,17 @@
         const name=(el("btcAuthName")?.value||"").trim();
         if(!email) throw new Error("Enter your email address.");
         if(password.length<8) throw new Error("Use a password with at least 8 characters.");
+        pendingAccountMode="signup";
         const {data,error}=await client.auth.signUp({email,password,options:{data:{first_name:name},emailRedirectTo:location.origin+location.pathname}});
         if(error) throw error;
         if(data.session){ authMessage("Account created. Syncing your Journey…","success"); setTimeout(()=>btcCloseAuth(),650); }
         else authMessage("Account created. Check your email to confirm it, then come back and sign in.","success");
       } else if(authMode==="signin"){
         if(!email) throw new Error("Enter your email address.");
+        pendingAccountMode="signin";
         const {data,error}=await client.auth.signInWithPassword({email,password}); if(error) throw error;
         currentUser=data?.user||data?.session?.user||currentUser;
+        if(currentUser) prepareAccount(currentUser.id,false);
         renderAccount();
         authMessage("Signed in. Bringing your Journey with you…","success");
         btcCloseAuth();
@@ -135,10 +170,15 @@
     if(!client)return;
     status("Signing out…","syncing");
     try {
+      const uid=currentUser?.id||null;
+      if(uid) saveAccountCache(uid);
       const {error}=await client.auth.signOut();
       if(error) throw error;
+      clearActiveJourney();
+      localStorage.removeItem(ACTIVE_ACCOUNT_KEY);
       currentUser=null;
       clearTimeout(syncTimer); syncTimer=null;
+      refreshLocalUI();
       renderAccount();
       setSessionLocked(true);
       status("Signed out. Sign in to unlock your Journey.");
@@ -160,8 +200,11 @@
       const {error}=await client.rpc("delete_own_account");
       if(error) throw error;
       try { await client.auth.signOut({scope:"local"}); } catch(_) {}
+      const deletedUid=currentUser?.id||null;
       currentUser=null;
-      localStorage.clear();
+      clearActiveJourney();
+      localStorage.removeItem(ACTIVE_ACCOUNT_KEY);
+      if(deletedUid) localStorage.removeItem(accountCacheKey(deletedUid));
       sessionStorage.clear();
       window.alert("Your Before the Close account and cloud data were deleted.");
       location.reload();
@@ -279,6 +322,7 @@
       applyingCloud=true;
       if(!migrated){ await pullCloud(true); await pushCloud(); localStorage.setItem(MIGRATION_KEY,currentUser.id); refreshLocalUI(); }
       else { await pushCloud(); await pullCloud(); refreshLocalUI(); }
+      saveAccountCache(currentUser.id);
       status("Synced • "+new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}));
     } catch(err){ console.error("Before the Close cloud sync:",err); status("Sync issue — your data is still safe on this device.","error"); }
     finally {
@@ -300,16 +344,21 @@
   async function init(){
     if(!window.supabase?.createClient){ status("Cloud library couldn't load. Local mode is still working.","error"); return; }
     client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-    const {data:{session}}=await client.auth.getSession(); currentUser=session?.user||null; renderAccount();
+    const {data:{session}}=await client.auth.getSession(); currentUser=session?.user||null;
+    if(currentUser) prepareAccount(currentUser.id,false);
+    renderAccount();
     setSessionLocked(!currentUser);
     client.auth.onAuthStateChange((event,session)=>{
-      currentUser=session?.user||null; renderAccount();
+      currentUser=session?.user||null;
+      if(currentUser) prepareAccount(currentUser.id,pendingAccountMode==="signup");
+      renderAccount();
       setSessionLocked(!currentUser);
       if(event==="PASSWORD_RECOVERY") setTimeout(()=>btcOpenAuth("newpassword"),0);
       if(currentUser && ["SIGNED_IN","INITIAL_SESSION","TOKEN_REFRESHED"].includes(event)){
         btcCloseAuth();
         setTimeout(()=>syncAll(false),0);
       }
+      if(event==="SIGNED_IN" || event==="INITIAL_SESSION") pendingAccountMode=null;
     });
     if(currentUser) syncAll(false); else status("Signed out. Sign in to unlock your Journey.");
   }
