@@ -1,0 +1,7 @@
+Before the Close v1.6.1 — Sync Loop Fix
+
+- Prevents cloud sync from retriggering itself when cloud data refreshes the local UI.
+- Serializes sync cycles so overlapping automatic/auth/manual sync calls cannot run at the same time.
+- Keeps localStorage-triggered autosync suppressed for the entire cloud apply + UI refresh cycle.
+- Preserves v1.6 Cloud Complete milestone sync and all existing local data.
+- No Supabase SQL changes required for this patch.

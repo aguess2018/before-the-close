@@ -19,6 +19,7 @@
   let currentUser = null;
   let applyingCloud = false;
   let syncTimer = null;
+  let syncInProgress = false;
   let authMode = "signup";
 
   function el(id){ return document.getElementById(id); }
@@ -194,17 +195,25 @@
 
   async function syncAll(manual=false){
     if(!currentUser || !navigator.onLine) { if(manual) status("Offline. Your changes are safe locally and will sync when you're back online."); return; }
+    // v1.6.1: serialize cloud work. UI refreshes can write to localStorage,
+    // so localStorage-triggered autosync must stay suppressed for the full cycle.
+    if(syncInProgress) return;
+    syncInProgress=true;
+    clearTimeout(syncTimer);
+    syncTimer=null;
     status("Syncing…","syncing");
     try {
       const migrated=localStorage.getItem(MIGRATION_KEY)===currentUser.id;
+      applyingCloud=true;
       if(!migrated){ await pullCloud(); await pushCloud(); localStorage.setItem(MIGRATION_KEY,currentUser.id); refreshLocalUI(); }
       else { await pushCloud(); await pullCloud(); refreshLocalUI(); }
       status("Synced • "+new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}));
     } catch(err){ console.error("Before the Close cloud sync:",err); status("Sync issue — your data is still safe on this device.","error"); }
+    finally { applyingCloud=false; syncInProgress=false; }
   }
   window.btcSyncNow=(manual=true)=>syncAll(manual);
 
-  function scheduleSync(){ if(applyingCloud||!currentUser)return; clearTimeout(syncTimer); syncTimer=setTimeout(()=>syncAll(false),900); }
+  function scheduleSync(){ if(applyingCloud||syncInProgress||!currentUser)return; clearTimeout(syncTimer); syncTimer=setTimeout(()=>{ syncTimer=null; syncAll(false); },900); }
   const nativeSet=Storage.prototype.setItem, nativeRemove=Storage.prototype.removeItem;
   Storage.prototype.setItem=function(k,v){ nativeSet.call(this,k,v); if(this===localStorage&&SYNC_KEYS.has(k))scheduleSync(); };
   Storage.prototype.removeItem=function(k){ nativeRemove.call(this,k); if(this===localStorage&&SYNC_KEYS.has(k))scheduleSync(); };
