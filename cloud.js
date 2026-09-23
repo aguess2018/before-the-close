@@ -122,7 +122,32 @@
     finally { if(btn) btn.disabled=false; }
   };
 
-  window.btcSignOut = async function(){ if(!client)return; await client.auth.signOut(); currentUser=null; renderAccount(); status("Signed out. Your local Journey stays on this device."); };
+  function setSessionLocked(locked){
+    document.body.classList.toggle("btc-session-locked", !!locked);
+    const gate=el("btcSessionGate");
+    if(gate) gate.hidden=!locked;
+  }
+
+  window.btcSessionSignIn = function(){ btcOpenAuth("signin"); };
+  window.btcSessionCreateAccount = function(){ btcOpenAuth("signup"); };
+
+  window.btcSignOut = async function(){
+    if(!client)return;
+    status("Signing out…","syncing");
+    try {
+      const {error}=await client.auth.signOut();
+      if(error) throw error;
+      currentUser=null;
+      clearTimeout(syncTimer); syncTimer=null;
+      renderAccount();
+      setSessionLocked(true);
+      status("Signed out. Sign in to unlock your Journey.");
+      window.scrollTo(0,0);
+    } catch(err){
+      console.error("Sign out failed",err);
+      status("Couldn't sign out. Try again.","error");
+    }
+  };
 
   window.btcDeleteAccount = async function(){
     if(!client || !currentUser) return;
@@ -276,15 +301,17 @@
     if(!window.supabase?.createClient){ status("Cloud library couldn't load. Local mode is still working.","error"); return; }
     client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
     const {data:{session}}=await client.auth.getSession(); currentUser=session?.user||null; renderAccount();
+    setSessionLocked(!currentUser);
     client.auth.onAuthStateChange((event,session)=>{
       currentUser=session?.user||null; renderAccount();
+      setSessionLocked(!currentUser);
       if(event==="PASSWORD_RECOVERY") setTimeout(()=>btcOpenAuth("newpassword"),0);
       if(currentUser && ["SIGNED_IN","INITIAL_SESSION","TOKEN_REFRESHED"].includes(event)){
         btcCloseAuth();
         setTimeout(()=>syncAll(false),0);
       }
     });
-    if(currentUser) syncAll(false); else status("Sign in to enable cloud backup.");
+    if(currentUser) syncAll(false); else status("Signed out. Sign in to unlock your Journey.");
   }
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",init); else init();
 

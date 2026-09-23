@@ -1903,3 +1903,15 @@ button,.nav-item{-webkit-tap-highlight-color:transparent;touch-action:manipulati
 .btc-danger-zone p{margin:7px 0 12px;font-size:.76rem;line-height:1.5;opacity:.62}
 .btc-delete-account{width:100%;min-height:48px;border-radius:14px;border:1px solid rgba(255,95,95,.38);background:rgba(255,70,70,.07);color:#ffaaaa;font-weight:800}
 .btc-delete-account:active{transform:scale(.99)}
+
+
+/* v1.7.1 — signed-out privacy gate */
+.btc-session-gate{position:fixed;inset:0;z-index:9000;background:#0b0b0c;display:flex;align-items:center;justify-content:center;padding:calc(24px + env(safe-area-inset-top)) 22px calc(24px + env(safe-area-inset-bottom));}
+.btc-session-gate[hidden]{display:none!important;}
+.btc-session-gate-card{width:min(100%,420px);text-align:center;background:#151516;border:1px solid rgba(218,174,45,.28);border-radius:22px;padding:30px 22px;box-shadow:0 24px 70px rgba(0,0,0,.5);}
+.btc-session-gate-card h2{margin:8px 0 10px;}
+.btc-session-gate-card p{margin:0 0 22px;color:#aaa;line-height:1.5;}
+.btc-session-gate-card button{width:100%;margin-top:10px;}
+body.btc-session-locked{overflow:hidden!important;}
+body.btc-session-locked .bottom-nav{visibility:hidden!important;}
+body.btc-session-locked #btcAuthModal{z-index:9500;}

@@ -13,9 +13,19 @@
 <title>Before the Close</title>
 <link href="manifest.json" rel="manifest"/>
 <link href="icons/icon-192.png" rel="apple-touch-icon"/>
-<link href="style.css?v=1.7.0" rel="stylesheet"/>
+<link href="style.css?v=1.7.1" rel="stylesheet"/>
 </head>
 <body>
+<div id="btcSessionGate" class="btc-session-gate" hidden>
+  <div class="btc-session-gate-card">
+    <div class="onboarding-mark">✝</div>
+    <div class="eyebrow">Before the Close</div>
+    <h2>Your Journey is locked</h2>
+    <p>Sign in to access the account and Journey saved on this device.</p>
+    <button class="btc-account-primary" type="button" onclick="btcSessionSignIn()">Sign In</button>
+    <button class="btc-account-secondary" type="button" onclick="btcSessionCreateAccount()">Create Account</button>
+  </div>
+</div>
 <div aria-hidden="true" class="btc-launch-splash" id="btcLaunchSplash">
 <div class="btc-launch-mark">✝</div>
 <div class="btc-launch-name">BEFORE THE CLOSE</div>
@@ -314,7 +324,7 @@
 
 <section class="about-card btc-settings-section">
 <div class="eyebrow">App &amp; Support</div><h2>Before the Close</h2><p>Faith, focus, and purpose for people who sell.</p>
-<div class="about-meta"><span>Build</span><strong>1.7 Dev</strong></div><div class="about-meta"><span>Prayer Library</span><strong>560+ prayers</strong></div><div class="about-meta"><span>Status</span><strong>Pre-release testing</strong></div>
+<div class="about-meta"><span>Build</span><strong>1.7.1 Dev</strong></div><div class="about-meta"><span>Prayer Library</span><strong>560+ prayers</strong></div><div class="about-meta"><span>Status</span><strong>Pre-release testing</strong></div>
 </section>
 <div aria-hidden="true" class="journey-bottom-spacer"></div>
 </div>
@@ -633,10 +643,10 @@
 <!-- ========================================
      JAVASCRIPT
 ========================================= -->
-<script src="prayers.js?v=1.7.0"></script>
-<script src="app.js?v=1.7.0"></script>
+<script src="prayers.js?v=1.7.1"></script>
+<script src="app.js?v=1.7.1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="cloud.js?v=1.7.0"></script>
+<script src="cloud.js?v=1.7.1"></script>
 <script>
 // v1.4.1: robust Pray-tab binding for mobile browsers/PWA shells.
 window.addEventListener("DOMContentLoaded", function () {
