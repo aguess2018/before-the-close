@@ -120,7 +120,7 @@
 
   async function pullCloud(){
     const uid=currentUser.id;
-    const [profile,checkins,refs,favs,goal,hist,ach,stats,prefs]=await Promise.all([
+    const [profile,checkins,refs,favs,goal,hist,ach,stats,prefs,moments]=await Promise.all([
       client.from("profiles").select("*").eq("id",uid).maybeSingle(),
       client.from("daily_checkins").select("checkin_date,mood").eq("user_id",uid),
       client.from("reflections").select("reflection_date,mood,note").eq("user_id",uid),
@@ -129,9 +129,10 @@
       client.from("prayer_history").select("prayer_key,title,prayer_text,prayer_type,industry,opened_at").eq("user_id",uid).order("opened_at",{ascending:false}).limit(20),
       client.from("user_achievements").select("achievement_key").eq("user_id",uid),
       client.from("user_stats").select("*").eq("user_id",uid).maybeSingle(),
-      client.from("notification_preferences").select("*").eq("user_id",uid).maybeSingle()
+      client.from("notification_preferences").select("*").eq("user_id",uid).maybeSingle(),
+      client.from("milestone_moments").select("moment_id,moment_date,moment_type,note,created_at").eq("user_id",uid).order("created_at",{ascending:false}).limit(100)
     ]);
-    const firstError=[profile,checkins,refs,favs,goal,hist,ach,stats,prefs].find(x=>x.error)?.error; if(firstError) throw firstError;
+    const firstError=[profile,checkins,refs,favs,goal,hist,ach,stats,prefs,moments].find(x=>x.error)?.error; if(firstError) throw firstError;
     applyingCloud=true;
     try {
       const p=profile.data;
@@ -153,6 +154,7 @@
         const ms=safeJSON("btcMilestones",{shares:0,goalsCompleted:0,bestStreak:0}); ms.shares=Math.max(ms.shares||0,stats.data.prayers_shared||0); ms.goalsCompleted=Math.max(ms.goalsCompleted||0,stats.data.goals_completed||0); ms.bestStreak=Math.max(ms.bestStreak||0,stats.data.best_streak||0); localStorage.setItem("btcMilestones",JSON.stringify(ms));
       }
       if(prefs.data && !localStorage.getItem("btcDailyReminder")){ localStorage.setItem("btcDailyReminder",JSON.stringify({enabled:!!prefs.data.daily_reminder_enabled,time:(prefs.data.reminder_time||"08:00").slice(0,5),lastSent:""})); }
+      const localM=safeJSON("btcMilestoneMoments",[]); const mergedM=Array.isArray(localM)?[...localM]:[]; (moments.data||[]).forEach(x=>{ const id=Number(x.moment_id); if(!mergedM.some(y=>Number(y.id)===id)) mergedM.push({id,date:x.moment_date,type:x.moment_type,note:x.note||""}); }); mergedM.sort((a,b)=>Number(b.id||0)-Number(a.id||0)); localStorage.setItem("btcMilestoneMoments",JSON.stringify(mergedM.slice(0,100)));
     } finally { applyingCloud=false; }
   }
 
@@ -187,6 +189,7 @@
     const js=safeJSON("btcJourneyStats",{prayersOpened:0}), ms=safeJSON("btcMilestones",{shares:0,goalsCompleted:0,bestStreak:0});
     r=await client.from("user_stats").upsert({user_id:uid,prayers_opened:js.prayersOpened||0,prayers_shared:ms.shares||0,goals_completed:ms.goalsCompleted||0,current_streak:parseInt(localStorage.getItem("streak")||"0",10)||0,best_streak:ms.bestStreak||0},{onConflict:"user_id"}); if(r.error)throw r.error;
     const rem=safeJSON("btcDailyReminder",{enabled:false,time:"08:00"}); r=await client.from("notification_preferences").upsert({user_id:uid,daily_reminder_enabled:!!rem.enabled,reminder_time:(rem.time||"08:00")+":00",timezone:Intl.DateTimeFormat().resolvedOptions().timeZone||null},{onConflict:"user_id"}); if(r.error)throw r.error;
+    const moments=safeJSON("btcMilestoneMoments",[]); if(Array.isArray(moments)&&moments.length){ const rows=moments.slice(0,100).filter(x=>x&&x.id&&x.date&&x.type).map(x=>({user_id:uid,moment_id:String(x.id),moment_date:x.date,moment_type:x.type,note:(x.note||"").slice(0,180)})); if(rows.length){ r=await client.from("milestone_moments").upsert(rows,{onConflict:"user_id,moment_id"}); if(r.error)throw r.error; } }
   }
 
   async function syncAll(manual=false){
@@ -195,7 +198,7 @@
     try {
       const migrated=localStorage.getItem(MIGRATION_KEY)===currentUser.id;
       if(!migrated){ await pullCloud(); await pushCloud(); localStorage.setItem(MIGRATION_KEY,currentUser.id); refreshLocalUI(); }
-      else { await pushCloud(); }
+      else { await pushCloud(); await pullCloud(); refreshLocalUI(); }
       status("Synced • "+new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}));
     } catch(err){ console.error("Before the Close cloud sync:",err); status("Sync issue — your data is still safe on this device.","error"); }
   }

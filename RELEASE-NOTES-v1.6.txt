@@ -1,0 +1,11 @@
+BEFORE THE CLOSE — v1.6 CLOUD COMPLETE
+
+- Adds cloud backup/restore for Milestone Moments.
+- Sync Now now refreshes cloud additions after safely pushing pending local changes.
+- Journey Calendar automatically reflects restored check-ins, reflections, and milestone moments.
+- Existing localStorage remains the offline-first safety layer.
+- Adds Supabase RLS-protected milestone_moments table.
+
+IMPORTANT: Run SUPABASE-v1.6-CLOUD-COMPLETE.sql in Supabase SQL Editor BEFORE deploying this build.
+
+TEST: Device A: create milestone/favorite/check-in/reflection/goal -> Sync Now. Device B/fresh browser: sign in -> verify restoration.
