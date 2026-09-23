@@ -1,0 +1,7 @@
+BEFORE THE CLOSE — v1.6.2 CLOUD DEV — SYNC STABILITY FIX
+
+- Adds an 8-second post-sync cooldown so delayed UI/localStorage writes cannot retrigger cloud sync.
+- Keeps manual Sync Now available during cooldown.
+- Prevents auth/lifecycle autosync calls from immediately stacking after a completed sync.
+- No Supabase SQL changes required.
+- Cache bumped to before-the-close-v162.

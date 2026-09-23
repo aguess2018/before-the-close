@@ -20,6 +20,7 @@
   let applyingCloud = false;
   let syncTimer = null;
   let syncInProgress = false;
+  let syncCooldownUntil = 0;
   let authMode = "signup";
 
   function el(id){ return document.getElementById(id); }
@@ -198,6 +199,7 @@
     // v1.6.1: serialize cloud work. UI refreshes can write to localStorage,
     // so localStorage-triggered autosync must stay suppressed for the full cycle.
     if(syncInProgress) return;
+    if(!manual && Date.now() < syncCooldownUntil) return;
     syncInProgress=true;
     clearTimeout(syncTimer);
     syncTimer=null;
@@ -209,11 +211,17 @@
       else { await pushCloud(); await pullCloud(); refreshLocalUI(); }
       status("Synced • "+new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}));
     } catch(err){ console.error("Before the Close cloud sync:",err); status("Sync issue — your data is still safe on this device.","error"); }
-    finally { applyingCloud=false; syncInProgress=false; }
+    finally {
+      applyingCloud=false;
+      syncInProgress=false;
+      // v1.6.2: some UI renderers finish small localStorage writes on delayed timers.
+      // Give those writes time to settle so they cannot immediately start another cloud cycle.
+      syncCooldownUntil=Date.now()+8000;
+    }
   }
   window.btcSyncNow=(manual=true)=>syncAll(manual);
 
-  function scheduleSync(){ if(applyingCloud||syncInProgress||!currentUser)return; clearTimeout(syncTimer); syncTimer=setTimeout(()=>{ syncTimer=null; syncAll(false); },900); }
+  function scheduleSync(){ if(applyingCloud||syncInProgress||!currentUser||Date.now()<syncCooldownUntil)return; clearTimeout(syncTimer); syncTimer=setTimeout(()=>{ syncTimer=null; syncAll(false); },900); }
   const nativeSet=Storage.prototype.setItem, nativeRemove=Storage.prototype.removeItem;
   Storage.prototype.setItem=function(k,v){ nativeSet.call(this,k,v); if(this===localStorage&&SYNC_KEYS.has(k))scheduleSync(); };
   Storage.prototype.removeItem=function(k){ nativeRemove.call(this,k); if(this===localStorage&&SYNC_KEYS.has(k))scheduleSync(); };
