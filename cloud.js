@@ -120,7 +120,7 @@
 
   window.btcSignOut = async function(){ if(!client)return; await client.auth.signOut(); currentUser=null; renderAccount(); status("Signed out. Your local Journey stays on this device."); };
 
-  async function pullCloud(){
+  async function pullCloud(authoritativeProfile=false){
     const uid=currentUser.id;
     const [profile,checkins,refs,favs,goal,hist,ach,stats,prefs,moments]=await Promise.all([
       client.from("profiles").select("*").eq("id",uid).maybeSingle(),
@@ -139,11 +139,21 @@
     try {
       const p=profile.data;
       if(p){
+        // v1.6.3: on a fresh device, the authenticated cloud profile is authoritative.
+        // This prevents default/blank onboarding state from winning the startup race.
         const localName=localStorage.getItem("userName")||localStorage.getItem("firstName")||"";
-        if(!localName && p.first_name){ localStorage.setItem("userName",p.first_name); localStorage.setItem("firstName",p.first_name); }
-        if(!localStorage.getItem("salesType") && p.industry) localStorage.setItem("salesType",p.industry);
-        if(!localStorage.getItem("salesStyle") && p.sales_style) localStorage.setItem("salesStyle",p.sales_style);
-        if(p.onboarding_complete) localStorage.setItem("btcOnboardingComplete","true");
+        if(p.first_name && (authoritativeProfile || !localName)){
+          localStorage.setItem("userName",p.first_name);
+          localStorage.setItem("firstName",p.first_name);
+        }
+        if(p.industry && (authoritativeProfile || !localStorage.getItem("salesType"))) localStorage.setItem("salesType",p.industry);
+        if(p.sales_style && (authoritativeProfile || !localStorage.getItem("salesStyle"))) localStorage.setItem("salesStyle",p.sales_style);
+        if(p.onboarding_complete){
+          localStorage.setItem("btcOnboardingComplete","true");
+          const onboarding=el("onboarding");
+          if(onboarding){ onboarding.hidden=true; onboarding.style.display="none"; }
+          document.body.style.overflow="";
+        }
       }
       const localC=safeJSON("btcDailyCheckins",{}); (checkins.data||[]).forEach(x=>{ if(!localC[x.checkin_date]) localC[x.checkin_date]=x.mood; }); localStorage.setItem("btcDailyCheckins",JSON.stringify(localC));
       const localR=safeJSON("btcReflections",{}); (refs.data||[]).forEach(x=>{ if(!localR[x.reflection_date]) localR[x.reflection_date]={mood:x.mood||"",note:x.note||""}; }); localStorage.setItem("btcReflections",JSON.stringify(localR));
@@ -207,7 +217,7 @@
     try {
       const migrated=localStorage.getItem(MIGRATION_KEY)===currentUser.id;
       applyingCloud=true;
-      if(!migrated){ await pullCloud(); await pushCloud(); localStorage.setItem(MIGRATION_KEY,currentUser.id); refreshLocalUI(); }
+      if(!migrated){ await pullCloud(true); await pushCloud(); localStorage.setItem(MIGRATION_KEY,currentUser.id); refreshLocalUI(); }
       else { await pushCloud(); await pullCloud(); refreshLocalUI(); }
       status("Synced • "+new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}));
     } catch(err){ console.error("Before the Close cloud sync:",err); status("Sync issue — your data is still safe on this device.","error"); }

@@ -1,0 +1,9 @@
+BEFORE THE CLOSE — v1.6.3 CLOUD DEV — CLOUD HYDRATION FIX
+
+- Fixes fresh-device sign-in incorrectly falling through to blank/default onboarding.
+- On first sync for an authenticated account, the Supabase profile is authoritative for name, industry, sales style, and onboarding completion.
+- Completed cloud onboarding immediately dismisses the local onboarding overlay without overwriting the restored profile.
+- Existing-device offline-first merge behavior remains unchanged after initial migration.
+- Keeps v1.6.2 sync stability cooldown.
+- Cache bumped to before-the-close-v163.
+- No new Supabase SQL required.
